@@ -6,9 +6,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 const path = require("path");
+const DBURL = process.env.DBURL;
 
 mongoose
-  .connect("mongodb://localhost/ironTravel", {
+  .connect(DBURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })

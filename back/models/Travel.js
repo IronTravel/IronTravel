@@ -5,7 +5,7 @@ const Travel = new mongoose.Schema(
     trip: String,
     city: String,
     country: String,
-    travel_partners: { type: ObjectId, ref: "user" },
+    travel_partners: { type: mongoose.Schema.ObjectId, ref: "user" },
     visited_places: Array
   },
   {

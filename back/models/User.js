@@ -5,7 +5,7 @@ const User = new mongoose.Schema(
     email: String,
     gender: {
       type: String,
-      enum: ["Male", "Female"]
+      enum: ["male", "female"]
     },
     name: String,
     lastName: String,
@@ -18,14 +18,14 @@ const User = new mongoose.Schema(
     description: String,
     nationality: String,
     favourite_color: String,
-    my_hobbies: [{ type: ObjectId, ref: "hobby" }],
-    my_travels: [{ type: ObjectId, ref: "travelProfile" }],
-    my_tours: [{ type: ObjectId, ref: "tour" }],
-    my_places: [{ type: ObjectId, ref: "place" }],
+    my_hobbies: [{ type: mongoose.Schema.ObjectId, ref: "hobby" }],
+    my_travels: [{ type: mongoose.Schema.ObjectId, ref: "travelProfile" }],
+    my_tours: [{ type: mongoose.Schema.ObjectId, ref: "tour" }],
+    my_places: [{ type: mongoose.Schema.ObjectId, ref: "place" }],
     about_me: {
-      music: [{ type: ObjectId, ref: "musicGenres" }],
-      personality: [{ type: ObjectId, ref: "personality" }],
-      life_style: [{ type: ObjectId, ref: "lifeStyle" }]
+      music: [{ type: mongoose.Schema.ObjectId, ref: "musicGenres" }],
+      personality: [{ type: mongoose.Schema.ObjectId, ref: "personality" }],
+      life_style: [{ type: mongoose.Schema.ObjectId, ref: "lifeStyle" }]
     }
   },
   {

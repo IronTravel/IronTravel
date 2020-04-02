@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const TravelProfile = new mongoose.Schema(
   {
     name: String,
-    partners: [{ type: ObjectId, ref: "user" }],
+    partners: [{ type: mongoose.Schema.ObjectId, ref: "user" }],
     entries: [
       {
         date: Date,
@@ -13,8 +13,8 @@ const TravelProfile = new mongoose.Schema(
         }
       }
     ],
-    organizator_tour: { type: ObjectId, ref: "user" },
-    organizator_host: { type: ObjectId, ref: "user" }
+    organizator_tour: { type: mongoose.Schema.ObjectId, ref: "user" },
+    organizator_host: { type: mongoose.Schema.ObjectId, ref: "user" }
   },
   {
     timestamps: true
