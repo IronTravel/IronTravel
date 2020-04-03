@@ -8,14 +8,10 @@ const _ = require("lodash");
 //SIGNUP//
 router.post("/signup", async (req, res) => {
   const { email, password } = req.body;
-  console.log("este es el email", email);
-  console.log("esta es la password", password);
   if (!email || !password) {
     res.json({ status: "debes rellenar todos los campos" });
   } else {
-    // console.log(email);
     const userExist = await User.findOne({ email });
-    // console.log(userExist);
     if (userExist) {
       console.log("user already exists");
       res.json({ status: "user already exists try again" });
