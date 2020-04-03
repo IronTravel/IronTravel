@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 const logger = require("morgan");
 const path = require("path");
 const DBURL = process.env.DBURL;
+const session=require("express-session")
+const MongoStore = require("connect-mongo")(session);
 
 mongoose
   .connect(DBURL, {
@@ -34,9 +36,21 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: true,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
+  })
+);
+require("./passport")(app);
 
 // Router
 const index = require("./routes/index");
 app.use("/", index);
+
+const auth = require("./routes/auth");
+app.use("/auth", auth);
 
 module.exports = app;
