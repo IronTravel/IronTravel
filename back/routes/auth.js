@@ -1,20 +1,25 @@
 const express = require("express");
-const User = require("../models/User");
 const passport = require("passport");
 const router = express.Router();
-const { hashPassword } = require("../lib/hashing");
 const _ = require("lodash");
+
+//Models
+const User = require("../models/User");
+
+//Lib
+const { isLoggedIn } = require('../lib');
+const { hashPassword } = require("../lib");
 
 //SIGNUP//
 router.post("/signup", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    res.json({ status: "debes rellenar todos los campos" });
+    return res.status(422).json({ status: 'Username and Password required' })
   } else {
     const userExist = await User.findOne({ email });
     if (userExist) {
       console.log("user already exists");
-      res.json({ status: "user already exists try again" });
+      return res.status(409).json({ status: 'Username already exists. Please try with a different one.' })
     } else {
       const newUser = await User.create({
         email,
@@ -35,15 +40,29 @@ router.post("/login", passport.authenticate("local"), (req, res) => {
 });
 
 //LOGOUT//
-router.post("/logout", (req, res) => {
+router.post("/logout", isLoggedIn(), (req, res) => {
   if (req.user) {
     req.logout();
+    console.log("logout")
     return res.json({ status: "logout" });
   } else {
+    console.log("You have to be logged in to logout" )
     return res
       .status(401)
       .json({ status: "You have to be logged in to logout" });
   }
 });
+
+//WHOAMI//
+router.get('/whoami', isLoggedIn(), async (req, res) => {
+  if (req.user){
+    console.log(req.user)
+      return res.json(req.user)
+  }else{
+    console.log("No user login", req.user)
+      return res.status(401).json({ status: 'No user logged in' })
+  }
+    })
+
 
 module.exports = router;
