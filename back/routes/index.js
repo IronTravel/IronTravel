@@ -6,7 +6,4 @@ router.get('/', (req, res, next) => {
   res.json({ message: 'this is an API' })
 });
 
-// const auth = require("./auth");
-// router.use("/auth", auth);
-
 module.exports = router;

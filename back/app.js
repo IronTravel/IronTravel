@@ -68,4 +68,8 @@ app.use("/", index);
 const auth = require("./routes/auth");
 app.use("/auth", auth);
 
+const data = require("./routes/data");
+app.use("/data", data);
+
+
 module.exports = app;

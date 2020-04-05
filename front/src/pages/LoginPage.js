@@ -1,32 +1,42 @@
 import React, { useState } from "react";
+import styled from 'styled-components'
+import {useForm} from 'react-hook-form'
+import { withRouter, Redirect } from 'react-router-dom';
 
-export const LoginPage = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    return(
-<form
-      onSubmit={e => {
-        e.preventDefault();
-        handleSubmit(email, password);
-      }}
-    >
+//Context
+import { useUser,useUserSetter } from "../context/user";
+
+//Service
+import { login } from "../service";
+
+export const LoginPage = withRouter(({history}) => {
+  const [formSubmitError, setFormSubmitError] = useState('');
+  const { handleSubmit, register, errors } = useForm();
+
+  const user = useUser();
+  const setUser = useUserSetter();
+
+  const onFormSubmit = (data) => {
+      login(data)
+          .then((res) => {
+              setUser(res.data);
+              history.push("/");
+          })
+          .catch(() => {
+              setFormSubmitError('Wrong Username or Password. Please, verify and try again.');
+          })
+  }
+  return(
+    <form onSubmit={handleSubmit(onFormSubmit)}>
       <div>
         <label>email</label>
-        <input
-          type="text"
-          value={email}
-          onChange={e => setUsername(e.target.value)}
-        ></input>
+        <input name="username" id="username" type="text" ref={register({ required: true })}></input>
       </div>
       <div>
         <label>Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        ></input>
+        <input name="password" id="password" type="password" ref={register({ required: true })}></input>
       </div>
       <button type="submit">Create Account</button>
     </form>
-    )
-}
+  )
+})

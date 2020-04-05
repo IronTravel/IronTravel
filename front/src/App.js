@@ -7,10 +7,11 @@ import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
 import { SignupPage } from './pages/SignupPage';
 
+// HOCs
+import { withAuth } from './components/withAuthHOC';
 
 
-
-export const App = () => {
+export const App = withAuth(() => {
 return (
     <Router>
             <Switch>
@@ -20,4 +21,4 @@ return (
             </Switch>
     </Router>
 );
-};
+});
