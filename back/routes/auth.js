@@ -1,9 +1,14 @@
 const express = require("express");
-const User = require("../models/User");
 const passport = require("passport");
 const router = express.Router();
-const { hashPassword } = require("../lib/hashing");
 const _ = require("lodash");
+
+//Models
+const User = require("../models/User");
+
+//Lib
+const { isLoggedIn } = require('../lib/isLoggedIn');
+const { hashPassword } = require("../lib/hashing");
 
 //SIGNUP//
 router.post("/signup", async (req, res) => {
@@ -45,5 +50,14 @@ router.post("/logout", (req, res) => {
       .json({ status: "You have to be logged in to logout" });
   }
 });
+
+//WHOAMI//
+router.get('/whoami', isLoggedIn(), async (req, res) => {
+  if (req.user)
+      return res.json(req.user)
+  else
+      return res.status(401).json({ status: 'No user logged in' })
+})
+
 
 module.exports = router;
