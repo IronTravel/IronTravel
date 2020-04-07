@@ -17,10 +17,17 @@ export const SignupPage = withRouter(({history}) => {
   const user = useUser();
   
   const onFormSubmit = (data) => {
-    console.log(data)
+    console.log(data.password)
+    console.log(data.confirmPassword)
+    if (data.password === data.confirmPassword){
       signup(data)
         .then(() => history.push('/'))
+        .then(console.log("register user"))
         .catch(e => setFormSubmitError(e.response.data.status))
+    } else {
+      console.log("this password is not the same")
+    }
+
   }
 
     return(
@@ -32,6 +39,10 @@ export const SignupPage = withRouter(({history}) => {
       <div>
         <label>Password</label>
         <input name="password" id="password" type="password" ref={register({ required: true })}></input>
+      </div>
+      <div>
+        <label>Confirm password</label>
+        <input name="confirmPassword" id="confirmPassword" type="password" ref={register({ required: true })}></input>
       </div>
       <button type="submit">Create Account</button>
     </form>

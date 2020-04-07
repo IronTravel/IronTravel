@@ -32,21 +32,21 @@ const debug = require("debug")(
 
 const app = express();
 
-//Cross Domain CORS whitlist
-const whitelist = ["http://localhost:1234"];
-const corsOptions = {
-  origin: function(origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true
-};
+// //Cross Domain CORS whitlist
+// const whitelist = ["http://localhost:1234"];
+// const corsOptions = {
+//   origin: function(origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   credentials: true
+// };
 
-// Middleware Setup
-app.use(cors(corsOptions));
+// // Middleware Setup
+// app.use(cors(corsOptions));
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -71,5 +71,13 @@ app.use("/auth", auth);
 const data = require("./routes/data");
 app.use("/data", data);
 
+const users = require("./routes/users");
+app.use("/users", users);
+
+const travels = require("./routes/travels");
+app.use("/travels", travels);
+
+const tours = require("./routes/tours");
+app.use("/tours", tours);
 
 module.exports = app;

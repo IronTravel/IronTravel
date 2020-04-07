@@ -34761,7 +34761,7 @@ module.exports = require('./lib/axios');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.whoami = exports.logout = exports.login = exports.signup = void 0;
+exports.amenities = exports.whoami = exports.logout = exports.login = exports.signup = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -34774,7 +34774,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var service = _axios.default.create({
   baseURL: 'http://localhost:3005/',
   withCredentials: true
-});
+}); //AUTH//
+
 
 var signup = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(formData) {
@@ -34868,9 +34869,37 @@ var whoami = /*#__PURE__*/function () {
   return function whoami() {
     return _ref4.apply(this, arguments);
   };
-}();
+}(); //DATA//
+
 
 exports.whoami = whoami;
+
+var amenities = /*#__PURE__*/function () {
+  var _ref5 = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee5() {
+    return _regenerator.default.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.next = 2;
+            return service.get('data/amenities');
+
+          case 2:
+            return _context5.abrupt("return", _context5.sent);
+
+          case 3:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5);
+  }));
+
+  return function amenities() {
+    return _ref5.apply(this, arguments);
+  };
+}();
+
+exports.amenities = amenities;
 },{"@babel/runtime/regenerator":"node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"node_modules/@babel/runtime/helpers/asyncToGenerator.js","axios":"node_modules/axios/index.js"}],"src/pages/HomePage.js":[function(require,module,exports) {
 "use strict";
 
@@ -39923,7 +39952,7 @@ var LoginPage = (0, _reactRouterDom.withRouter)(function (_ref) {
     })
   })), /*#__PURE__*/_react.default.createElement("button", {
     type: "submit"
-  }, "Create Account"));
+  }, "Login"));
 });
 exports.LoginPage = LoginPage;
 },{"@babel/runtime/helpers/slicedToArray":"node_modules/@babel/runtime/helpers/slicedToArray.js","react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","react-hook-form":"node_modules/react-hook-form/dist/react-hook-form.es.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../context/user":"src/context/user/index.js","../service":"src/service/index.js"}],"src/pages/SignupPage.js":[function(require,module,exports) {
@@ -39972,12 +40001,18 @@ var SignupPage = (0, _reactRouterDom.withRouter)(function (_ref) {
   var user = (0, _user.useUser)();
 
   var onFormSubmit = function onFormSubmit(data) {
-    console.log(data);
-    (0, _service.signup)(data).then(function () {
-      return history.push('/');
-    }).catch(function (e) {
-      return setFormSubmitError(e.response.data.status);
-    });
+    console.log(data.password);
+    console.log(data.confirmPassword);
+
+    if (data.password === data.confirmPassword) {
+      (0, _service.signup)(data).then(function () {
+        return history.push('/');
+      }).then(console.log("register user")).catch(function (e) {
+        return setFormSubmitError(e.response.data.status);
+      });
+    } else {
+      console.log("this password is not the same");
+    }
   };
 
   return /*#__PURE__*/_react.default.createElement("form", {
@@ -39996,12 +40031,67 @@ var SignupPage = (0, _reactRouterDom.withRouter)(function (_ref) {
     ref: register({
       required: true
     })
+  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", null, "Confirm password"), /*#__PURE__*/_react.default.createElement("input", {
+    name: "confirmPassword",
+    id: "confirmPassword",
+    type: "password",
+    ref: register({
+      required: true
+    })
   })), /*#__PURE__*/_react.default.createElement("button", {
     type: "submit"
   }, "Create Account"));
 });
 exports.SignupPage = SignupPage;
-},{"@babel/runtime/helpers/slicedToArray":"node_modules/@babel/runtime/helpers/slicedToArray.js","react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","react-hook-form":"node_modules/react-hook-form/dist/react-hook-form.es.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../context/user":"src/context/user/index.js","../service":"src/service/index.js"}],"src/components/Loading/index.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/slicedToArray":"node_modules/@babel/runtime/helpers/slicedToArray.js","react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","react-hook-form":"node_modules/react-hook-form/dist/react-hook-form.es.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../context/user":"src/context/user/index.js","../service":"src/service/index.js"}],"src/pages/AmenitiesPage.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Amenities = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _service = require("../service");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Amenities = /*#__PURE__*/function () {
+  var _ref = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
+    var amenitiesList;
+    return _regenerator.default.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return (0, _service.amenities)();
+
+          case 2:
+            amenitiesList = _context.sent;
+            return _context.abrupt("return", /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("h1", null, "Holi"), amenitiesList && amenitiesList.map(function (name) {
+              return /*#__PURE__*/_react.default.createElement("div", null, name);
+            })));
+
+          case 4:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function Amenities() {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+exports.Amenities = Amenities;
+},{"@babel/runtime/regenerator":"node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"node_modules/@babel/runtime/helpers/asyncToGenerator.js","react":"node_modules/react/index.js","../service":"src/service/index.js"}],"src/components/Loading/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -40093,13 +40183,15 @@ var _LoginPage = require("./pages/LoginPage");
 
 var _SignupPage = require("./pages/SignupPage");
 
+var _AmenitiesPage = require("./pages/AmenitiesPage");
+
 var _withAuthHOC = require("./components/withAuthHOC");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //Components
 // HOCs
-var App = (0, _withAuthHOC.withAuth)(function () {
+var App = function App() {
   return /*#__PURE__*/_react.default.createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
     path: "/",
     exact: true,
@@ -40110,10 +40202,14 @@ var App = (0, _withAuthHOC.withAuth)(function () {
   }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
     path: "/signup",
     component: _SignupPage.SignupPage
+  }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+    path: "/amenities",
+    component: _AmenitiesPage.AmenitiesPage
   })));
-});
+};
+
 exports.App = App;
-},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./pages/HomePage":"src/pages/HomePage.js","./pages/LoginPage":"src/pages/LoginPage.js","./pages/SignupPage":"src/pages/SignupPage.js","./components/withAuthHOC":"src/components/withAuthHOC/index.js"}],"src/Index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./pages/HomePage":"src/pages/HomePage.js","./pages/LoginPage":"src/pages/LoginPage.js","./pages/SignupPage":"src/pages/SignupPage.js","./pages/AmenitiesPage":"src/pages/AmenitiesPage.js","./components/withAuthHOC":"src/components/withAuthHOC/index.js"}],"src/Index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -40157,7 +40253,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33409" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45757" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

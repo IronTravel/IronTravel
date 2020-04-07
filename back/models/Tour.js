@@ -7,7 +7,7 @@ const Tour = new mongoose.Schema(
     city: String,
     country: String,
     tour_partner: { type: mongoose.Schema.ObjectId, ref: "user" },
-    organizer: { type: ObjectId, ref: "user" },
+    organizer: { type: mongoose.Schema.ObjectId, ref: "user" },
     start_date: Date,
     end_date: Date,
     photos: Array,
