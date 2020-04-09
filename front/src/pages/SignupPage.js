@@ -21,7 +21,10 @@ export const SignupPage = withRouter(({history}) => {
     console.log(data.confirmPassword)
     if (data.password === data.confirmPassword){
       signup(data)
-        .then(() => history.push('/'))
+      .then((res) => {
+        setUser(res.data);
+        history.push("/");
+    })
         .then(console.log("register user"))
         .catch(e => setFormSubmitError(e.response.data.status))
     } else {

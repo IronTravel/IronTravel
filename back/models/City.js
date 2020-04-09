@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 const City = new mongoose.Schema(
   {
-    name: String,
+    city: String,
     country: String,
+    description:String,
+    image: String,
     restaurants: Array,
     landmarks: Array
   },
