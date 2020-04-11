@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 const City = new mongoose.Schema(
   {
-    city: String,
+    name: String,
     country: String,
     description:String,
     image: String,
     restaurants: Array,
-    landmarks: Array
+    landmarks: Array,
+    museums:Array
   },
   {
     timestamps: true
