@@ -12,7 +12,7 @@ import { AmenitiesPage } from './pages/AmenitiesPage';
 import { withAuth } from './components/withAuthHOC';
 
 
-export const App = () => {
+export const App = withAuth(() => {
 return (
     <Router>
             <Switch>
@@ -22,4 +22,4 @@ return (
                 <Route path="/amenities" component={AmenitiesPage} />
             </Switch>
     </Router>
-)};
+)});

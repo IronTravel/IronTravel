@@ -4,7 +4,7 @@ import {useForm} from 'react-hook-form'
 import { withRouter, Redirect } from 'react-router-dom';
 
 //Context
-import { useUser } from "../context/user";
+import { useUser, useUserSetter } from "../context/user";
 
 //Service
 import { signup } from "../service";
@@ -15,6 +15,7 @@ export const SignupPage = withRouter(({history}) => {
   const { handleSubmit, register, errors } = useForm();
 
   const user = useUser();
+  const setUser = useUserSetter();
   
   const onFormSubmit = (data) => {
     console.log(data.password)
