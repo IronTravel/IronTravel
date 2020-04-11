@@ -12,12 +12,17 @@
         "seed-amenities": "node bin/amenities.js",
         "seed-lifestyles": "node bin/lifestyles.js",
         "seed-hobbies": "node bin/hobbies.js",
-        "seeds": "node bin/musicGenres.js && node bin/users.js && node bin/personalities.js && node bin/amenities.js && node bin/lifestyles.js && node bin/hobbies.js"
+        "seed-city": "node bin/city.js",
+        "seed-prueba": "node bin/prueba.js",
+        "seed-prueba1": "node bin/pruebarest-mus.js",
+        "seeds": "node bin/musicGenres.js && node bin/users.js && node bin/personalities.js && node bin/amenities.js && node bin/lifestyles.js && node bin/hobbies.js && node node bin/city.js"
     },
     "dependencies": {
         "axios": "^0.19.2",
         "bcrypt": "^4.0.1",
         "body-parser": "^1.18.3",
+        "cheerio": "^1.0.0-rc.3",
+        "cli-table": "^0.3.1",
         "connect-mongo": "^3.2.0",
         "cookie-parser": "^1.4.3",
         "cors": "^2.8.5",
@@ -29,7 +34,8 @@
         "morgan": "^1.9.0",
         "passport": "^0.4.1",
         "passport-local": "^1.0.0",
-        "querystring": "^0.2.0"
+        "querystring": "^0.2.0",
+        "request-promise": "^4.2.5"
     },
     "devDependencies": {
         "nodemon": "^1.12.1"

@@ -3,8 +3,11 @@ const City = new mongoose.Schema(
   {
     name: String,
     country: String,
+    description:String,
+    image: String,
     restaurants: Array,
-    landmarks: Array
+    landmarks: Array,
+    museums:Array
   },
   {
     timestamps: true

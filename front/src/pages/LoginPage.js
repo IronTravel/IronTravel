@@ -36,7 +36,7 @@ export const LoginPage = withRouter(({history}) => {
         <label>Password</label>
         <input name="password" id="password" type="password" ref={register({ required: true })}></input>
       </div>
-      <button type="submit">Create Account</button>
+      <button type="submit">Login</button>
     </form>
   )
 })

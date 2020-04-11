@@ -1,7 +1,7 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("../../models/User");
-const { checkHashed } = require("../../lib/hashing");
+const { hashPassword } = require("../../lib");
 
 passport.use(
   new LocalStrategy(async (email, password, done) => {
@@ -11,7 +11,7 @@ passport.use(
       }
       const foundUser = await User.findOne({ email });
       if (foundUser) {
-        checkHashed(password, foundUser.password)
+        hashPassword(password, foundUser.password)
           ? done(null, foundUser)
           : done(null, false);
       } else {

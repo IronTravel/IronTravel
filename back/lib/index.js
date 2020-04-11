@@ -5,6 +5,7 @@ const { MongoError } = require("mongodb");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
+const cheerio = require('cheerio');
 
 const salt = bcrypt.genSaltSync(10);
 const DBURL = process.env.DBURL;
@@ -127,5 +128,5 @@ module.exports = {
   getSpotityToken,
   isLoggedIn,
   isLoggedOut,
-  getRandom
+  getRandom,
 };
