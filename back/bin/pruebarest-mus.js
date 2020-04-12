@@ -1,67 +1,67 @@
-require("dotenv").config();
-const City = require("../models/City");
-const axios = require("axios");
+// require("dotenv").config();
+// const City = require("../models/City");
+// const axios = require("axios");
 
-const { withDbConnection } = require("../lib");
+// const { withDbConnection } = require("../lib");
 
-//Params
-const id = process.env.CLIENT_ID_FOURSQUARE;
-const secret = process.env.CLIENT_SECRET_FOURSQUARE;
-const v = process.env.VERSION_FOURSQUARE;
-const restaurantId = "4d4b7105d754a06374d81259";
-const landmarkId = "4bf58dd8d48988d12d941735";
-const museumId = "4bf58dd8d48988d181941735";
-const sortPopularity = 1;
-const limit = 2;
+// //Params
+// const id = process.env.CLIENT_ID_FOURSQUARE;
+// const secret = process.env.CLIENT_SECRET_FOURSQUARE;
+// const v = process.env.VERSION_FOURSQUARE;
+// const restaurantId = "4d4b7105d754a06374d81259";
+// const landmarkId = "4bf58dd8d48988d12d941735";
+// const museumId = "4bf58dd8d48988d181941735";
+// const sortPopularity = 1;
+// const limit = 2;
 
-withDbConnection(async () => {
-  const cities = await City.find();
-  let cityCount = 0;
+// withDbConnection(async () => {
+//   const cities = await City.find();
+//   let cityCount = 0;
 
-  for (city of cities) {
-    try {
-      const restaurantsRequest = await axios.get(
-        `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${restaurantId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
-      );
+//   for (city of cities) {
+//     try {
+//       const restaurantsRequest = await axios.get(
+//         `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${restaurantId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
+//       );
 
-      await City.findByIdAndUpdate(city._id, {
-        restaurants: restaurantsRequest.data.response.groups.map((e) =>
-          e.items.map((i) => i.venue)
-        ).pop(),
-      });
+//       await City.findByIdAndUpdate(city._id, {
+//         restaurants: restaurantsRequest.data.response.groups.map((e) =>
+//           e.items.map((i) => i.venue)
+//         ).pop(),
+//       });
 
-      const landmarkRequest = await axios.get(
-        `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${landmarkId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
-      );
+//       const landmarkRequest = await axios.get(
+//         `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${landmarkId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
+//       );
       
-      await City.findByIdAndUpdate(city._id, {
-        landmarks: landmarkRequest.data.response.groups.map((e) =>
-          e.items.map((i) => i.venue)
-        ).pop(),
-      });
+//       await City.findByIdAndUpdate(city._id, {
+//         landmarks: landmarkRequest.data.response.groups.map((e) =>
+//           e.items.map((i) => i.venue)
+//         ).pop(),
+//       });
 
-      const museumRequest = await axios.get(
-        `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${museumId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
-      );
+//       const museumRequest = await axios.get(
+//         `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${museumId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
+//       );
 
-      await City.findByIdAndUpdate(city._id, {
-        museums: museumRequest.data.response.groups.map((e) =>
-          e.items.map((i) => i.venue)
-        ).pop(),
-      });
+//       await City.findByIdAndUpdate(city._id, {
+//         museums: museumRequest.data.response.groups.map((e) =>
+//           e.items.map((i) => i.venue)
+//         ).pop(),
+//       });
 
-      console.log(`${city.name} restaurants, landmarsk and museums added (${++cityCount} of ${cities.length})`);
+//       console.log(`${city.name} restaurants, landmarsk and museums added (${++cityCount} of ${cities.length})`);
 
-    } catch (error) {
-      console.log(
-        error.response.status,
-        error.response.statusText,
-        `${city.name} (${++cityCount} of ${cities.length})`
-      );
-      break;
-    }
-  }
-});
+//     } catch (error) {
+//       console.log(
+//         error.response.status,
+//         error.response.statusText,
+//         `${city.name} (${++cityCount} of ${cities.length})`
+//       );
+//       break;
+//     }
+//   }
+// });
 
 // withDbConnection(async () => {
 //   // get all the Citys from the data base
@@ -151,3 +151,42 @@ withDbConnection(async () => {
 //     }
 //   }
 // });
+
+require("dotenv").config();
+const Museum = require("../models/Museum");
+const axios = require("axios");
+const { withDbConnection } = require("../lib");
+
+
+withDbConnection(async () => {
+    const museums = await Museum.find();
+        for (museum of museums) {
+            try {
+                const response = await axios({
+                    url: "https://www.googleapis.com/customsearch/v1",
+                    params: {
+                        key: process.env.KEY_GOOGLE,
+                        cx: process.env.CX_GOOGLE,
+                        q: museum.name,
+                        searchType: "image",
+                        fileType: "jpg",
+                        cr: true,
+                        alt: "json"
+                    }
+                });
+                console.log(response.data.items[0].link)
+                if(response.data.items[0].link){
+                  await Museum.findByIdAndUpdate(museum._id, 
+                      museum.images = response.data.items[0].link
+                    )
+                    await museum.save();
+                    continue;
+              } else {
+                continue;
+              }
+            } catch (error) {
+                console.log(error);
+                break;
+            }
+        }
+});
