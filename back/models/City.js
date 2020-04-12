@@ -5,9 +5,9 @@ const City = new mongoose.Schema(
     country: String,
     description:String,
     image: String,
-    restaurants: Array,
-    landmarks: Array,
-    museums:Array
+    restaurants: [{ type: mongoose.Schema.ObjectId, ref: "restaurant" }],
+    landmarks: [{ type: mongoose.Schema.ObjectId, ref: "landmark" }],
+    museums: [{ type: mongoose.Schema.ObjectId, ref: "museum" }]
   },
   {
     timestamps: true

@@ -47,51 +47,53 @@ axios.get('https://www.delicious.com.au/travel/international/gallery/100-cities-
                 items.map(element => {
                     return element
                 }))
-                const cities = await City.find();
-                let cityCount = 0;
+
+                
+                // const cities = await City.find();
+                // let cityCount = 0;
               
-                for (city of cities) {
-                  try {
-                    const restaurantsRequest = await axios.get(
-                      `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${restaurantId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
-                    );
+                // for (city of cities) {
+                //   try {
+                //     const restaurantsRequest = await axios.get(
+                //       `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${restaurantId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
+                //     );
               
-                    await City.findByIdAndUpdate(city._id, {
-                      restaurants: restaurantsRequest.data.response.groups.map((e) =>
-                        e.items.map((i) => i.venue)
-                      ).pop(),
-                    });
+                //     await City.findByIdAndUpdate(city._id, {
+                //       restaurants: restaurantsRequest.data.response.groups.map((e) =>
+                //         e.items.map((i) => i.venue)
+                //       ).pop(),
+                //     });
               
-                    const landmarkRequest = await axios.get(
-                      `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${landmarkId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
-                    );
+                //     const landmarkRequest = await axios.get(
+                //       `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${landmarkId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
+                //     );
                     
-                    await City.findByIdAndUpdate(city._id, {
-                      landmarks: landmarkRequest.data.response.groups.map((e) =>
-                        e.items.map((i) => i.venue)
-                      ).pop(),
-                    });
+                //     await City.findByIdAndUpdate(city._id, {
+                //       landmarks: landmarkRequest.data.response.groups.map((e) =>
+                //         e.items.map((i) => i.venue)
+                //       ).pop(),
+                //     });
               
-                    const museumRequest = await axios.get(
-                      `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${museumId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
-                    );
+                //     const museumRequest = await axios.get(
+                //       `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${museumId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
+                //     );
               
-                    await City.findByIdAndUpdate(city._id, {
-                      museums: museumRequest.data.response.groups.map((e) =>
-                        e.items.map((i) => i.venue)
-                      ).pop(),
-                    });
+                //     await City.findByIdAndUpdate(city._id, {
+                //       museums: museumRequest.data.response.groups.map((e) =>
+                //         e.items.map((i) => i.venue)
+                //       ).pop(),
+                //     });
               
-                    console.log(`${city.name} restaurants, landmarsk and museums added (${++cityCount} of ${cities.length})`);
+                //     console.log(`${city.name} restaurants, landmarsk and museums added (${++cityCount} of ${cities.length})`);
               
-                  } catch (error) {
-                    console.log(
-                      error.response.status,
-                      error.response.statusText,
-                      `${city.name} (${++cityCount} of ${cities.length})`
-                    );
-                    break;
-                  }
-                }
+                //   } catch (error) {
+                //     console.log(
+                //       error.response.status,
+                //       error.response.statusText,
+                //       `${city.name} (${++cityCount} of ${cities.length})`
+                //     );
+                //     break;
+                //   }
+                // }
             })
 })
