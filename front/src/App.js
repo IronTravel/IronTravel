@@ -13,13 +13,14 @@ import { withAuth } from './components/withAuthHOC';
 
 
 export const App = withAuth(() => {
-return (
-    <Router>
+    return (
+        <Router>
             <Switch>
                 <Route path="/" exact component={HomePage} />
                 <Route path="/login" component={LoginPage} />
                 <Route path="/signup" component={SignupPage} />
                 <Route path="/amenities" component={AmenitiesPage} />
             </Switch>
-    </Router>
-)});
+        </Router>
+    )
+});
