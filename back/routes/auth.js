@@ -7,11 +7,11 @@ const _ = require("lodash");
 const User = require("../models/User");
 
 //Lib
-const { isLoggedIn } = require('../lib');
+const { isLoggedIn, isLoggedOut } = require('../lib');
 const { hashPassword } = require("../lib");
 
 //SIGNUP//
-router.post("/signup", async (req, res) => {
+router.post("/signup", isLoggedOut(), async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(422).json({ status: 'Username and Password required' })
@@ -35,9 +35,27 @@ router.post("/signup", async (req, res) => {
 });
 
 //LOGIN//
-router.post("/login", passport.authenticate("local"), (req, res) => {
+router.post("/login",isLoggedOut(), passport.authenticate("local"), (req, res) => {
   res.json(_.pick(req.user, ["_id", "email"]));
 });
+
+//LOGIN GOOGLE//
+router.get(
+  "/google/login",
+  isLoggedOut(),
+  passport.authenticate("google", { scope: ["profile"] })
+);
+router.get(
+  "/google/callback",
+  isLoggedOut(),
+  passport.authenticate("google", {
+    failureRedirect: "/",
+  }),
+  (req, res) => {
+    // Successful authentication, redirect home.
+    res.redirect("/");
+  }
+);
 
 //LOGOUT//
 router.post("/logout", isLoggedIn(), (req, res) => {

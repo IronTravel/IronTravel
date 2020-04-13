@@ -174,8 +174,8 @@ withDbConnection(async () => {
                         alt: "json"
                     }
                 });
-                console.log(response.data.items[0].link)
-                if(response.data.items[0].link){
+                
+                if (response.data.items && response.data.items.length && response.data.items[0].link){
                   await Museum.findByIdAndUpdate(museum._id, 
                       museum.images = response.data.items[0].link
                     )
