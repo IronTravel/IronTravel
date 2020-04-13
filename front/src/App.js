@@ -7,9 +7,11 @@ import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
 import { SignupPage } from './pages/SignupPage';
 import { AmenitiesPage } from './pages/AmenitiesPage';
+import { Google } from "./pages/GoolePage";
 
 // HOCs
 import { withAuth } from './components/withAuthHOC';
+
 
 
 export const App = withAuth(() => {
@@ -20,6 +22,7 @@ return (
                 <Route path="/login" component={LoginPage} />
                 <Route path="/signup" component={SignupPage} />
                 <Route path="/amenities" component={AmenitiesPage} />
+                <Route path="/google/login" component={Google} />
             </Switch>
     </Router>
 )});

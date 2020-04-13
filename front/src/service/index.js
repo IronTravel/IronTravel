@@ -10,6 +10,7 @@ export const signup = async (formData) => {
 }
 
 export const login = async (formData) => {
+    console.log("hola soy login")
     return service.post('auth/login', formData);
 }
 
@@ -19,6 +20,12 @@ export const logout = async () => {
 
 export const whoami = async () => {
     return await service.get('auth/whoami');
+}
+
+
+export const google = async () => {
+    console.log("hola soy google")
+    return await service.get('auth/google/login');
 }
 
 //DATA//

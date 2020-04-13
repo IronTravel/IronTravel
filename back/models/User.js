@@ -14,6 +14,7 @@ const User = new mongoose.Schema(
       date: Date,
       age: Number
     },
+    googleId: Number,
     avatar: String,
     description: String,
     nationality: String,

@@ -7,7 +7,7 @@ import { withRouter, Redirect } from 'react-router-dom';
 import { useUser,useUserSetter } from "../context/user";
 
 //Service
-import { login } from "../service";
+import { login, google} from "../service";
 
 export const LoginPage = withRouter(({history}) => {
   const [formSubmitError, setFormSubmitError] = useState('');
@@ -16,7 +16,12 @@ export const LoginPage = withRouter(({history}) => {
   const user = useUser();
   const setUser = useUserSetter();
 
+  const google = () => {
+    google()
+  }
+  
   const onFormSubmit = (data) => {
+    
       login(data)
           .then((res) => {
               setUser(res.data);

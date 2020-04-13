@@ -33,7 +33,7 @@ const debug = require("debug")(
 const app = express();
 
 //Cross Domain CORS whitlist
-const whitelist = ["http://localhost:1234"];
+const whitelist = ["http://localhost:1234", 'https://accounts.google.com/o/oauth2/v2/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A1234%2Fauth%2Fgoogle%2Fcallback&scope=profile&client_id=193964470484-henq5mudtrk6d59dj4g93jmnbeuhimo3.apps.googleusercontent.com'];
 const corsOptions = {
   origin: function(origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
