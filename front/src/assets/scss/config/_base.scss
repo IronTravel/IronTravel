@@ -1,0 +1,25 @@
+//
+// CSS Base
+// --------------------------------------------------
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font: 14px 'Open Sans', sans-serif;
+    color: #5F5F5F;
+}
+
+a {
+	&:hover,
+	&:focus,
+	&:active {
+		outline: 0;
+	}
+}
+
+img {
+	@extend .img-fluid;
+}
