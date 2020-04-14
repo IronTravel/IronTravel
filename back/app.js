@@ -32,21 +32,30 @@ const debug = require("debug")(
 
 const app = express();
 
-//Cross Domain CORS whitlist
-const whitelist = ["http://localhost:1234", "http://localhost:3005"]
-const corsOptions = {
-  origin: function(origin, callback) {
-    // if (!origin) return callback(null, true);
-    if (whitelist.indexOf(origin) !== -1) {
-      // corsOptions = { origin: true } 
-      callback(null, true);
-    } else {
-      // corsOptions = { origin: false } 
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true
+// Cross Domain CORS whitlist
+// const whitelist = ["http://localhost:1234", "http://localhost:3005"]
+// const corsOptions = {
+//   origin: function(origin, callback) {
+//     // if (!origin) return callback(null, true);
+//     if (whitelist.indexOf(origin) !== -1) {
+//       // corsOptions = { origin: true } 
+//       callback(null, true);
+//     } else {
+//       // corsOptions = { origin: false } 
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   credentials: true
+// };
+
+var corsOptions = {
+  origin: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  exposedHeaders: ['x-auth-token']
 };
+// app.use(cors(corsOption));
+
 
 // var whitelist = ["http://localhost:1234"]
 // var corsOptionsDelegate = function (req, callback) {

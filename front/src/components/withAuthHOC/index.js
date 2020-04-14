@@ -3,7 +3,7 @@ import { UserContext } from '../../context/user';
 import { Loading } from '../Loading';
 
 // Service
-import { whoami } from '../../service';
+import { whoami } from '../../service/auth';
 
 export const withAuth = Component => () => {
 

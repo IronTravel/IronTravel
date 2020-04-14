@@ -4,8 +4,6 @@ export const UserContext = React.createContext();
 
 export const useUser = () => {
     const userState = useContext(UserContext);
-    
-    console.log(userState)
     return userState.user;
 };
 

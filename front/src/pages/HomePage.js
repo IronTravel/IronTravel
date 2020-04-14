@@ -5,7 +5,7 @@ import React from 'react'
 import { useUser, useUserSetter } from "../context/user";
 
 // Service
-import { logout } from '../service';
+import { logout } from '../service/auth';
 
 export const HomePage = () => {
     const user = useUser();
