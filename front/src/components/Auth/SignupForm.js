@@ -6,7 +6,7 @@ import { withRouter, Redirect } from 'react-router-dom';
 import { useUser, useUserSetter } from "../../context/user";
 
 //Service
-import { signup } from "../../service";
+import { signup } from "../../service/auth";
 
 export const RegisterForm = withRouter(({ history }) => {
 

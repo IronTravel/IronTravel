@@ -3,6 +3,7 @@ const User = require('../models/User');
 
 // STRATEGIES
 require('./strategies/local');
+require('./strategies/google');
 
 passport.serializeUser((user, cb) => {
   cb(null, user._id);

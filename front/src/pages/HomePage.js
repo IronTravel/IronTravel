@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { useUser, useUserSetter } from "../context/user";
 
 // Service
-import { logout } from '../service';
+import { logout } from '../service/auth';
 
 export const HomePage = withRouter(({ history }) => {
     const user = useUser();

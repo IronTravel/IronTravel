@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 //Components
 import { HomePage } from './pages/HomePage';
 import { AuthPage } from './pages/AuthPage';
-import { SignupPage } from './pages/SignupPage';
 import { AmenitiesPage } from './pages/AmenitiesPage';
+import { Google } from "./pages/GoolePage";
 
 // HOCs
 import { withAuth } from './components/withAuthHOC';
@@ -17,8 +17,8 @@ export const App = withAuth(() => {
                 <Switch>
                     <Route path="/" exact component={HomePage} />
                     <Route path="/auth" component={AuthPage} />
-                    <Route path="/signup" component={SignupPage} />
                     <Route path="/amenities" component={AmenitiesPage} />
+                    <Route path="/google/login" exact component={Google} />
                 </Switch>
             </Router>
         </main>

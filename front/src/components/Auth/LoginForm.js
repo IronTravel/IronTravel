@@ -6,7 +6,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { useUser, useUserSetter } from '../../context/user';
 
 //Service
-import { login } from '../../service';
+import { login } from '../../service/auth';
 
 export const LoginForm = withRouter(({ history }) => {
 

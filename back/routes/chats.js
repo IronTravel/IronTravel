@@ -25,7 +25,7 @@ router.post('/create', isLoggedIn(), async (req, res) => {
 router.get('/delete/:id', isLoggedIn(), async (req, res) => {
     const id = req.params.id
     console.log(id)
-    const chat = await Chat.findOneAndDelete(id)
+    const chat = await Chat.findOneAndDelete({_id: id})
 
     return res.json({status:`${id} eliminado`, chat})
   })
