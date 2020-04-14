@@ -3,11 +3,11 @@ import React, { useState, useEffect } from "react";
 
 
 //Service
-import { google } from "../service";
+import { google } from "../service/auth";
 
 export const Google = () => {
-    google()
+    // google()
 
-    return (<h1>HOLA</h1>)
+    return (<a href="http://localhost:3005/auth/google/login">google</a>)
 }
 

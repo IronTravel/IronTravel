@@ -57,5 +57,4 @@ router.get('/:id', isLoggedIn(), async (req, res) => {
     return res.json(travel)
   })
 
-  
 module.exports = router;

@@ -43,17 +43,17 @@ router.post("/login",isLoggedOut(), passport.authenticate("local"), (req, res) =
 router.get(
   "/google/login",
   isLoggedOut(),
-  passport.authenticate("google", { scope: ["profile"] })
+  passport.authenticate("google", { scope: ["profile email"] })
 );
 router.get(
   "/google/callback",
   isLoggedOut(),
   passport.authenticate("google", {
-    failureRedirect: "/",
+    failureRedirect: "http://localhost:1234/login",
   }),
   (req, res) => {
     // Successful authentication, redirect home.
-    res.redirect("/");
+    res.redirect("http://localhost:1234/");
   }
 );
 
