@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {amenities} from '../service'
+import { amenities } from '../service'
 
 export const Amenities = async () => {
 

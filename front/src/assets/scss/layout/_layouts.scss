@@ -1,0 +1,42 @@
+//
+//  Main Layout
+// --------------------------------------------------
+
+.auth-content-wrapper {
+    @extend .vh-100, .d-flex, .position-relative, .align-items-center, .justify-content-center;
+    z-index: 5;
+}
+
+.auth-content-wrapper .col + .col {
+    padding-left: 60px;
+}
+
+.auth-title {
+    font-size: 48px;
+    font-weight: 300;
+    color: #fff;
+}
+
+.auth-tagline {
+    font-size: 22px;
+    font-style: italic;
+    color: #fff;
+    margin-bottom: 40px;
+}
+
+.auth-intro {
+    font-size: 20px;
+    color: #fff;
+    line-height: 30px;
+}
+
+.auth-bg {
+    @extend .position-fixed, .fixed-top, .fixed-bottom, .vw-100, .vh-100;
+    background: rgba(#D12151, .88);
+    z-index: 2;
+}
+
+.auth-faces {
+    @extend .position-fixed, .fixed-top, .fixed-bottom, .vw-100, .vh-100;
+    z-index: 1;
+}

@@ -1,0 +1,37 @@
+//
+//  fields
+// --------------------------------------------------
+
+.field-wrapper {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    border-radius: 4px;
+    letter-spacing: 0;
+    border: 1px solid #D8D8D8;
+    margin-bottom: 10px;
+
+    .field__label {
+        font-size: 11px;
+        color: #a0a0a0;
+        margin-bottom: 0;
+    }
+
+    .field__input-text {
+        font-size: 14px;
+        color: #5F5F5F;
+        border: none;
+        outline: none;
+        box-shadow: none!important;
+
+        &::-webkit-input-placeholder,
+        &::placeholder {
+            color: #dddddd;
+        }
+    }
+
+    &--error {
+        border: 1px solid red;
+    }
+}

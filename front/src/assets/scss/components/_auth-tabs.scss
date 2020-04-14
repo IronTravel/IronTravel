@@ -1,0 +1,43 @@
+//
+//  Auth tabs
+// --------------------------------------------------
+
+.auth-tabs {
+    height: 550px;
+    display: flex;
+    background-color: #F2F2F4;
+    border-radius: 8px;
+    overflow: hidden;
+
+    &__buttons {
+        flex: 0 1 12%;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid #D8D8D8;
+
+        &__btn {
+            background-color: #F2F2F4;
+            border: none;
+            height: 50%;
+
+            &:hover {
+                background-color: #ECECEC;
+            }
+
+            &:focus {
+                background-color: #E3E3E3;
+                outline: 0;
+                box-shadow: none;
+            }
+
+            &--active,
+            &--active:hover {
+                background-color: #E3E3E3;
+            }
+        }
+    }
+
+    &__body {
+        flex: 0 1 88%;
+    }
+}
