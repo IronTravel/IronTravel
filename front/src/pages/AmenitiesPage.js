@@ -45,7 +45,8 @@ export const AmenitiesPage = () => {
     const handleSetUserHobbies = async (hobbieID) => {
         console.log(hobbieID)
         console.log(userHobbies)
-        let newArr = [...userHobbies, hobbieID];
+        let newArr = [...userHobbies];
+        newArr.push(hobbieID)
         console.log(newArr)
         setUserHoobies(newArr);
         await AddHobby(hobbieID);
@@ -65,7 +66,6 @@ export const AmenitiesPage = () => {
                             </li>
                         ))}
                 </ul>
-
                 <ul>
                     {userHobbies && userHobbies.map((e, i) => (
                         <li key={i}>
@@ -74,9 +74,6 @@ export const AmenitiesPage = () => {
                         </li>
                     ))}
                 </ul>
-
-
-
             </div>
         </>
     );
