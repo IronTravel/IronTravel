@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { withRouter } from 'react-router-dom';
 
 // Context
 import { useUser, useUserSetter } from "../context/user";
@@ -7,18 +7,18 @@ import { useUser, useUserSetter } from "../context/user";
 // Service
 import { logout } from '../service/auth';
 
-export const HomePage = () => {
+export const HomePage = withRouter(({ history }) => {
     const user = useUser();
-    console.log("este es el usuario", user)
     const setUser = useUserSetter();
     const handleLogOut = () => {
         logout();
         setUser('');
+        history.push('/auth')
     }
-    return(
+    return (
         <div>
-           {user && <h1>{user.email}</h1>}
+            {user && <h1>{user.email}</h1>}
             <button onClick={handleLogOut} className="btn-logout">Logout</button>
         </div>
     )
-}
+})
