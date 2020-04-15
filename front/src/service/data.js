@@ -12,13 +12,13 @@ export const hobbies = async () => {
 }
 
 //Add
-export const addHobbies = async idHobbies => {
+export const addHobby = async idHobbies => {
     console.log(idHobbies)
     return await service.post(`data/hobbies/add/${idHobbies}`);
 }
 
 //Delete
-export const deleteHobbies= async idHobbies => {
+export const deleteHobby= async idHobbies => {
     console.log(idHobbies)
     return await service.get(`data/hobbies/delete/${idHobbies}`);
 }
@@ -30,13 +30,13 @@ export const musicgenres = async () => {
 }
 
 //Add
-export const addMusicGenres = async idMusicGenres => {
+export const addMusicGenre = async idMusicGenres => {
     console.log(idMusicGenres)
     return await service.post(`data/musicgenres/add/${idMusicGenres}`);
 }
 
 //Delete
-export const deleteMusicGenres = async idMusicGenres => {
+export const deleteMusicGenre = async idMusicGenres => {
     console.log(idMusicGenres)
     return await service.get(`data/musicgenres/delete/${idMusicGenres}`);
 }
@@ -48,13 +48,13 @@ export const personalities = async () => {
 }
 
 //Add
-export const addPersonalities = async idpersonalities => {
+export const addPersonality = async idpersonalities => {
     console.log(idpersonalities)
     return await service.post(`data/personalities/add/${idpersonalities}`);
 }
 
 //Delete
-export const deletePersonalities = async idpersonalities => {
+export const deletePersonality = async idpersonalities => {
     console.log(idpersonalities)
     return await service.get(`data/personalities/delete/${idpersonalities}`);
 }
@@ -66,13 +66,13 @@ export const lifestyles = async () => {
 }
 
 //Add
-export const addLifestyles = async idLifestyles => {
+export const addLifestyle = async idLifestyles => {
     console.log(idLifestyles)
     return await service.post(`data/lifestyles/add/${idLifestyles}`);
 }
 
 //Delete
-export const deleteLifestyles = async idLifestyles => {
+export const deleteLifestyle = async idLifestyles => {
     console.log(idLifestyles)
     return await service.get(`data/lifestyles/delete/${idLifestyles}`);
 }
@@ -84,13 +84,13 @@ export const amenities = async () => {
 }
 
 //Add
-export const addAmenities = async idAmenities => {
+export const addAmenity = async idAmenities => {
     console.log(idAmenities)
     return await service.post(`data/amenities/add/${idAmenities}`);
 }
 
 //Delete
-export const deleteAmenities = async idAmenities => {
+export const deleteAmenity = async idAmenities => {
     console.log(idAmenities)
     return await service.get(`data/amenities/delete/${idAmenities}`);
 }

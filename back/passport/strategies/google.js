@@ -16,7 +16,6 @@ passport.use(new GoogleStrategy({
 
     const existingUser = await User.findOne({ googleId: profile.id });
     console.log(profile);
-    // console.log(email);
     
     if (existingUser) {
       
@@ -27,7 +26,8 @@ passport.use(new GoogleStrategy({
       return cb(null, existingUser);
     } else {
       const newUser = await User.create({
-        name: profile.name.familyName,
+        name: profile.name.givenName,
+        lastName:profile.name.familyName,
         avatar: profile.photos[0].value,
         email: profile.emails[0].value,
         googleId: profile.id,

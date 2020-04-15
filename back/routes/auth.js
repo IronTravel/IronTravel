@@ -12,17 +12,20 @@ const { hashPassword } = require("../lib");
 
 //SIGNUP//
 router.post("/signup", isLoggedOut(), async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(422).json({ status: 'Username and Password required' })
+  const { username, password, name, lastname } = req.body;
+  const email = username
+  if (!username || !password) {
+    return res.status(422).json({ status: 'E-mail and Password required' })
   } else {
     const userExist = await User.findOne({ email });
     if (userExist) {
       console.log("user already exists");
-      return res.status(409).json({ status: 'Username already exists. Please try with a different one.' })
+      return res.status(409).json({ status: 'E-mail already exists. Please try with a different one.' })
     } else {
       const newUser = await User.create({
-        email,
+        name:name,
+        lastName:lastname,
+        email:email,
         password: hashPassword(password),
       });
 

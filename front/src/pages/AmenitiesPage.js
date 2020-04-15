@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react'
 
 import { useUser, useUserSetter } from "../context/user";
 
-import { amenities, hobbies, musicgenres, personalities, lifestyles, addAmenities, deleteAmenities } from '../service/data'
+import { amenities, hobbies, musicgenres, personalities, lifestyles, addAmenity, deleteAmenity, addHobby, deleteHobby } from '../service/data'
+import { whoami } from '../service/auth'
 
 
 
-const AddAmenities = ({ idAmenities, added }) => (
+const AddHobby = ({ idHobby, added }) => (
     <a
         href="#"
         onClick={async () => {
-            await addAmenities(idAmenities);
+            await addHobby(idHobby);
             added()
         }}
     >
@@ -19,11 +20,11 @@ const AddAmenities = ({ idAmenities, added }) => (
 )
 
 
-const DeleteAmenities = ({ idAmenities, deleted }) => (
+const DeleteHobby = ({ idHobby, deleted }) => (
     <a
         href="#"
         onClick={async () => {
-            await deleteAmenities(idAmenities);
+            await deleteHobby(idHobby);
             deleted()
         }}
     >
@@ -31,46 +32,54 @@ const DeleteAmenities = ({ idAmenities, deleted }) => (
     </a>
 )
 
+
 export const AmenitiesPage = () => {
-
-    const [amenitiesList, setAmenities] = useState([])
-    const fetchAmenities = () => amenities().then(res => setAmenities(res.data))
-    console.log(amenitiesList)
-    const user = useUser();
-    console.log("este es el usuario", user)
-    const setUser = useUserSetter();
-    if (user) console.log(user.about_me.music) //comentar con Carlos
-
+    const [hobbiesList, setHoobies] = useState([])
+    const [userHobbies, setUserHoobies] = useState();
 
     useEffect(() => {
-        fetchAmenities()
-        // hobbies()
-        //     .then(res => {
-        //         setAmenities(res.data)
-        //     })
-    }, [])
+        whoami().then((res) => setUserHoobies(res.data.my_hobbies));
+        hobbies().then(res => setHoobies(res.data));
+    }, []);
+
+    console.log(hobbiesList)
+
+    const handleSetUserHobbies = async (hobbieID) => {
+        console.log(hobbieID)
+        console.log(userHobbies)
+        let newArr = [...userHobbies, ...[hobbieID]];   
+        console.log(newArr)
+        setUserHoobies(newArr);
+        await AddHobby(hobbieID);
+    }
 
     return (
-        <>
-            <h1>List of Amenities</h1>
-            <div>
-                <ul>
-                    {amenitiesList.map((e, i) => (
-                        <li key={i}>
-                            <AddAmenities idAmenities={e._id} added={fetchAmenities} />
-                            {e.name}
-                        </li>
-                    ))}
-                </ul>
-                {user && user.my_hobbies.map((e, i) => (
+      <>
+        <h1>List of Amenities</h1>
+        <div>
+          <ul>
+            {hobbiesList.length &&
+              hobbiesList.map((e, i) => (
+                <li key={i}>
+                  <button onClick={() => handleSetUserHobbies(e._id)}>ADD</button>
+                  {/* <AddHobby idHobby={e._id} added={setUserHoobies} /> */}
+                  {e.name}
+                </li>
+              ))}
+          </ul>
+        
+        <ul>
+        {userHobbies && userHobbies.map((e, i) => (
+              <li key={i}>
+                {/* <DeleteHobby idHobby={e} deleted={fetchHobby1} /> */}
+                {e}
+              </li>
+            ))}
+        </ul>
 
-                    <li key={i}>
-                        <DeleteAmenities idAmenities={e} deleted={fetchAmenities} />
-                        {e}
-                    </li>
 
-                ))}
-            </div>
-        </>
-    )
+
+        </div>
+      </>
+    );
 }
