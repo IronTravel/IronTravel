@@ -20,6 +20,12 @@ router.get('/hobbies', isLoggedIn(), async (req, res) => {
   const hobbies = await Hobby.find() 
   return res.json(hobbies)
 })
+//User Hobby
+router.get('/hobbies/user', isLoggedIn(), async (req, res) => {
+  const userFind = await User.findById(req.user.id) 
+  console.log(userFind.about_me.hobbies)
+  return res.json(userFind.about_me.hobbies)
+})
 
 //Add
 router.post('/hobbies/add/:id',async(req, res) => {
@@ -36,7 +42,7 @@ router.post('/hobbies/add/:id',async(req, res) => {
 router.get('/hobbies/delete/:id',async(req, res) => {
   const id = req.params.id
   const user = req.user
-  await User.updateOne(
+  await User.findByIdAndUpdate(
     user,
     { $pull: { "about_me.hobbies": id } },
     { safe: true, multi: true }

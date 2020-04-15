@@ -11,6 +11,10 @@ export const hobbies = async () => {
     return await service.get('data/hobbies');
 }
 
+export const userHobby = async () => {
+    return await service.get('data/hobbies/user');
+}
+
 //Add
 export const addHobby = async idHobbies => {
     console.log(idHobbies)
