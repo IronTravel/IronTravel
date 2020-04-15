@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { useUser, useUserSetter } from "../context/user";
 
-import { amenities, hobbies, musicgenres, personalities, lifestyles, addAmenity, deleteAmenity, addHobby, deleteHobby } from '../service/data'
+import { amenities, hobbies, musicgenres, personalities, lifestyles, addHobby, deleteHobby } from '../service/data'
 import { whoami } from '../service/auth'
 
 
@@ -32,7 +32,6 @@ const DeleteHobby = ({ idHobby, deleted }) => (
     </a>
 )
 
-
 export const AmenitiesPage = () => {
     const [hobbiesList, setHoobies] = useState([])
     const [userHobbies, setUserHoobies] = useState();
@@ -47,7 +46,7 @@ export const AmenitiesPage = () => {
     const handleSetUserHobbies = async (hobbieID) => {
         console.log(hobbieID)
         console.log(userHobbies)
-        let newArr = [...userHobbies, ...[hobbieID]];   
+        let newArr = [...userHobbies, hobbieID];
         console.log(newArr)
         setUserHoobies(newArr);
         await AddHobby(hobbieID);
