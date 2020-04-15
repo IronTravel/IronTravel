@@ -154,12 +154,15 @@
 
 require("dotenv").config();
 const Museum = require("../models/Museum");
+const Restaurant = require("../models/Restaurant");
+const Landmark = require("../models/Landmark");
 const axios = require("axios");
 const { withDbConnection } = require("../lib");
 
 
 withDbConnection(async () => {
     const museums = await Museum.find();
+        let museumCount = 0;
         for (museum of museums) {
             try {
                 const response = await axios({
@@ -180,6 +183,78 @@ withDbConnection(async () => {
                       museum.images = response.data.items[0].link
                     )
                     await museum.save();
+                    console.log(`${museum.name} museums added (${++museumCount} of ${museums.length})`);
+                    continue;
+              } else {
+                continue;
+              }
+            } catch (error) {
+                console.log(error);
+                break;
+            }
+        }
+});
+
+
+withDbConnection(async () => {
+    const restaurants = await Restaurant.find();
+    let restaurantCount = 0;
+        for (restaurant of restaurants) {
+            try {
+                const response = await axios({
+                    url: "https://www.googleapis.com/customsearch/v1",
+                    params: {
+                        key: process.env.KEY_GOOGLE,
+                        cx: process.env.CX_GOOGLE,
+                        q: restaurant.name,
+                        searchType: "image",
+                        fileType: "jpg",
+                        cr: true,
+                        alt: "json"
+                    }
+                });
+                
+                if (response.data.items && response.data.items.length && response.data.items[0].link){
+                  await Restaurant.findByIdAndUpdate(restaurant._id, 
+                      restaurant.images = response.data.items[0].link
+                    )
+                    await restaurant.save();
+                    console.log(`${restaurant.name} restaurant added (${++restaurantCount} of ${restaurants.length})`);
+                    continue;
+              } else {
+                continue;
+              }
+            } catch (error) {
+                console.log(error);
+                break;
+            }
+        }
+});
+
+withDbConnection(async () => {
+    const landmarks = await Landmark.find();
+    let landmarkCount = 0;
+        for (landmark of landmarks) {
+            try {
+                const response = await axios({
+                    url: "https://www.googleapis.com/customsearch/v1",
+                    params: {
+                        key: process.env.KEY_GOOGLE,
+                        cx: process.env.CX_GOOGLE,
+                        q: landmark.name,
+                        searchType: "image",
+                        fileType: "jpg",
+                        cr: true,
+                        alt: "json"
+                    }
+                });
+                
+                if (response.data.items && response.data.items.length && response.data.items[0].link){
+                  await Landmark.findByIdAndUpdate(landmark._id, 
+                    landmark.images = response.data.items[0].link
+                    )
+                    await landmark.save();
+                    console.log(`${landmark.name} restaurant added (${++landmarkCount} of ${landmarks.length})`);
                     continue;
               } else {
                 continue;
