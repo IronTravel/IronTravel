@@ -21,10 +21,18 @@ router.get('/hobbies', isLoggedIn(), async (req, res) => {
   return res.json(hobbies)
 })
 //User Hobby
-router.get('/hobbies/user', isLoggedIn(), async (req, res) => {
-  const userFind = await User.findById(req.user.id) 
-  console.log(userFind.about_me.hobbies)
-  return res.json(userFind.about_me.hobbies)
+// router.get('/hobbies/user', isLoggedIn(), async (req, res) => {
+//   const userFind = await User.findById(req.user.id) 
+//   console.log(userFind.about_me.hobbies)
+//   //return res.json(userFind.about_me.hobbies)
+//   return res.json(userFind.about_me)
+// })
+
+router.get('/aboutMe/user', isLoggedIn(), async (req, res) => {
+  console.log(req.user)
+  const userFind = await User.findById(req.user.id)
+  console.log("eeeeee", userFind.about_me.hobbies)
+  return res.json(userFind.about_me)
 })
 
 //Add
