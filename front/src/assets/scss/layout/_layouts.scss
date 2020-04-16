@@ -2,6 +2,10 @@
 //  Main Layout
 // --------------------------------------------------
 
+.container {
+    max-width: 1520px;
+}
+
 .auth-content-wrapper {
     @extend .vh-100, .d-flex, .position-relative, .align-items-center, .justify-content-center;
     z-index: 5;
@@ -39,4 +43,20 @@
 .auth-faces {
     @extend .position-fixed, .fixed-top, .fixed-bottom, .vw-100, .vh-100;
     z-index: 1;
+}
+
+.profile-box-wrapper {
+    @extend .d-flex, .justify-content-between, .flex-wrap;
+
+    section {
+        &:nth-child(1) {
+            flex: 0 1 25%;
+        }
+        &:nth-child(2) {
+            flex: 0 1 50%;
+        }
+        &:nth-child(3) {
+            flex: 0 1 25%;
+        }
+    }
 }

@@ -3,12 +3,18 @@
 // --------------------------------------------------
 
 .main-header {
-    @extend .d-flex, .align-items-center;
+    @extend .d-flex, .align-items-center, .pr-3, .mb-5;
     background-color: #392E4E;
     height: 50px;
 
+    .main-logo {
+        min-width: 50px;
+    }
+
     .current-section {
-        flex: 1 0 160px;
+        @extend .px-3;
+        width: 100%;
+        max-width: 220px;
         font-size: 15px;
         font-weight: 700;
         color: #fff;
@@ -16,7 +22,7 @@
     }
 
     .header-search {
-        flex: 1 0 45%;
+        width: 100%;
         height: inherit;
 
         input[type="search"] {
@@ -28,10 +34,10 @@
     }
 
     .main-nav {
-        @extend .d-flex, .align-items-center, .justify-content-between;
-        flex: 0 1 250px;
+        @extend .d-flex, .align-items-center, .justify-content-between, .px-4;
+        width: 100%;
+        max-width: 210px;
         height: inherit;
-        padding: 0 40px;
 
         a {
             font-size: 13px;
@@ -41,6 +47,23 @@
     }
 
     .user-menu {
-        flex: 1 0 20%;
+        @extend .d-flex, .align-items-center, .justify-content-around;
+        width: 100%;
+        max-width: 220px;
+
+        &__icon-btn,
+        &__user-btn {
+            border: none;
+            background: transparent;
+            outline: none;
+        }
+
+        &__user-btn {
+            @extend .pr-4;
+        }
+
+        .user-card {
+            color: #fff;
+        }
     }
 }

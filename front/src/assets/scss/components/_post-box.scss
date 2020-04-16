@@ -1,0 +1,25 @@
+//
+//  Post box
+// --------------------------------------------------
+
+.post-box {
+    @extend .border-0;
+    padding: 2rem;
+
+    &__header {
+        @extend .mb-3;
+    }
+
+    &__body {
+        @extend .pb-4, .mb-4;
+        border-bottom: 1px solid #D8D8D8;
+
+        p {
+            @extend .mb-0;
+        }
+    }
+
+    &__footer {
+
+    }
+}
