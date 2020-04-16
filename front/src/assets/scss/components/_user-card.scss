@@ -7,7 +7,7 @@
     color: #5F5F5F;
 
     &__img {
-        @extend .mr-2, .position-relative;
+        @extend .mr-3, .position-relative;
         width: 26px;
         height: 26px;
         border-radius: 50%;
@@ -31,7 +31,7 @@
         .user-card__time {
             font-weight: 500;
             font-size: 11px;
-            color: #AEAEAE;
+            color: #979797;
         }
     }
 }

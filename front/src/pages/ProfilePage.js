@@ -5,11 +5,12 @@ import { Header } from '../layout/Header';
 import { UserCard } from '../components/UserCard';
 
 import defaultAvatar from '../assets/images/avatar.png';
+import heartIcon from '../assets/svgs/icon-heart.svg';
 
 export const ProfilePage = () => {
     return (
         <>
-            <Header></Header>
+            <Header />
             <div className="container">
                 {/* ProfileHeader Component */}
                 <div className="profile-header">
@@ -93,20 +94,108 @@ export const ProfilePage = () => {
                     </div>
 
                     {/* ProfilePosts Component */}
-                    <div className="col-6 px-5">
+                    <div className="col-6 px-4">
                         <article className="post-box section-box section-box--shadow">
                             <header className="post-box__header">
-                                <UserCard avatarSize={50} name="John Smith" time="5 hours ago" />
+                                <UserCard avatarSize={38} name="John Smith" time="5 hours ago" />
                             </header>
                             <div className="post-box__body">
                                 <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
                             </div>
                             <footer className="post-box__footer">
-                                <div className="like-wrapper">
-                                    <button className="like__icon">
-
+                                <div className="btn-like mr-4">
+                                    <button className="btn-like__icon">
+                                        <img src={heartIcon} />
                                     </button>
-                                    <span className="like__count"></span>
+                                    <span className="btn-like__count">15</span>
+                                </div>
+                                <div className="inline-avatars">
+                                    <div className="inline-avatars__images">
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                    </div>
+                                    <div className="inline-avatars__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
+                                </div>
+                            </footer>
+                        </article>
+                        <article className="post-box section-box section-box--shadow">
+                            <header className="post-box__header">
+                                <UserCard avatarSize={38} name="John Smith" time="5 hours ago" />
+                            </header>
+                            <div className="post-box__body">
+                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+                            </div>
+                            <footer className="post-box__footer">
+                                <div className="btn-like mr-4">
+                                    <button className="btn-like__icon">
+                                        <img src={heartIcon} />
+                                    </button>
+                                    <span className="btn-like__count">15</span>
+                                </div>
+                                <div className="inline-avatars">
+                                    <div className="inline-avatars__images">
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                    </div>
+                                    <div className="inline-avatars__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
+                                </div>
+                            </footer>
+                        </article>
+                        <article className="post-box section-box section-box--shadow">
+                            <header className="post-box__header">
+                                <UserCard avatarSize={38} name="John Smith" time="5 hours ago" />
+                            </header>
+                            <div className="post-box__body">
+                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+                            </div>
+                            <footer className="post-box__footer">
+                                <div className="btn-like mr-4">
+                                    <button className="btn-like__icon">
+                                        <img src={heartIcon} />
+                                    </button>
+                                    <span className="btn-like__count">15</span>
+                                </div>
+                                <div className="inline-avatars">
+                                    <div className="inline-avatars__images">
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                    </div>
+                                    <div className="inline-avatars__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
+                                </div>
+                            </footer>
+                        </article>
+                        <article className="post-box section-box section-box--shadow">
+                            <header className="post-box__header">
+                                <UserCard avatarSize={38} name="John Smith" time="5 hours ago" />
+                            </header>
+                            <div className="post-box__body">
+                                <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+                            </div>
+                            <footer className="post-box__footer">
+                                <div className="btn-like mr-4">
+                                    <button className="btn-like__icon">
+                                        <img src={heartIcon} />
+                                    </button>
+                                    <span className="btn-like__count">15</span>
+                                </div>
+                                <div className="inline-avatars">
+                                    <div className="inline-avatars__images">
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                        <UserCard showBorder avatarSize={28} />
+                                    </div>
+                                    <div className="inline-avatars__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
                                 </div>
                             </footer>
                         </article>

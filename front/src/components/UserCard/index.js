@@ -1,11 +1,14 @@
 import React from 'react';
 import defaultAvatar from '../../assets/images/avatar.png';
 
-export const UserCard = ({ avatar, avatarSize = 25, name, time }) => {
+export const UserCard = ({ avatar, name, time, avatarSize = 25 }) => {
     return (
         <div className="user-card">
-            <div className="user-card__img">
-                <img src={avatar || defaultAvatar} width={avatarSize} alt="" />
+            <div className="user-card__img" style={{ width: avatarSize, height: avatarSize }}>
+                <img
+                    src={avatar || defaultAvatar}
+                    width={avatarSize * 1.2}
+                    alt="" />
             </div>
             <div className="user-card__info">
                 <div className="user-card__name">{name}</div>

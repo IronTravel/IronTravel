@@ -20,6 +20,6 @@
     }
 
     &__footer {
-
+        @extend .d-flex, .align-items-center, .flex-wrap;
     }
 }
