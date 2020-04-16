@@ -1,0 +1,25 @@
+//
+//  Inline avatars
+// --------------------------------------------------
+
+.inline-avatars {
+    @extend .d-flex, .align-items-center;
+
+    &__images {
+        @extend .d-flex, .align-items-center, .mr-4;
+
+        > * {
+            margin-right: -25px;
+        }
+
+        .user-card__img {
+            border: 2px solid white;
+        }
+    }
+
+    &__text {
+        max-width: 140px;
+        font-size: 11px;
+        line-height: 15px;
+    }
+}
