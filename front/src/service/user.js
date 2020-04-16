@@ -9,9 +9,10 @@ export const allUser = async () => {
     return await service.get('/users');
 }
 
-export const editUser = async idUser => {
+export const editUser = async (idUser,data ) => {
     console.log(idUser)
-    return await service.post(`/users/edit/${idUser}`);
+    console.log(data)
+    return await service.post(`/users/edit/${idUser}`, data);
 }
 
 export const oneUser = async idUser => {

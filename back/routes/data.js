@@ -28,12 +28,20 @@ router.get('/hobbies', isLoggedIn(), async (req, res) => {
 //   return res.json(userFind.about_me)
 // })
 
+// router.get('/aboutMe/user', isLoggedIn(), async (req, res) => {
+//   console.log(req.user)
+//   const userFind = await User.findById(req.user.id)
+//   console.log("eeeeee", userFind.about_me.hobbies)
+//   return res.json(userFind.about_me)
+// })
+
+
 router.get('/aboutMe/user', isLoggedIn(), async (req, res) => {
-  console.log(req.user)
-  const userFind = await User.findById(req.user.id)
-  console.log("eeeeee", userFind.about_me.hobbies)
-  return res.json(userFind.about_me)
+  const populate = await User.findById(req.user.id).populate([{ path: "hobbies" }, { path: "music"}, { path: "life_style" },{ path: "personality" }])
+  return res.json(populate)
 })
+
+
 
 //Add
 router.post('/hobbies/add/:id',async(req, res) => {
@@ -41,7 +49,7 @@ router.post('/hobbies/add/:id',async(req, res) => {
   const idUser = req.user.id
 
   await User.findByIdAndUpdate(idUser,
-    { $addToSet: { "about_me.hobbies":id }}
+    { $addToSet: { hobbies:id }}
   )
   return res.json({status:"added"})
 })
@@ -52,8 +60,8 @@ router.get('/hobbies/delete/:id',async(req, res) => {
   const user = req.user
   await User.findByIdAndUpdate(
     user,
-    { $pull: { "about_me.hobbies": id } },
-    { safe: true, multi: true }
+    { $pull: { hobbies: id } },
+    // { safe: true, multi: true }
   );
   return res.json({status:"deleted"})
 } )
@@ -71,7 +79,7 @@ router.post('/musicgenres/add/:id',async(req, res) => {
   const idUser = req.user.id
 
   await User.findByIdAndUpdate(idUser,
-    { $addToSet: { "about_me.music":id }}
+    { $addToSet: { music:id }}
   )
   return res.json({status:"added"})
 })
@@ -82,7 +90,7 @@ router.get('/musicgenres/delete/:id',async(req, res) => {
   const user = req.user
   await User.updateOne(
     user,
-    { $pull: { "about_me.music": id } },
+    { $pull: { music: id } },
     { safe: true, multi: true }
   );
   return res.json({status:"deleted"})
@@ -101,7 +109,7 @@ router.post('/personalities/add/:id',async(req, res) => {
   const idUser = req.user.id
 
   await User.findByIdAndUpdate(idUser,
-    { $addToSet: { "about_me.personality":id }}
+    { $addToSet: { personality:id }}
   )
   return res.json({status:"added"})
 })
@@ -112,7 +120,7 @@ router.get('/personalities/delete/:id',async(req, res) => {
   const user = req.user
   await User.updateOne(
     user,
-    { $pull: { "about_me.personality": id } },
+    { $pull: { personality: id } },
     { safe: true, multi: true }
   );
   return res.json({status:"deleted"})
@@ -131,7 +139,7 @@ router.post('/lifestyles/add/:id',async(req, res) => {
   const idUser = req.user.id
 
   await User.findByIdAndUpdate(idUser,
-    { $addToSet: { "about_me.life_style":id }}
+    { $addToSet: { life_style:id }}
   )
   return res.json({status:"added"})
 })
@@ -142,7 +150,7 @@ router.get('/lifestyles/delete/:id',async(req, res) => {
   const user = req.user
   await User.updateOne(
     user,
-    { $pull: { "about_me.life_style": id } },
+    { $pull: { life_style: id } },
     { safe: true, multi: true }
   );
   return res.json({status:"deleted"})
