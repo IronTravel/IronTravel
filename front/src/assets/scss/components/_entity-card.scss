@@ -128,4 +128,55 @@
             }
         }
     }
+
+    &--travel {
+        @extend .pb-4;
+        .entity-card__header__bg {
+            height: 250px;
+        }
+        .entity-card__body {
+            padding-top: 20px;
+        }
+    }
+
+    &--button {
+        width: 100%;
+        height: 455px;
+        background: transparent;
+        border: 2px dashed #ABABAB;
+        transition: all .45s;
+
+        &__title {
+            @extend .mb-0, .mt-2;
+            font-weight: 700;
+            font-size: 20px;
+            color: #919191;
+            letter-spacing: -0.6px;
+            transition: all .45s;
+        }
+
+        &__tagline {
+            font-weight: 300;
+            font-size: 14px;
+            color: #5F5F5F;
+            letter-spacing: -0.4px;
+            text-align: center;
+            transition: all .45s;
+        }
+
+        &:hover {
+            box-shadow: 0 10px 15px 0 rgba(0,0,0,0.09);
+
+            .entity-card--button__title {
+                margin-bottom: .18rem!important;
+                color: #757575;
+                transform: scale(1.08);
+            }
+            .entity-card--button__tagline {
+                color: #222;
+                transform: scale(1.08);
+            }
+        }
+
+    }
 }
