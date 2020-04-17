@@ -8,6 +8,7 @@ import { AuthPage } from './pages/AuthPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { SettingsPage } from './pages/SettingsPage';
 import { PersonalityPage } from './pages/PersonalityPage';
+import { SearchMatchPage } from "./pages/SearchMatchPage";
 import { Google } from "./pages/GoolePage";
 
 // HOCs
@@ -21,9 +22,10 @@ export const App = withAuth(() => {
                 <Route path="/" exact component={HomePage} />
                 <Route path="/auth" exact component={AuthPage} />
                 <Route path="/profile" exact component={ProfilePage} />
+                <Route path="/search" exact component={SearchMatchPage} />
                 <Route path="/settings" exact component={SettingsPage} />
                 <Route path="/settings/personality" exact component={PersonalityPage} />
-                
+
                 <Route path="/google/login" exact component={Google} />
             </Switch>
         </Router>

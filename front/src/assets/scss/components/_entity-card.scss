@@ -1,0 +1,70 @@
+//
+//  Entity Card
+// --------------------------------------------------
+
+.entity-card {
+    @extend .mb-5;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #D8D8D8;
+    overflow: hidden;
+
+    &__header {
+        @extend .position-relative;
+
+        &__bg {
+            height: 230px;
+            overflow: hidden;
+            position: relative;
+
+            img {
+                object-fit: cover;
+                position: absolute;
+                top: -50%;
+                transform: translateY(50%);
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+    &__body {
+        position: relative;
+        padding: 60px 20px 20px 20px;
+
+        &__avatar {
+            width: 120px;
+            height: 120px;
+            margin: auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #F2F2F4;
+            position: absolute;
+            top: -70px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        &__title {
+            font-weight: 700;
+            font-size: 20px;
+            color: #5F5F5F;
+            letter-spacing: -0.6px;
+            text-align: center;
+        }
+
+        &__tagline {
+            text-align: center;
+        }
+
+        &__data {
+            @extend .d-flex, .justify-content-around;
+            text-align: center;
+
+            .entity-card__data {
+                .value {}
+                .key {}
+            }
+        }
+    }
+}
