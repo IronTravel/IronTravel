@@ -196,52 +196,17 @@ const { withDbConnection } = require("../lib");
 // });
 
 
-withDbConnection(async () => {
-    const restaurants = await Restaurant.find();
-    let restaurantCount = 0;
-        for (restaurant of restaurants) {
-            try {
-                const response = await axios({
-                    url: "https://www.googleapis.com/customsearch/v1",
-                    params: {
-                        key: process.env.KEY_GOOGLE,
-                        cx: process.env.CX_GOOGLE,
-                        q: restaurant.name,
-                        searchType: "image",
-                        fileType: "jpg",
-                        cr: true,
-                        alt: "json"
-                    }
-                });
-                
-                if (response.data.items && response.data.items.length && response.data.items[0].link){
-                  await Restaurant.findByIdAndUpdate(restaurant._id, 
-                      restaurant.images = response.data.items[0].link
-                    )
-                    await restaurant.save();
-                    console.log(`${restaurant.name} restaurant added (${++restaurantCount} of ${restaurants.length})`);
-                    continue;
-              } else {
-                continue;
-              }
-            } catch (error) {
-                console.log(error);
-                break;
-            }
-        }
-});
-
 // withDbConnection(async () => {
-//     const landmarks = await Landmark.find();
-//     let landmarkCount = 0;
-//         for (landmark of landmarks) {
+//     const restaurants = await Restaurant.find();
+//     let restaurantCount = 0;
+//         for (restaurant of restaurants) {
 //             try {
 //                 const response = await axios({
 //                     url: "https://www.googleapis.com/customsearch/v1",
 //                     params: {
 //                         key: process.env.KEY_GOOGLE,
 //                         cx: process.env.CX_GOOGLE,
-//                         q: landmark.name,
+//                         q: restaurant.name,
 //                         searchType: "image",
 //                         fileType: "jpg",
 //                         cr: true,
@@ -250,11 +215,11 @@ withDbConnection(async () => {
 //                 });
                 
 //                 if (response.data.items && response.data.items.length && response.data.items[0].link){
-//                   await Landmark.findByIdAndUpdate(landmark._id, 
-//                     landmark.images = response.data.items[0].link
+//                   await Restaurant.findByIdAndUpdate(restaurant._id, 
+//                       restaurant.images = response.data.items[0].link
 //                     )
-//                     await landmark.save();
-//                     console.log(`${landmark.name} landmark added (${++landmarkCount} of ${landmarks.length})`);
+//                     await restaurant.save();
+//                     console.log(`${restaurant.name} restaurant added (${++restaurantCount} of ${restaurants.length})`);
 //                     continue;
 //               } else {
 //                 continue;
@@ -265,3 +230,38 @@ withDbConnection(async () => {
 //             }
 //         }
 // });
+
+withDbConnection(async () => {
+    const landmarks = await Landmark.find();
+    let landmarkCount = 0;
+        for (landmark of landmarks) {
+            try {
+                const response = await axios({
+                    url: "https://www.googleapis.com/customsearch/v1",
+                    params: {
+                        key: process.env.KEY_GOOGLE,
+                        cx: process.env.CX_GOOGLE,
+                        q: landmark.name,
+                        searchType: "image",
+                        fileType: "jpg",
+                        cr: true,
+                        alt: "json"
+                    }
+                });
+                
+                if (response.data.items && response.data.items.length && response.data.items[0].link){
+                  await Landmark.findByIdAndUpdate(landmark._id, 
+                    landmark.images = response.data.items[0].link
+                    )
+                    await landmark.save();
+                    console.log(`${landmark.name} landmark added (${++landmarkCount} of ${landmarks.length})`);
+                    continue;
+              } else {
+                continue;
+              }
+            } catch (error) {
+                console.log(error);
+                break;
+            }
+        }
+});

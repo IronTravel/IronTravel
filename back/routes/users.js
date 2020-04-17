@@ -30,17 +30,21 @@ router.post('/update-password', isLoggedIn(), async (req, res) => {
   try {
     const user = await User.findById(id)
     if (user) {
+      
       if(checkHashedPassword(password, user.password) === true){
+        console.log("hola")
         user.password = hashPassword(newPassword)
         await user.save()
         return res.json({status:"password Changed"})
       } else {
+        console.log("adios")
         return res.json({status:"The old password is not correct"})
       }
     } else { 
       return res.json({status:"Usuario inexistente"})
     }
   } catch (error){
+    console.log(error)
     return res.json(error)
   }
 

@@ -16,7 +16,7 @@ const User = new mongoose.Schema(
     },
     googleId: Number,
     avatar: String,
-    description: String,
+    about: String,
     nationality: String,
     favourite_color: String,
     my_travels: [{ type: mongoose.Schema.ObjectId, ref: "travelProfile" }],
