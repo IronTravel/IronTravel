@@ -1,0 +1,66 @@
+//
+//  Section box
+// --------------------------------------------------
+
+.section-box {
+    @extend .mb-5;
+    background: #fff;
+    border: 1px solid #d8d8d8;
+    border-radius: 8px;
+
+    &__header {
+        @extend .d-flex, .align-items-center;
+        height: 65px;
+        border-bottom: 1px solid #D8D8D8;
+    }
+
+    &__title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #5F5F5F;
+        letter-spacing: -0.5px;
+        margin-bottom: 0;
+    }
+
+    &__body {
+        .content-box {
+            @extend .mb-4;
+
+            &__title {
+                font-weight: 700;
+                font-size: 13px;
+                color: #5F5F5F;
+            }
+        }
+    }
+
+    &__link {
+        @extend .px-4, .py-3, .d-block;
+        font-weight: 600;
+        font-size: 14px;
+        color: #5F5F5F;
+        border-bottom: 1px solid #D8D8D8;
+        transition: background-color .25s;
+
+        &:hover {
+            background-color: rgba(246,173,5,0.2);
+            color: #5F5F5F;
+            text-decoration: none;
+        }
+
+        &--active {
+            background-color: #F6AD05;
+            color: #fff;
+
+            &:hover {
+                background-color: #F6AD05;
+                color: #fff;
+            }
+
+        }
+    }
+
+    &--shadow {
+        box-shadow: 0 5px 10px 0 rgba(0,0,0,0.03);
+    }
+}

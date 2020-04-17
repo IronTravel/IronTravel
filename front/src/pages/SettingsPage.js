@@ -1,306 +1,95 @@
-// import React, { useState, useEffect } from 'react'
+import React from 'react';
 
-// import { useUser, useUserSetter } from "../context/user";
-
-// import { amenities, hobbies, musicgenres, personalities, lifestyles, addAmenity, deleteAmenity, addHobby, deleteHobby, userHobby } from '../service/data'
-// import { whoami } from '../service/auth'
-
-// // if (user) userHobby().then(res => setUserHobbies(res.data))
-
-// export const AmenitiesPage = () => {
-
-//     const user = useUser()
-//     console.log(user)
-//     const [hobbiesList, setHoobies] = useState([])
-//     const [userHobbies, setUserHobbies] = useState([]);
-
-//     const fetchUserHobbies = () => userHobby().then(hobbies => setUserHobbies(hobbies.data));
-//     console.log(userHobbies)
-    
-//     //IMPORTANTE CAMBIAR EN DATA DEL BACK LA INFO QUE NOS TRAEMOS
-
-//     useEffect(() => {
-//         whoami().then((res) => {
-//             console.log(res.data.my_hobbies)
-//             hobbies().then(res => setHoobies(res.data));
-//             // setUserHobbies(userHobby().then(res => setUserHobbies(res.data)))
-//             fetchUserHobbies()
-//             // setUserHobbies(res.data.my_hobbies || [])
-//             console.log(userHobbies)
-//         });
-        
-//     }, []);
-
-//     const addHobbies = (hobbieID) => {
-//         // addHobby(hobbieID).then(userHobby().then(res => setUserHobbies(res.data)))
-//         addHobby(hobbieID).then(fetchUserHobbies())
-//     }
-//     const deleteHobbies = (hobbieID) => {
-//         // deleteHobby(hobbieID).then(userHobby().then(res => setUserHobbies(res.data)))
-//         deleteHobby(hobbieID).then(fetchUserHobbies())
-//     }
-
-//     return (
-//         <>
-//             <h1>List of Amenities</h1>
-//             <div>
-//                 <ul>
-//                     {hobbiesList.length &&
-//                         hobbiesList.map((e, i) => (
-//                             <li key={i}>
-//                                 <button onClick={() => addHobbies(e._id)}>ADD</button>
-//                                 {e.name}
-//                             </li>
-//                         ))}
-//                 </ul>
-//                 <ul>
-//                     {userHobbies && userHobbies.map((e, i) => (
-//                         <li key={i}>
-//                             <button onClick={() => deleteHobbies(e)}>DELETE</button>
-//                             {e}
-//                         </li>
-//                     ))}
-//                 </ul>
-//             </div>
-//         </>
-
-
-//     );
-// }
-
-import React, { useState, useEffect } from 'react'
-// import { useForm } from 'react-hook-form'
-
-//Context
-// import { useUser, useUserSetter } from "../context/user";
-
-//Service
-// import { hobbies, musicgenres, personalities, lifestyles, addAboutMe, deleteAboutMe, aboutMe } from '../service/data'
-// import { whoami } from '../service/auth'
-// import { editUser, editPass } from '../service/user';
-
-
-//Pages
-import { PersonallInformation } from '../components/Settings/PersonallInformation';
-
-
-
-
+// Components
+import { Header } from '../layout/Header';
+import { UserProfileHeader } from '../components/UserProfileHeader';
 
 export const SettingsPage = () => {
-
-    // const user = useUser()
-
-    // const [hobbiesList, setHoobies] = useState([])
-    // const [musicList, setMusicList] = useState([])
-    // const [personalityList, setPersonalityList] = useState([])
-    // const [lifeStylesList, setLifeStylesList] = useState([])
-
-    // const [userAboutMe, setUserAboutMe] = useState([]);
-
-    // const [formSubmitError, setFormSubmitError] = useState('');
-    // const { handleSubmit, register, errors } = useForm();
-
-    // const setUser = useUserSetter();
-
-    // const fetchUAboutMe = () => aboutMe().then(aboutMe => setUserAboutMe(aboutMe.data));
-    
-    // useEffect(() => {
-    //     whoami().then((res) => {
-    //         hobbies().then(res => setHoobies(res.data));
-    //         musicgenres().then(res => setMusicList(res.data));
-    //         personalities().then(res => setPersonalityList(res.data));
-    //         lifestyles().then(res => setLifeStylesList(res.data));
-    //         fetchUAboutMe()
-    //     });
-        
-    // }, []);
-
-    // const onFormSubmit = (data) => {
-    //         editUser(data)
-    //         .then((res) => {
-    //             setUser(res.data)
-    //         })
-    //         .catch(e => setFormSubmitError(e.response.data.status))
-    // }
-
-    // const addSingleAboutMe = (ID, aboutMe) => {
-    //     addAboutMe(ID, aboutMe).then(fetchUAboutMe()).then((res) => {
-    //         setUser(res.data)
-    //     })
-    // }
-    // const deleteSingleAboutMe = (ID, aboutMe) => {
-    //     deleteAboutMe(ID, aboutMe).then(fetchUAboutMe())
-    // }
-
-    // const onFormSubmit = (data) => {
-    //     console.log(data)
-    //             if(data.newPassword === data.confirmNewPassword) {
-    //                 editPass(data)
-    //                 .then((res) => {
-    //                     console.log("hola")
-    //                     setUser(res.data)
-    //                 })
-    //             }
-    //     }
-
     return (
-        <div>
-            <div>
-                <PersonallInformation />
+        <>
+            <Header />
+            <div className="container">
+                <UserProfileHeader />
+
+                <div className="row">
+
+                    {/* ProfileResume Component */}
+                    <div className="col-3">
+                        <section className="section-box">
+                            <div className="section-box__header mb-0">
+                                <h2 className="section-box__title px-4">Settings</h2>
+                            </div>
+                            <div className="section-box__body">
+                                <a className="section-box__link section-box__link--active" href="#">Personal Information</a>
+                                <a className="section-box__link" href="#">Account Settings</a>
+                                <a className="section-box__link" href="#">Change Password</a>
+                                <a className="section-box__link" href="#">Personality and Lifestyle</a>
+                                <a className="section-box__link" href="#">Music and Hobbies</a>
+                            </div>
+                        </section>
+                    </div>
+
+                    {/* ProfilePosts Component */}
+                    <div className="col-9 px-4">
+                        <section className="section-box">
+                            <div className="section-box__header mb-4">
+                                <h2 className="section-box__title px-4">Personal Information</h2>
+                            </div>
+                            <div className="section-box__body px-4 pb-4">
+                                <form>
+                                    <div className="row">
+                                        <div className="col col-6 mb-2">
+                                            <div className="field-wrapper">
+                                                <label className="field__label" htmlFor="name">Name</label>
+                                                <input className="field__input-text" placeholder="your name here" name="name" id="name" type="text" />
+                                            </div>
+                                        </div>
+                                        <div className="col col-6 mb-2">
+                                            <div className="field-wrapper">
+                                                <label className="field__label" htmlFor="lastname">Last Name</label>
+                                                <input className="field__input-text" placeholder="your lastname here" name="lastname" id="lastname" type="text" />
+                                            </div>
+                                        </div>
+                                        <div className="col col-6 mb-2">
+                                            <div className="field-wrapper">
+                                                <label className="field__label" htmlFor="email">E-mail</label>
+                                                <input className="field__input-text" placeholder="your email here" name="email" id="email" type="email" />
+                                            </div>
+                                        </div>
+                                        <div className="col col-6 mb-2">
+                                            <div className="field-wrapper">
+                                                <label className="field__label" htmlFor="birthday">Birthday</label>
+                                                <input className="field__input-text" placeholder="your name here" name="birthday" id="birthday" type="text" />
+                                            </div>
+                                        </div>
+                                        <div className="col col-6 mb-2">
+                                            <div className="field-wrapper field-wrapper--select">
+                                                <label className="field__label" htmlFor="gender">Gender</label>
+                                                <select className="field__input-select" name="gender" id="gender">
+                                                    <option className="placeholder" selected disabled>Select an option...</option>
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div className="col col-12">
+                                            <div className="field-wrapper">
+                                                <label className="field__label" htmlFor="about-you">About you</label>
+                                                <textarea className="field__input-textarea" placeholder="your name here" id="about-you" name="about-you" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="field-wrapper--button">
+                                        <button className="btn btn--primary btn--w-full" type="submit">Save</button>
+                                    </div>
+                                    <div className="form-errors"></div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
             </div>
-        </div>
+        </>
     )
 }
-    // <>
-    //     <h1>List of Amenities</h1>
-    //     <div>
-    //         <div>
-    //         <ul>
-    //             {hobbiesList.length &&
-    //                 hobbiesList.map((e, i) => (
-    //                     <li key={i}>
-    //                         <button onClick={() => addSingleAboutMe(e._id,"hobbies")}>ADD</button>
-    //                         {e.name}
-    //                     </li>
-    //                 ))}
-    //         </ul>
-    //         </div>
-    //         <div>
-    //         <ul>
-    //             {musicList.length &&
-    //                 musicList.map((e, i) => (
-    //                     <li key={i}>
-    //                         <button onClick={() => addSingleAboutMe(e._id,"musicgenres")}>ADD</button>
-    //                         {e.name}
-    //                     </li>
-    //                 ))}
-    //         </ul>
-    //         </div>
-    //         <div>
-    //         <ul>
-    //             {personalityList.length &&
-    //                 personalityList.map((e, i) => (
-    //                     <li key={i}>
-    //                         <button onClick={() => addSingleAboutMe(e._id, "personalities")}>ADD</button>
-    //                         {e.name}
-    //                     </li>
-    //                 ))}
-    //         </ul>
-    //         </div>
-    //         <div>
-    //         <ul>
-    //             {lifeStylesList.length &&
-    //                 lifeStylesList.map((e, i) => (
-    //                     <li key={i}>
-    //                         <button onClick={() => addSingleAboutMe(e._id, "lifestyles")}>ADD</button>
-    //                         {e.name}
-    //                     </li>
-    //                 ))}
-    //         </ul>
-    //         </div>
-    //         <ul>
-    //             {userAboutMe.music && userAboutMe.music.map((e, i) => (
-    //                 <li key={i}>
-    //                     <button onClick={() => deleteSingleAboutMe(e._id,"musicgenres")}>DELETE</button>
-    //                     {e.name}
-    //                 </li>
-    //             ))}
-    //         </ul>
-    //         <ul>
-    //             {userAboutMe.hobbies && userAboutMe.hobbies.map((e, i) => (
-    //                 <li key={i}>
-    //                     <button onClick={() => deleteSingleAboutMe(e._id,"hobbies")}>DELETE</button>
-    //                     {e.name}
-    //                 </li>
-    //             ))}
-    //         </ul>
-    //         <ul>
-    //             {userAboutMe.personality && userAboutMe.personality.map((e, i) => (
-    //                 <li key={i}>
-    //                     <button onClick={() => deleteSingleAboutMe(e._id, "personalities")}>DELETE</button>
-    //                     {e.name}
-    //                 </li>
-    //             ))}
-    //         </ul>
-    //         <ul>
-    //             {userAboutMe.life_style && userAboutMe.life_style.map((e, i) => (
-    //                 <li key={i}>
-    //                     <button onClick={() => deleteSingleAboutMe(e._id, "lifestyles")}>DELETE</button>
-    //                     {e.name}
-    //                 </li>
-    //             ))}
-    //         </ul>
-    //     </div>
-    //     <div>
-    //         <h1>Personal Information</h1>
-    //     {user && 
-    //     <form onSubmit={handleSubmit(onFormSubmit)}>
-    //       <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
-    //         <label>Name*</label>
-    //         <input placeholder={user.name} name="name" defaultValue={user.name} ref={register({ required: true })}></input>
-    //       </div>
-    //       <div className={`field-wrapper ${errors?.lastName && 'field-wrapper--error'}`}>
-    //         <label>LastName*</label>
-    //         <input placeholder={user.lastName} name="lastName" defaultValue={user.lastName} ref={register({ required: true })}></input>
-    //       </div>
-    //       <div className={`field-wrapper ${errors?.email && 'field-wrapper--error'}`}>
-    //         <label>E-mail*</label>
-    //         <input placeholder={user.email} name="email" defaultValue={user.email} ref={register({ required: true })}></input>
-    //       </div>
-    //       {user.dod && 
-    //       <div className={`field-wrapper ${errors?.date && 'field-wrapper--error'}`}>
-    //         <label>Birthday</label>
-    //         <input placeholder={user.dod.date} ></input> 
-    //       </div>
-    //         }
-    //     {user.genre && 
-    //       <div className={`field-wrapper ${errors?.genre && 'field-wrapper--error'}`}>
-    //         <label>Genre</label>
-    //         <input placeholder={user.genre} name="genre" defaultValue={user.genre}></input>
-    //       </div>
-    //     }
-    //       {user.favouriteColor && 
-    //       <div className={`field-wrapper ${errors?.favouriteColor && 'field-wrapper--error'}`}>
-    //         <label>Favourite Color</label>
-    //         <input placeholder={user.favouriteColor} name="favouriteColor" defaultValue={user.favouriteColor} ref={register({ required: true })}></input>
-    //       </div>
-    //         }
-    //         {user.about && 
-    //       <div className={`field-wrapper ${errors?.about && 'field-wrapper--error'}`}>
-    //         <label>About You</label>
-    //         <input placeholder={user.about} name="about" defaultValue={user.about} ref={register({ required: true })}></input>
-    //       </div>
-    //         }
-    //         <div className="field-wrapper--button">
-    //             <button className="btn btn--primary btn--w-full" type="submit">Save</button>
-    //         </div>
-    //         <div className="form-errors">{formSubmitError}</div>
-    //     </form>
-    //     }
-    //     </div>
-            {/* <div>
-                <h1>Passwords</h1>
-                {user && 
-                    <form onSubmit={handleSubmit(onFormSubmit)}>
-                        <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
-                            <label>Current Password*</label>
-                            <input placeholder="••••••••••••" name="password" type="password" ref={register({ required: true })}></input>
-                        </div>
-                        <div>
-                            <label>New Password*</label>
-                            <input name="newPassword" type="password" ref={register({ required: true })}></input>
-                        </div>
-                        <div>
-                            <label>Confirm New Password*</label>
-                            <input name="confirmNewPassword" type="password" ref={register({ required: true })}></input>
-                        </div>
-                        <div className="field-wrapper--button">
-                            <button className="btn btn--primary btn--w-full" type="submit">Save</button>
-                        </div>
-                        <div className="form-errors">{formSubmitError}</div>
-                    </form>
-                }
-            </div> */}
-    // </>
-    
