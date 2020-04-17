@@ -60,10 +60,10 @@ export const PersonallInformation = () => {
             <input placeholder={user.favouriteColor} name="favouriteColor" defaultValue={user.favouriteColor} ref={register({ required: true })}></input>
           </div>
             }
-            {user.about && 
-          <div className={`field-wrapper ${errors?.about && 'field-wrapper--error'}`}>
+            {user.description && 
+          <div className={`field-wrapper ${errors?.description && 'field-wrapper--error'}`}>
             <label>About You</label>
-            <input placeholder={user.about} name="about" defaultValue={user.about} ref={register({ required: true })}></input>
+            <input placeholder={user.description} name="description" defaultValue={user.description} ref={register({ required: true })}></input>
           </div>
             }
             <div className="field-wrapper--button">
