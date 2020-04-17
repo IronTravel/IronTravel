@@ -3,56 +3,25 @@ import React from 'react';
 // Components
 import { Header } from '../layout/Header';
 import { UserCard } from '../components/UserCard';
-
-import defaultAvatar from '../assets/images/avatar.png';
 import heartIcon from '../assets/svgs/icon-heart.svg';
+import { UserProfileHeader } from '../components/UserProfileHeader';
 
 export const ProfilePage = () => {
     return (
         <>
             <Header />
             <div className="container">
-                {/* ProfileHeader Component */}
-                <div className="profile-header">
-                    <div className="profile-header__bg">
-                        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80" alt="" />
-                    </div>
-                    <div className="profile-header__info">
-                        <div className="profile-header__info__data">
-                            <div className="value">73</div>
-                            <div className="key">Travels</div>
-                        </div>
-                        <div className="profile-header__info__data">
-                            <div className="value">289</div>
-                            <div className="key">Tours</div>
-                        </div>
-                        <div className="profile-header__info__data profile-header__info__data--user">
-                            <div className="big-avatar">
-                                <img src={defaultAvatar} alt="" />
-                            </div>
-                            <div className="value">John Smith</div>
-                            <div className="key">Creative, Athlete, Running</div>
-                        </div>
-                        <div className="profile-header__info__data">
-                            <div className="value">34K</div>
-                            <div className="key">Followers</div>
-                        </div>
-                        <div className="profile-header__info__data">
-                            <div className="value">789</div>
-                            <div className="key">Following</div>
-                        </div>
-                    </div>
-                </div>
+                <UserProfileHeader />
 
                 <div className="row">
 
                     {/* ProfileResume Component */}
                     <div className="col-3">
                         <section className="section-box">
-                            <div className="section-box__header">
-                                <h2 className="section-box__title">Profile resume</h2>
+                            <div className="section-box__header mb-4">
+                                <h2 className="section-box__title px-4">Profile resume</h2>
                             </div>
-                            <div className="section-box__body">
+                            <div className="section-box__body px-4">
                                 <section className="content-box">
                                     <h4 className="content-box__title">About Me</h4>
                                     <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
@@ -204,10 +173,10 @@ export const ProfilePage = () => {
                     {/* ProfileAside Component */}
                     <div className="col-3">
                         <section className="section-box">
-                            <div className="section-box__header">
-                                <h2 className="section-box__title">My Travels</h2>
+                            <div className="section-box__header mb-4">
+                                <h2 className="section-box__title px-4">My Travels</h2>
                             </div>
-                            <div className="section-box__body">
+                            <div className="section-box__body px-4">
                                 <div className="image-grid">
                                     <div className="image-box">
                                         <a href="#">
@@ -258,10 +227,10 @@ export const ProfilePage = () => {
                             </div>
                         </section>
                         <section className="section-box">
-                            <div className="section-box__header">
-                                <h2 className="section-box__title">My Tours</h2>
+                            <div className="section-box__header mb-4">
+                                <h2 className="section-box__title px-4">My Tours</h2>
                             </div>
-                            <div className="section-box__body">
+                            <div className="section-box__body px-4">
                                 <article className="tour-small">
                                     <a href="#">
                                         <div className="tour-small__img">
