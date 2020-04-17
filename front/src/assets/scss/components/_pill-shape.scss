@@ -25,4 +25,50 @@
         background: rgba(57,46,78,0.80);
         border: 1px solid #392E4E;
     }
+
+    &--lg {
+        @extend .px-4, .mr-2, .mb-2;
+        padding-top: .4rem;
+        padding-bottom: .4rem;
+        font-size: 14px;
+    }
+}
+
+.pill-checkbox {
+    input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        z-index: -1000;
+    }
+
+    .pill-shape {
+        background: transparent;
+
+        &--primary {
+            color: #EE3263;
+        }
+        &--secondary {
+            color: #E19F08;
+        }
+        &--terciary {
+            color: #392E4E;
+        }
+    }
+
+    input[type="checkbox"]:checked + .pill-shape {
+        color: #fff;
+
+        &--primary {
+            background: rgba(238,50,99,0.80);
+            border: 1px solid #EE3263;
+        }
+        &--secondary {
+            background: rgba(246,173,5,0.90);
+            border: 1px solid #E19F08;
+        }
+        &--terciary {
+            background: rgba(57,46,78,0.80);
+            border: 1px solid #392E4E;
+        }
+    }
 }
