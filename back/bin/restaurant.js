@@ -14,7 +14,7 @@ const secret = process.env.CLIENT_SECRET_FOURSQUARE;
 const v = process.env.VERSION_FOURSQUARE;
 const restaurantId = "4d4b7105d754a06374d81259";
 const sortPopularity = 1;
-const limit = 2;
+const limit = 10;
 
 withDbConnection(async () => {
 await dropIfExists(Restaurant);
@@ -29,7 +29,7 @@ await dropIfExists(Restaurant);
       );
       await Restaurant.create(response.data.response.groups.map((e) => e.items.map((i) => i.venue)).pop())
       await City.findByIdAndUpdate(city._id, 
-        { $push: { restaurants: response.data.response.groups.map((e) => e.items.map((i) => i.venue.id)).pop() } }
+        { $addToSet: { restaurants: response.data.response.groups.map((e) => e.items.map((i) => i.venue.id)).pop() } }
       )
       console.log(`${city.name} restaurants (${++cityCount} of ${cities.length})`);
     } catch (error) {

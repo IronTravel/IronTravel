@@ -14,7 +14,7 @@ const secret = process.env.CLIENT_SECRET_FOURSQUARE;
 const v = process.env.VERSION_FOURSQUARE;
 const landmarkId = "4bf58dd8d48988d12d941735";
 const sortPopularity = 1;
-const limit = 2;
+const limit = 10;
 
 withDbConnection(async () => {
 await dropIfExists(Landmark);
@@ -29,7 +29,7 @@ await dropIfExists(Landmark);
       );
       await Landmark.create(response.data.response.groups.map((e) => e.items.map((i) => i.venue)).pop())
       await City.findByIdAndUpdate(city._id, 
-        { $push: { landmarks: response.data.response.groups.map((e) => e.items.map((i) => i.venue.id)).pop() } }
+        { $addToSet: { landmarks: response.data.response.groups.map((e) => e.items.map((i) => i.venue.id)).pop() } }
       )
       console.log(`${city.name} landmarks (${++cityCount} of ${cities.length})`);
     } catch (error) {
