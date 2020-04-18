@@ -43,9 +43,9 @@ let newArrayMusicGenres = []
 let newArrayHobbiess = []
 await keys.forEach(e => {
     if (hobbies.indexOf(e) !== -1){
-        return newArrayMusicGenres.push(e)
+        return newArrayHobbiess.push(e)
     } 
-    return newArrayHobbiess.push(e)
+    return newArrayMusicGenres.push(e)
 })
 
 await addAboutMe(newArrayMusicGenres, "musicgenres");
