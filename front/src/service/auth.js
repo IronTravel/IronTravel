@@ -12,7 +12,6 @@ export const signup = async (formData) => {
 
 //Login
 export const login = async (formData) => {
-    console.log("hola soy login")
     return service.post('auth/login', formData);
 };
 

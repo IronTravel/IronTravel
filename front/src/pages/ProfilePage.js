@@ -3,12 +3,10 @@ import React from 'react';
 // Components
 import { Header } from '../layout/Header';
 import { UserCard } from '../components/UserCard';
-import IconHeart from '../assets/svgs/icon-heart.svg';
 import { UserProfileHeader } from '../components/UserProfileHeader';
+import { LikeButton } from '../components/LikeButton';
 
 export const ProfilePage = () => {
-
-
     return (
         <>
             <Header />
@@ -73,12 +71,7 @@ export const ProfilePage = () => {
                                 <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
                             </div>
                             <footer className="post-box__footer">
-                                <div className="btn-like mr-4">
-                                    <button className="btn-like__icon">
-                                        <IconHeart />
-                                    </button>
-                                    <span className="btn-like__count">15</span>
-                                </div>
+                                <LikeButton className="mr-4" />
                                 <div className="inline-objects">
                                     <div className="inline-objects__images">
                                         <UserCard showBorder avatarSize={28} />
@@ -99,12 +92,7 @@ export const ProfilePage = () => {
                                 <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
                             </div>
                             <footer className="post-box__footer">
-                                <div className="btn-like mr-4">
-                                    <button className="btn-like__icon">
-                                        <IconHeart />
-                                    </button>
-                                    <span className="btn-like__count">15</span>
-                                </div>
+                                <LikeButton className="mr-4" />
                                 <div className="inline-objects">
                                     <div className="inline-objects__images">
                                         <UserCard showBorder avatarSize={28} />
@@ -125,12 +113,7 @@ export const ProfilePage = () => {
                                 <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
                             </div>
                             <footer className="post-box__footer">
-                                <div className="btn-like mr-4">
-                                    <button className="btn-like__icon">
-                                        <IconHeart />
-                                    </button>
-                                    <span className="btn-like__count">15</span>
-                                </div>
+                                <LikeButton className="mr-4" />
                                 <div className="inline-objects">
                                     <div className="inline-objects__images">
                                         <UserCard showBorder avatarSize={28} />
@@ -151,12 +134,7 @@ export const ProfilePage = () => {
                                 <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
                             </div>
                             <footer className="post-box__footer">
-                                <div className="btn-like mr-4">
-                                    <button className="btn-like__icon">
-                                        <IconHeart />
-                                    </button>
-                                    <span className="btn-like__count">15</span>
-                                </div>
+                                <LikeButton className="mr-4" />
                                 <div className="inline-objects">
                                     <div className="inline-objects__images">
                                         <UserCard showBorder avatarSize={28} />
