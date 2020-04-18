@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form'
+import Modali, { useModali } from 'modali';
 
 // Components
 import { Header } from '../layout/Header';
@@ -7,15 +9,23 @@ import { UserCard } from '../components/UserCard';
 import NewEntity from '../assets/svgs/icon-new.svg';
 
 export const MyTravelsPage = () => {
+
+    const [formSubmitError, setFormSubmitError] = useState('');
+    const { handleSubmit, register, errors } = useForm();
+    const [exampleModal, toggleExampleModal] = useModali({ title: 'New Travel' });
+
+    const onNewTravelFormSubmit = (data) => {
+        console.log(data);
+    }
+
     return (
         <>
             <Header />
             <div className="container">
                 <UserProfileHeader />
-
                 <div className="row">
                     <div className="col-3">
-                        <button className="entity-card entity-card--button">
+                        <button className="entity-card entity-card--button" onClick={toggleExampleModal}>
                             <NewEntity />
                             <h4 className="entity-card--button__title">New travel</h4>
                             <p className="entity-card--button__tagline">The start of a new jorney…</p>
@@ -148,6 +158,42 @@ export const MyTravelsPage = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Modals */}
+            <Modali.Modal {...exampleModal} className="modal">
+                <div className="auth-card__body">
+                    <strong className="mb-2">Help us find better matches for you!</strong>
+                    <p className="mb-4">Tell us a little bit more about you, complete the questions below and we will match you more accurately.</p>
+                    <form onSubmit={handleSubmit(onNewTravelFormSubmit)}>
+                        <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
+                            <label className="field__label" htmlFor="name">Title or name*</label>
+                            <input className="field__input-text" placeholder="Add a name to identify your travel" name="name" id="name" type="text" ref={register({ required: true })} />
+                        </div>
+                        <div className="row">
+                            <div className="col-6 pr-1">
+                                <div className="field-wrapper">
+                                    <label className="field__label" htmlFor="from">From</label>
+                                    <input className="field__input-text" placeholder="From" name="from" id="from" type="date" ref={register({ required: false })} />
+                                </div>
+                            </div>
+                            <div className="col-6 pl-1">
+                                <div className="field-wrapper">
+                                    <label className="field__label" htmlFor="to">To</label>
+                                    <input className="field__input-text" placeholder="To" name="to" id="to" type="date" ref={register({ required: false })} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="field-wrapper">
+                            <label className="field__label" htmlFor="country">Country</label>
+                            <input className="field__input-text" placeholder="Your destination" name="country" id="country" type="text" ref={register({ required: false })} />
+                        </div>
+                        <div className="field-wrapper--button mt-4">
+                            <button className="btn btn--primary btn--w-full" type="submit">Create</button>
+                        </div>
+                        <div className="form-errors">{formSubmitError}</div>
+                    </form>
+                </div>
+            </Modali.Modal>
         </>
     )
 }
