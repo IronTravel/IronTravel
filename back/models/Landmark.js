@@ -4,7 +4,7 @@ const Landmark = new mongoose.Schema(
         name: String,
         location:Object,
         categories:Object,
-        images:{type: String, default: ""}
+        images:String
     },
     {
         timestamps: true

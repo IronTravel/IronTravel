@@ -18,6 +18,10 @@ export const PersonalityPage = () => {
 
     const [personalityList, setPersonalityList] = useState([])
     const [lifeStylesList, setLifeStylesList] = useState([])
+    const [userPersonaLityList, setUserPersonaLityList] = useState([])
+    const [userLifeStyleList, setUserLifeStyleList] = useState([])
+
+    console.log(userPersonaLityList)
 
     const [userAboutMe, setUserAboutMe] = useState([]);
 
@@ -28,6 +32,8 @@ export const PersonalityPage = () => {
 
     useEffect(() => {
         whoami().then((res) => {
+            setUserPersonaLityList(res.data.personality);
+            setUserLifeStyleList(res.data.life_style);
             personalities().then(res => setPersonalityList(res.data));
             lifestyles().then(res => setLifeStylesList(res.data));
             fetchUAboutMe()
@@ -35,27 +41,31 @@ export const PersonalityPage = () => {
         
     }, []);
 
+    const handleChecked = (hasValue, id, set, list) => { 
+        if (hasValue) {
+            let copy = [...list];
+            let newArr = copy.filter(e => e !== id)
+            set(newArr);
+        } else {
+            set([...list, id]);
+        }
+    }
+
     const onFormSubmit = async (data) => {
-var keys = _.keys(_.pickBy(data));
-const personalities = personalityList.map(e => e._id)
+        var keys = _.keys(_.pickBy(data));
+        const personalities = personalityList.map(e => e._id)
 
-let newArrayPersonalities = []
-let newArrayLifeStyles = []
-await keys.forEach(e => {
-    if (personalities.indexOf(e) !== -1){
-        return newArrayPersonalities.push(e)
-    } 
-    return newArrayLifeStyles.push(e)
-})
+        let newArrayPersonalities = []
+        let newArrayLifeStyles = []
+        await keys.forEach(e => {
+            if (personalities.indexOf(e) !== -1){
+                return newArrayPersonalities.push(e)
+            } 
+            return newArrayLifeStyles.push(e)
+        })
 
-await addAboutMe(newArrayPersonalities, "personalities");
-
-await addAboutMe(newArrayLifeStyles, "lifestyles");
-
-
-
-console.log(keys)
-
+            await addAboutMe(newArrayPersonalities, "personalities");
+            await addAboutMe(newArrayLifeStyles, "lifestyles")
     }
 
     return (
@@ -97,23 +107,29 @@ console.log(keys)
                                         <div className="col col-12 mb-4">
                                             <h4 className="content-box__title">Personality</h4>
                                             <div className="content-box__pills text-center">
-                                            {personalityList.length && personalityList.map((e, i) => (
-                                                <label className="pill-checkbox" key={i}>
-                                                    <input  ref={register} name={e._id} type="checkbox"/>
-                                                    <span className="pill-shape pill-shape--secondary pill-shape--lg" name={e.name} value={e.name}>{e.name}</span>
-                                                </label>
-                                            ))}
+                                                {personalityList.length && personalityList.map((e, i) => {
+                                                    let hasValue = userPersonaLityList.includes(e._id);
+                                                    return(
+                                                        <label className="pill-checkbox" key={i}>
+                                                            <input  ref={register} name={e._id} checked={hasValue} type="checkbox" onChange={() => handleChecked(hasValue, e._id, setUserPersonaLityList, userPersonaLityList)}/>
+                                                            <span className="pill-shape pill-shape--secondary pill-shape--lg" name={e.name} value={e.name}>{e.name}</span>
+                                                        </label>
+                                                    )
+                                                })}
                                             </div>
                                         </div>
                                         <div className="col col-12 mb-4">
                                             <h4 className="content-box__title">Lifestyle</h4>
                                             <div className="content-box__pills text-center">
-                                            {lifeStylesList.length && lifeStylesList.map((e, i) => (
-                                                <label className="pill-checkbox" key={i}>
-                                                    <input ref={register} name={e._id}type="checkbox" />
-                                                    <span className="pill-shape pill-shape--primary pill-shape--lg" name={e.name} value={e.name}>{e.name}</span>
-                                                </label>
-                                            ))}
+                                            {lifeStylesList.length && lifeStylesList.map((e, i) => {
+                                                let hasValue = userLifeStyleList.includes(e._id);
+                                                return(
+                                                    <label className="pill-checkbox" key={i}>
+                                                        <input ref={register} name={e._id}type="checkbox" checked={hasValue} type="checkbox" onChange={() => handleChecked(hasValue, e._id, setUserLifeStyleList, userLifeStyleList)} />
+                                                        <span className="pill-shape pill-shape--primary pill-shape--lg" name={e.name} value={e.name}>{e.name}</span>
+                                                    </label>
+                                                )
+                                            })}
                                             </div>
                                         </div>
                                     </div>

@@ -69,7 +69,7 @@ router.post('/edit', isLoggedIn(), async (req, res) => {
             user.dob.date = birthday
             console.log(user.description, "ahora")
             await user.save()
-            return res.json({status:"Information Changed!!"} )
+            return res.json(user)
         } else {
             return res.json({status:"You cant change"})
         }

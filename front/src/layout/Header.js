@@ -1,5 +1,8 @@
-import React from 'react';
+import React from 'react'
 import { Link } from 'react-router-dom';
+
+//Context
+import { useUser } from "../context/user";
 
 // Components
 import LogoWeTravelSM from '../assets/svgs/logo-wetravel-sm.svg';
@@ -7,11 +10,14 @@ import ChatIcon from '../assets/svgs/icon-chat.svg';
 import BellIcon from '../assets/svgs/icon-bell.svg';
 import { UserCard } from '../components/UserCard';
 
+
+
 export const Header = () => {
+    const user = useUser()
     return (
         <header className="main-header">
             <div className="main-logo">
-                <LogoWeTravelSM />
+                <Link to="/settings"><LogoWeTravelSM /> </Link>
             </div>
             <div className="current-section">My Profile</div>
             <div className="header-search">
@@ -29,10 +35,12 @@ export const Header = () => {
                     <BellIcon />
                 </button>
                 <button className="user-menu__user-btn">
+                    {user && 
                     <UserCard
-                        avatar=""
-                        name="John Smith"
+                        avatar={user.avatar}
+                        name={user.name}
                     />
+                    }
                 </button>
             </div>
         </header>

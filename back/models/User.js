@@ -17,7 +17,7 @@ const User = new mongoose.Schema(
         googleId: Number,
         avatar: String,
         description: {type: String, default: ""},
-        nationality: String,
+        Country: String,
         favourite_color: String,
         followers: [{ type: mongoose.Schema.ObjectId, ref: "user" }],
         following: [{ type: mongoose.Schema.ObjectId, ref: "user" }],
