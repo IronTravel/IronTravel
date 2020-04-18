@@ -27,8 +27,10 @@ export const aboutMe = async () => {
 // }
 
 //Add
-export const addAboutMe = async (ID, aboutMe) => {
-    return await service.post(`data/${aboutMe}/add/${ID}`);
+
+export const addAboutMe = async (data, aboutMe) => {
+    console.log(data, aboutMe)
+    return await service.post(`/data/${aboutMe}/add`, data);
 }
 
 //Delete
