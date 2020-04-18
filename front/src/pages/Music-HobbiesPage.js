@@ -11,23 +11,29 @@ import { Header } from '../layout/Header';
 import { UserProfileHeader } from '../components/UserProfileHeader';
 
 //Service
-import { musicgenres, hobbies ,addAboutMe, aboutMe } from '../service/data'
+import { musicgenres, hobbies ,addAboutMe, randomAboutMe } from '../service/data'
 import { whoami } from '../service/auth'
 
 export const MusicHobbiesPage = () => {
 
     const [musicGenreList, setMusicGenreList] = useState([])
     const [hobbiesList, setHobbiesList] = useState([])
+    const [userMusicList, setUserMusicList] = useState([])
+    const [userHobbyList, setUserHobbyList] = useState([])
 
     const [userAboutMe, setUserAboutMe] = useState([]);
 
-    const fetchUAboutMe = () => aboutMe().then(aboutMe => setUserAboutMe(aboutMe.data));
+    const fetchUAboutMe = () => randomAboutMe().then(aboutMe => setUserAboutMe(aboutMe.data));
+
+    console.log(userAboutMe)
 
     const [formSubmitError, setFormSubmitError] = useState('');
     const { handleSubmit, register, errors } = useForm();
 
     useEffect(() => {
         whoami().then((res) => {
+            setUserMusicList(res.data.music);
+            setUserHobbyList(res.data.hobbies);
             musicgenres().then(res => setMusicGenreList(res.data));
             hobbies().then(res => setHobbiesList(res.data));
             fetchUAboutMe()
@@ -35,27 +41,31 @@ export const MusicHobbiesPage = () => {
         
     }, []);
 
+    const handleChecked = (hasValue, id, set, list) => { 
+        if (hasValue) {
+            let copy = [...list];
+            let newArr = copy.filter(e => e !== id)
+            set(newArr);
+        } else {
+            set([...list, id]);
+        }
+    }
+
     const onFormSubmit = async (data) => {
-var keys = _.keys(_.pickBy(data));
-const hobbies = hobbiesList.map(e => e._id)
+        var keys = _.keys(_.pickBy(data));
+        const hobbies = hobbiesList.map(e => e._id)
 
-let newArrayMusicGenres = []
-let newArrayHobbiess = []
-await keys.forEach(e => {
-    if (hobbies.indexOf(e) !== -1){
+        let newArrayMusicGenres = []
+        let newArrayHobbiess = []
+        await keys.forEach(e => {
+            if (hobbies.indexOf(e) !== -1){
+            return newArrayHobbiess.push(e)
+        } 
         return newArrayMusicGenres.push(e)
-    } 
-    return newArrayHobbiess.push(e)
-})
+    })
 
-await addAboutMe(newArrayMusicGenres, "musicgenres");
-
-await addAboutMe(newArrayHobbiess, "hobbies");
-
-
-
-console.log(keys)
-
+        await addAboutMe(newArrayMusicGenres, "musicgenres");
+        await addAboutMe(newArrayHobbiess, "hobbies");
     }
 
     return (
@@ -97,23 +107,29 @@ console.log(keys)
                                         <div className="col col-12 mb-4">
                                             <h4 className="content-box__title">Music Genres</h4>
                                             <div className="content-box__pills text-center">
-                                            {musicGenreList.length && musicGenreList.map((e, i) => (
-                                                <label className="pill-checkbox" key={i}>
-                                                    <input  ref={register} name={e._id} type="checkbox"/>
-                                                    <span className="pill-shape pill-shape--secondary pill-shape--lg" name={e.name} value={e.name}>{e.name}</span>
-                                                </label>
-                                            ))}
+                                                {musicGenreList.length && musicGenreList.map((e, i) => {
+                                                    let hasValue = userMusicList.includes(e._id);
+                                                    return (
+                                                        <label className="pill-checkbox" key={i}>
+                                                            <input ref={register} name={e._id} checked={hasValue} type="checkbox" onChange={() => handleChecked(hasValue, e._id, setUserMusicList, userMusicList)} />
+                                                            <span className="pill-shape pill-shape--secondary pill-shape--lg" name={e.name} value={e.name}>{e.name}</span>
+                                                        </label>
+                                                    )
+                                            })}
                                             </div>
                                         </div>
                                         <div className="col col-12 mb-4">
                                             <h4 className="content-box__title">Hobbies</h4>
                                             <div className="content-box__pills text-center">
-                                            {hobbiesList.length && hobbiesList.map((e, i) => (
+                                            {hobbiesList.length && hobbiesList.map((e, i) => {
+                                                let hasValue = userHobbyList.includes(e._id);
+                                                return(
                                                 <label className="pill-checkbox" key={i}>
-                                                    <input ref={register} name={e._id}type="checkbox" />
+                                                    <input ref={register} name={e._id} checked={hasValue} type="checkbox" onChange={() => handleChecked(hasValue, e._id, setUserHobbyList, userHobbyList)}/>
                                                     <span className="pill-shape pill-shape--primary pill-shape--lg" name={e.name} value={e.name}>{e.name}</span>
                                                 </label>
-                                            ))}
+                                                )
+                                            })}
                                             </div>
                                         </div>
                                     </div>

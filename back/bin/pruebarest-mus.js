@@ -160,52 +160,52 @@ const axios = require("axios");
 const { withDbConnection } = require("../lib");
 
 
-// withDbConnection(async () => {
-//     const museums = await Museum.find();
-//         let museumCount = 0;
-//         for (museum of museums) {
-//             try {
-//                 const response = await axios({
-//                     url: "https://www.googleapis.com/customsearch/v1",
-//                     params: {
-//                         key: process.env.KEY_GOOGLE,
-//                         cx: process.env.CX_GOOGLE,
-//                         q: museum.name,
-//                         searchType: "image",
-//                         fileType: "jpg",
-//                         cr: true,
-//                         alt: "json"
-//                     }
-//                 });
+withDbConnection(async () => {
+    const museums = await Museum.find({ images: { $exists: false } });
+        let museumCount = 0;
+        for (museum of museums) {
+            try {
+                const response = await axios({
+                    url: "https://www.googleapis.com/customsearch/v1",
+                    params: {
+                        key: process.env.KEY_GOOGLE9,
+                        cx: process.env.CX_GOOGLE9,
+                        q: museum.name,
+                        searchType: "image",
+                        fileType: "jpg",
+                        cr: true,
+                        alt: "json"
+                    }
+                });
                 
-//                 if (response.data.items && response.data.items.length && response.data.items[0].link){
-//                   await Museum.findByIdAndUpdate(museum._id, 
-//                       museum.images = response.data.items[0].link
-//                     )
-//                     await museum.save();
-//                     console.log(`${museum.name} museums added (${++museumCount} of ${museums.length})`);
-//                     continue;
-//               } else {
-//                 continue;
-//               }
-//             } catch (error) {
-//                 console.log(error);
-//                 break;
-//             }
-//         }
-// });
+                if (response.data.items && response.data.items.length && response.data.items[0].link){
+                  await Museum.findByIdAndUpdate(museum._id, 
+                      museum.images = response.data.items[0].link
+                    )
+                    await museum.save();
+                    console.log(`${museum.name} museums added (${++museumCount} of ${museums.length})`);
+                    continue;
+              } else {
+                continue;
+              }
+            } catch (error) {
+                console.log(error);
+                break;
+            }
+        }
+});
 
 
 // withDbConnection(async () => {
-//     const restaurants = await Restaurant.find();
+//     const restaurants = await Restaurant.find({ images: { $exists: false } });
 //     let restaurantCount = 0;
 //         for (restaurant of restaurants) {
 //             try {
 //                 const response = await axios({
 //                     url: "https://www.googleapis.com/customsearch/v1",
 //                     params: {
-//                         key: process.env.KEY_GOOGLE,
-//                         cx: process.env.CX_GOOGLE,
+//                         key: process.env.KEY_GOOGLE7,
+//                         cx: process.env.CX_GOOGLE7,
 //                         q: restaurant.name,
 //                         searchType: "image",
 //                         fileType: "jpg",
@@ -231,37 +231,37 @@ const { withDbConnection } = require("../lib");
 //         }
 // });
 
-withDbConnection(async () => {
-    const landmarks = await Landmark.find();
-    let landmarkCount = 0;
-        for (landmark of landmarks) {
-            try {
-                const response = await axios({
-                    url: "https://www.googleapis.com/customsearch/v1",
-                    params: {
-                        key: process.env.KEY_GOOGLE,
-                        cx: process.env.CX_GOOGLE,
-                        q: landmark.name,
-                        searchType: "image",
-                        fileType: "jpg",
-                        cr: true,
-                        alt: "json"
-                    }
-                });
+// withDbConnection(async () => {
+//     const landmarks = await Landmark.find({ images: { $exists: false } });
+//     let landmarkCount = 0;
+//         for (landmark of landmarks) {
+//             try {
+//                 const response = await axios({
+//                     url: "https://www.googleapis.com/customsearch/v1",
+//                     params: {
+//                         key: process.env.KEY_GOOGLE4,
+//                         cx: process.env.CX_GOOGLE4,
+//                         q: landmark.name,
+//                         searchType: "image",
+//                         fileType: "jpg",
+//                         cr: true,
+//                         alt: "json"
+//                     }
+//                 });
                 
-                if (response.data.items && response.data.items.length && response.data.items[0].link){
-                  await Landmark.findByIdAndUpdate(landmark._id, 
-                    landmark.images = response.data.items[0].link
-                    )
-                    await landmark.save();
-                    console.log(`${landmark.name} landmark added (${++landmarkCount} of ${landmarks.length})`);
-                    continue;
-              } else {
-                continue;
-              }
-            } catch (error) {
-                console.log(error);
-                break;
-            }
-        }
-});
+//                 if (response.data.items && response.data.items.length && response.data.items[0].link){
+//                   await Landmark.findByIdAndUpdate(landmark._id, 
+//                     landmark.images = response.data.items[0].link
+//                     )
+//                     await landmark.save();
+//                     console.log(`${landmark.name} landmark added (${++landmarkCount} of ${landmarks.length})`);
+//                     continue;
+//               } else {
+//                 continue;
+//               }
+//             } catch (error) {
+//                 console.log(error);
+//                 break;
+//             }
+//         }
+// });

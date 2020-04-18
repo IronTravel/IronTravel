@@ -14,7 +14,7 @@ const secret = process.env.CLIENT_SECRET_FOURSQUARE;
 const v = process.env.VERSION_FOURSQUARE;
 const landmarkId = "4bf58dd8d48988d12d941735";
 const sortPopularity = 1;
-const limit = 10;
+const limit = 3;
 
 withDbConnection(async () => {
 await dropIfExists(Landmark);

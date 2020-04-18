@@ -14,7 +14,7 @@ const secret = process.env.CLIENT_SECRET_FOURSQUARE;
 const v = process.env.VERSION_FOURSQUARE;
 const restaurantId = "4d4b7105d754a06374d81259";
 const sortPopularity = 1;
-const limit = 10;
+const limit = 3;
 
 withDbConnection(async () => {
 await dropIfExists(Restaurant);

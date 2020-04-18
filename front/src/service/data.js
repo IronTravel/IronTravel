@@ -15,10 +15,6 @@ export const hobbies = async () => {
 //     return await service.get('data/hobbies/user');
 // }
 
-export const aboutMe = async () => {
-    return await service.get('data/aboutMe/user');
-}
-
 // //Add
 // export const addHobby = async (idHobbies, h) => {
 //     console.log(idHobbies)
@@ -26,10 +22,16 @@ export const aboutMe = async () => {
 //     return await service.post(`data/hobbies/add/${idHobbies}`);
 // }
 
-//Add
+export const randomAboutMe = async () => {
+    return await service.get('data/aboutMe/random')
+}
 
+
+export const aboutMe = async () => {
+    return await service.get('data/aboutMe/user');
+}
+//Add
 export const addAboutMe = async (data, aboutMe) => {
-    console.log(data, aboutMe)
     return await service.post(`/data/${aboutMe}/add`, data);
 }
 
