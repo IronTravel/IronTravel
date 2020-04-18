@@ -11,13 +11,13 @@ import { Header } from '../layout/Header';
 import { UserProfileHeader } from '../components/UserProfileHeader';
 
 //Service
-import { personalities, lifestyles ,addAboutMe, aboutMe } from '../service/data'
+import { musicgenres, hobbies ,addAboutMe, aboutMe } from '../service/data'
 import { whoami } from '../service/auth'
 
-export const PersonalityPage = () => {
+export const MusicHobbiesPage = () => {
 
-    const [personalityList, setPersonalityList] = useState([])
-    const [lifeStylesList, setLifeStylesList] = useState([])
+    const [musicGenreList, setMusicGenreList] = useState([])
+    const [hobbiesList, setHobbiesList] = useState([])
 
     const [userAboutMe, setUserAboutMe] = useState([]);
 
@@ -28,8 +28,8 @@ export const PersonalityPage = () => {
 
     useEffect(() => {
         whoami().then((res) => {
-            personalities().then(res => setPersonalityList(res.data));
-            lifestyles().then(res => setLifeStylesList(res.data));
+            musicgenres().then(res => setMusicGenreList(res.data));
+            hobbies().then(res => setHobbiesList(res.data));
             fetchUAboutMe()
         });
         
@@ -37,20 +37,20 @@ export const PersonalityPage = () => {
 
     const onFormSubmit = async (data) => {
 var keys = _.keys(_.pickBy(data));
-const personalities = personalityList.map(e => e._id)
+const hobbies = hobbiesList.map(e => e._id)
 
-let newArrayPersonalities = []
-let newArrayLifeStyles = []
+let newArrayMusicGenres = []
+let newArrayHobbiess = []
 await keys.forEach(e => {
-    if (personalities.indexOf(e) !== -1){
-        return newArrayPersonalities.push(e)
+    if (hobbies.indexOf(e) !== -1){
+        return newArrayMusicGenres.push(e)
     } 
-    return newArrayLifeStyles.push(e)
+    return newArrayHobbiess.push(e)
 })
 
-await addAboutMe(newArrayPersonalities, "personalities");
+await addAboutMe(newArrayMusicGenres, "musicgenres");
 
-await addAboutMe(newArrayLifeStyles, "lifestyles");
+await addAboutMe(newArrayHobbiess, "hobbies");
 
 
 
@@ -76,8 +76,8 @@ console.log(keys)
                                 <Link to="/settings" className="section-box__link">Personal Information</Link>
                                 <Link to="/"className="section-box__link">Account Settings</Link>
                                 <Link to="/settings/change-password" className="section-box__link">Change Password</Link>
-                                <Link to="/settings/personality"className="section-box__link section-box__link--active">Personality and Lifestyle</Link>
-                                <Link to="/settings/music-hobbies"className="section-box__link">Music and Hobbies</Link>
+                                <Link to="/settings/personality"className="section-box__link">Personality and Lifestyle</Link>
+                                <Link to="/settings/music-hobbies"className="section-box__link section-box__link--active">Music and Hobbies</Link>
                             </div>
                         </section>
                     </div>
@@ -95,9 +95,9 @@ console.log(keys)
                                             <p>Connect with more people according to the way you are. Click on the features that describes you the best. We will match you with other travelers with alike personality types, also, this could help other travelers find you as well.</p>
                                         </div>
                                         <div className="col col-12 mb-4">
-                                            <h4 className="content-box__title">Personality</h4>
+                                            <h4 className="content-box__title">Music Genres</h4>
                                             <div className="content-box__pills text-center">
-                                            {personalityList.length && personalityList.map((e, i) => (
+                                            {musicGenreList.length && musicGenreList.map((e, i) => (
                                                 <label className="pill-checkbox" key={i}>
                                                     <input  ref={register} name={e._id} type="checkbox"/>
                                                     <span className="pill-shape pill-shape--secondary pill-shape--lg" name={e.name} value={e.name}>{e.name}</span>
@@ -106,9 +106,9 @@ console.log(keys)
                                             </div>
                                         </div>
                                         <div className="col col-12 mb-4">
-                                            <h4 className="content-box__title">Lifestyle</h4>
+                                            <h4 className="content-box__title">Hobbies</h4>
                                             <div className="content-box__pills text-center">
-                                            {lifeStylesList.length && lifeStylesList.map((e, i) => (
+                                            {hobbiesList.length && hobbiesList.map((e, i) => (
                                                 <label className="pill-checkbox" key={i}>
                                                     <input ref={register} name={e._id}type="checkbox" />
                                                     <span className="pill-shape pill-shape--primary pill-shape--lg" name={e.name} value={e.name}>{e.name}</span>

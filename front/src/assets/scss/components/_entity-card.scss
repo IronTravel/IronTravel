@@ -1,0 +1,182 @@
+//
+//  Entity Card
+// --------------------------------------------------
+
+.entity-card {
+    @extend .mb-5;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #D8D8D8;
+    overflow: hidden;
+
+    &__header {
+        @extend .position-relative;
+
+        &__bg {
+            height: 190px;
+            overflow: hidden;
+            position: relative;
+
+            img {
+                object-fit: cover;
+                position: absolute;
+                top: -50%;
+                transform: translateY(50%);
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+    &__body {
+        position: relative;
+        padding: 50px 20px 20px 20px;
+
+        &__user-value {
+            @extend .position-absolute, .text-center;
+            background: #EE3263;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 33px;
+            border: 3px solid #F2F2F4;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            top: 83%;
+            left: 85%;
+            transform: translate(-50%, -50%);
+        }
+
+        &__avatar-wrapper {
+            position: absolute;
+            top: -90px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        &__avatar {
+            width: 130px;
+            height: 130px;
+            margin: auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #F2F2F4;
+        }
+
+        &__title {
+            font-weight: 700;
+            font-size: 20px;
+            color: #5F5F5F;
+            letter-spacing: -0.6px;
+            text-align: center;
+        }
+
+        &__tagline {
+            max-width: 180px;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        &__data {
+            @extend .d-flex, .justify-content-around;
+            text-align: center;
+
+            .entity-card__data {
+                .value {
+                    font-weight: 700;
+                    font-size: 22px;
+                    color: #7E7E7E;
+                }
+                .key {
+                    font-size: 14px;
+                    color: #5F5F5F;
+                }
+            }
+        }
+    }
+
+    &__footer {
+        @extend .d-flex;
+        height: 55px;
+        border-top: 1px solid #D8D8D8;
+
+        &__btn {
+            @extend .d-flex, .align-items-center, .justify-content-center;
+            background: transparent;
+            width: 50%;
+            height: inherit;
+            border: none;
+            font-weight: 600;
+            font-size: 13px;
+            color: #808080;
+            text-align: center;
+            text-transform: uppercase;
+            transition: background .35s;
+
+            &:hover {
+                background: #ececec;
+            }
+
+            span {
+                @extend .ml-2;
+            }
+
+            &:first-child {
+                border-right: 1px solid #D8D8D8;
+            }
+        }
+    }
+
+    &--travel {
+        @extend .pb-4;
+        .entity-card__header__bg {
+            height: 250px;
+        }
+        .entity-card__body {
+            padding-top: 20px;
+        }
+    }
+
+    &--button {
+        width: 100%;
+        height: 455px;
+        background: transparent;
+        border: 2px dashed #ABABAB;
+        transition: all .45s;
+
+        &__title {
+            @extend .mb-0, .mt-2;
+            font-weight: 700;
+            font-size: 20px;
+            color: #919191;
+            letter-spacing: -0.6px;
+            transition: all .45s;
+        }
+
+        &__tagline {
+            font-weight: 300;
+            font-size: 14px;
+            color: #5F5F5F;
+            letter-spacing: -0.4px;
+            text-align: center;
+            transition: all .45s;
+        }
+
+        &:hover {
+            box-shadow: 0 10px 15px 0 rgba(0,0,0,0.09);
+
+            .entity-card--button__title {
+                margin-bottom: .18rem!important;
+                color: #757575;
+                transform: scale(1.08);
+            }
+            .entity-card--button__tagline {
+                color: #222;
+                transform: scale(1.08);
+            }
+        }
+
+    }
+}

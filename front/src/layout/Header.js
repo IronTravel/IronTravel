@@ -3,15 +3,16 @@ import { Link } from 'react-router-dom';
 
 // Components
 import LogoWeTravelSM from '../assets/svgs/logo-wetravel-sm.svg';
-import chatIcon from '../assets/svgs/icon-chat.svg';
-import bellIcon from '../assets/svgs/icon-bell.svg';
 import { UserCard } from '../components/UserCard';
+import { Notifications } from '../components/Notifications';
+import ChatIcon from '../assets/svgs/icon-chat.svg';
+import BellIcon from '../assets/svgs/icon-bell.svg';
 
 export const Header = () => {
     return (
         <header className="main-header">
             <div className="main-logo">
-                <img src={LogoWeTravelSM} width="50" alt="" />
+                <LogoWeTravelSM />
             </div>
             <div className="current-section">My Profile</div>
             <div className="header-search">
@@ -22,12 +23,12 @@ export const Header = () => {
                 <Link to="/my-tours">My Tours</Link>
             </nav>
             <div className="user-menu">
-                <button className="user-menu__icon-btn">
-                    <img src={chatIcon} width="16" />
-                </button>
-                <button className="user-menu__icon-btn">
-                    <img src={bellIcon} width="16" />
-                </button>
+                <div className="user-menu__icon-btn">
+                    <Notifications icon={<ChatIcon />} />
+                </div>
+                <div className="user-menu__icon-btn">
+                    <Notifications icon={<BellIcon />} />
+                </div>
                 <button className="user-menu__user-btn">
                     <UserCard
                         avatar=""
