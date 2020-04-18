@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@babel/runtime": "^7.9.2",
+    "@svgr/parcel-plugin-svgr": "^5.3.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "lodash": "^4.17.15",

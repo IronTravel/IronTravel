@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 
 // Components
 import LogoWeTravelSM from '../assets/svgs/logo-wetravel-sm.svg';
-import chatIcon from '../assets/svgs/icon-chat.svg';
-import bellIcon from '../assets/svgs/icon-bell.svg';
+import ChatIcon from '../assets/svgs/icon-chat.svg';
+import BellIcon from '../assets/svgs/icon-bell.svg';
 import { UserCard } from '../components/UserCard';
 
 export const Header = () => {
     return (
         <header className="main-header">
             <div className="main-logo">
-                <img src={LogoWeTravelSM} width="50" alt="" />
+                <LogoWeTravelSM />
             </div>
             <div className="current-section">My Profile</div>
             <div className="header-search">
@@ -23,10 +23,10 @@ export const Header = () => {
             </nav>
             <div className="user-menu">
                 <button className="user-menu__icon-btn">
-                    <img src={chatIcon} width="16" />
+                    <ChatIcon />
                 </button>
                 <button className="user-menu__icon-btn">
-                    <img src={bellIcon} width="16" />
+                    <BellIcon />
                 </button>
                 <button className="user-menu__user-btn">
                     <UserCard
