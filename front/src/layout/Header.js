@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 
 // Components
 import LogoWeTravelSM from '../assets/svgs/logo-wetravel-sm.svg';
+import { UserCard } from '../components/UserCard';
+import { Notifications } from '../components/Notifications';
 import ChatIcon from '../assets/svgs/icon-chat.svg';
 import BellIcon from '../assets/svgs/icon-bell.svg';
-import { UserCard } from '../components/UserCard';
 
 export const Header = () => {
     return (
@@ -22,12 +23,12 @@ export const Header = () => {
                 <Link to="/my-tours">My Tours</Link>
             </nav>
             <div className="user-menu">
-                <button className="user-menu__icon-btn">
-                    <ChatIcon />
-                </button>
-                <button className="user-menu__icon-btn">
-                    <BellIcon />
-                </button>
+                <div className="user-menu__icon-btn">
+                    <Notifications icon={<ChatIcon />} />
+                </div>
+                <div className="user-menu__icon-btn">
+                    <Notifications icon={<BellIcon />} />
+                </div>
                 <button className="user-menu__user-btn">
                     <UserCard
                         avatar=""
