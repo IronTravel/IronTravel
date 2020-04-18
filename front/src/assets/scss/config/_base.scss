@@ -15,12 +15,15 @@ body {
 
 textarea,
 select,
+input[type="tel"],
+input[type="file"],
 input[type="text"],
 input[type="number"],
-input[type="tel"],
 input[type="search"],
-input[type="file"],
+input[type="password"],
 a {
+    outline: 0;
+
 	&:hover,
 	&:focus,
 	&:active {
@@ -29,8 +32,13 @@ a {
 }
 
 button {
-    &:focus {
-        outline: 0;
+    outline: none;
+
+    &:hover,
+	&:focus,
+	&:active {
+        outline: none;
+        box-shadow: none;
     }
 }
 

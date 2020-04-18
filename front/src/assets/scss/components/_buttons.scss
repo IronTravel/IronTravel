@@ -55,4 +55,10 @@
         font-size: 14px;
         color: #979797;
     }
+
+    &--inverted {
+        .btn-like__icon {
+            order: 2;
+        }
+    }
 }
