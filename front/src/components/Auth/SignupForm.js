@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form'
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 //Context
-import { useUser, useUserSetter } from "../../context/user";
+import { useUserSetter } from "../../context/user";
 
 //Service
 import { signup } from "../../service/auth";
@@ -26,6 +26,7 @@ export const RegisterForm = withRouter(({ history }) => {
             setFormSubmitError('Password and Confirm Password must be equals');
         }
     }
+
     return (
         <section className="auth-card">
             <header className="auth-card__header">
