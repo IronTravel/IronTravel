@@ -44,14 +44,17 @@ router.get('/aboutMe/user', isLoggedIn(), async (req, res) => {
 
 
 //Add
-router.post('/hobbies/add/:id',async(req, res) => {
-  const id = req.params.id
-  const idUser = req.user.id
-
-  await User.findByIdAndUpdate(idUser,
-    { $addToSet: { hobbies:id }}
-  )
+router.post('/hobbies/add',async(req, res) => {
+  console.log(req.body.length)
+if(req.body.length !== 0){
+  console.log("hola")
+  const user = req.user.id
+  await User.findByIdAndUpdate(user, {hobbies: req.body})
   return res.json({status:"added"})
+} else {
+  console.log("adios")
+  return res.json({status:"No has modificado nada"})
+}
 })
 
 //Delete
@@ -74,14 +77,17 @@ router.get('/musicgenres', isLoggedIn(), async (req, res) => {
 })
 
 //Add
-router.post('/musicgenres/add/:id',async(req, res) => {
-  const id = req.params.id
-  const idUser = req.user.id
-
-  await User.findByIdAndUpdate(idUser,
-    { $addToSet: { music:id }}
-  )
+router.post('/musicgenres/add',async(req, res) => {
+  console.log(req.body.length)
+if(req.body.length !== 0){
+  console.log("hola")
+  const user = req.user.id
+  await User.findByIdAndUpdate(user, {music: req.body})
   return res.json({status:"added"})
+} else {
+  console.log("adios")
+  return res.json({status:"No has modificado nada"})
+}
 })
 
 //Delete
@@ -102,17 +108,33 @@ router.get('/personalities', isLoggedIn(), async (req, res) => {
   const personality = await Personality.find() 
   return res.json(personality)
 })
-
 //Add
-router.post('/personalities/add/:id',async(req, res) => {
-  const id = req.params.id
-  const idUser = req.user.id
 
-  await User.findByIdAndUpdate(idUser,
-    { $addToSet: { personality:id }}
-  )
+
+router.post('/personalities/add',async(req, res) => {
+  console.log(req.body.length)
+if(req.body.length !== 0){
+  console.log("hola")
+  const user = req.user.id
+  await User.findByIdAndUpdate(user, {personality: req.body})
   return res.json({status:"added"})
+} else {
+  console.log("adios")
+  return res.json({status:"No has modificado nada"})
+}
 })
+
+
+// //Add
+// router.post('/personalities/add/:id',async(req, res) => {
+//   const id = req.params.id
+//   const idUser = req.user.id
+
+//   await User.findByIdAndUpdate(idUser,
+//     { $addToSet: { personality:id }}
+//   )
+//   return res.json({status:"added"})
+// })
 
 //Delete
 router.get('/personalities/delete/:id',async(req, res) => {
@@ -134,14 +156,16 @@ router.get('/lifestyles', isLoggedIn(), async (req, res) => {
 })
 
 //Add
-router.post('/lifestyles/add/:id',async(req, res) => {
-  const id = req.params.id
-  const idUser = req.user.id
-
-  await User.findByIdAndUpdate(idUser,
-    { $addToSet: { life_style:id }}
-  )
+router.post('/lifestyles/add',async(req, res) => {
+  if(req.body.length !== 0){
+    console.log("hola desde lifeStyles")
+    const user = req.user.id
+  await User.findByIdAndUpdate(user, {life_style: req.body})
   return res.json({status:"added"})
+  }else{
+    console.log("adios desde lifeStyles")
+    return res.json({status:"No has modificado nada"})
+  }
 })
 
 //Delete

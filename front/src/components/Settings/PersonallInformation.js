@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 
 //Context
 import { useUser, useUserSetter } from "../../context/user";
-
+//Service
 import { editUser } from '../../service/user';
 
 export const PersonallInformation = () => {

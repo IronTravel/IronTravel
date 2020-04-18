@@ -10,8 +10,11 @@ import { PersonalityPage } from './pages/PersonalityPage';
 import { SearchMatchPage } from "./pages/SearchMatchPage";
 import { MyTravelsPage } from "./pages/MyTravelsPage";
 import { MyToursPage } from './pages/MyToursPage';
-
+import { MusicHobbiesPage } from './pages/Music-HobbiesPage';
+import {ChangePassword} from "./components/Settings/ChangePassword";
 import { Google } from "./pages/GoolePage";
+
+
 
 // HOCs
 import { withAuth } from './components/withAuthHOC';
@@ -29,8 +32,10 @@ export const App = withAuth(() => {
                 <Route path="/my-tours" exact component={MyToursPage} />
                 <Route path="/settings" exact component={SettingsPage} />
                 <Route path="/settings/personality" exact component={PersonalityPage} />
-
+                <Route path="/settings/change-password" exact component={ChangePassword} />
+                <Route path="/settings/music-hobbies" exact component={MusicHobbiesPage} />
                 <Route path="/google/login" exact component={Google} />
+                
             </Switch>
         </Router>
         // </main>
