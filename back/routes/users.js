@@ -52,22 +52,29 @@ router.post('/update-password', isLoggedIn(), async (req, res) => {
 
 //EDIT ONE USER//
 router.post('/edit', isLoggedIn(), async (req, res) => {
-    const { email, name, lastName } = req.body;
+    const { email, name, lastName, description, gender, birthday } = req.body;
+    console.log(description)
     const id = req.user.id
 
     try {
         const user = await User.findById(id)
         console.log(user)
         if(user){
+          console.log(user.description, "antes")
             user.email = email
             user.name = name
             user.lastName = lastName
+            user.description = description
+            user.gender = gender
+            user.dob.date = birthday
+            console.log(user.description, "ahora")
             await user.save()
-            return res.json(_.pick(req.user, ["email", "name", "lastName"]))
+            return res.json({status:"Information Changed!!"} )
         } else {
-            return res.json({status:"No puedes cambiar el dato"})
+            return res.json({status:"You cant change"})
         }
     } catch (error){
+      console.log(error)
         return res.json(error)
     }
 
