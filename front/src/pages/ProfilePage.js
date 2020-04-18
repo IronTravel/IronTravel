@@ -3,18 +3,19 @@ import React from 'react';
 // Components
 import { Header } from '../layout/Header';
 import { UserCard } from '../components/UserCard';
-import heartIcon from '../assets/svgs/icon-heart.svg';
+import IconHeart from '../assets/svgs/icon-heart.svg';
 import { UserProfileHeader } from '../components/UserProfileHeader';
 
 export const ProfilePage = () => {
+
+
     return (
         <>
             <Header />
+
             <div className="container">
                 <UserProfileHeader />
-
                 <div className="row">
-
                     {/* ProfileResume Component */}
                     <div className="col-3">
                         <section className="section-box">
@@ -74,7 +75,7 @@ export const ProfilePage = () => {
                             <footer className="post-box__footer">
                                 <div className="btn-like mr-4">
                                     <button className="btn-like__icon">
-                                        <img src={heartIcon} />
+                                        <IconHeart />
                                     </button>
                                     <span className="btn-like__count">15</span>
                                 </div>
@@ -100,7 +101,7 @@ export const ProfilePage = () => {
                             <footer className="post-box__footer">
                                 <div className="btn-like mr-4">
                                     <button className="btn-like__icon">
-                                        <img src={heartIcon} />
+                                        <IconHeart />
                                     </button>
                                     <span className="btn-like__count">15</span>
                                 </div>
@@ -126,7 +127,7 @@ export const ProfilePage = () => {
                             <footer className="post-box__footer">
                                 <div className="btn-like mr-4">
                                     <button className="btn-like__icon">
-                                        <img src={heartIcon} />
+                                        <IconHeart />
                                     </button>
                                     <span className="btn-like__count">15</span>
                                 </div>
@@ -152,7 +153,7 @@ export const ProfilePage = () => {
                             <footer className="post-box__footer">
                                 <div className="btn-like mr-4">
                                     <button className="btn-like__icon">
-                                        <img src={heartIcon} />
+                                        <IconHeart />
                                     </button>
                                     <span className="btn-like__count">15</span>
                                 </div>
@@ -260,6 +261,7 @@ export const ProfilePage = () => {
                     </div>
                 </div>
             </div>
+
         </>
     )
 }

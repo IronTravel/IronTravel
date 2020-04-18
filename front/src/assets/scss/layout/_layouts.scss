@@ -2,8 +2,18 @@
 //  Main Layout
 // --------------------------------------------------
 
+.main-wrapper {
+  margin: auto;
+    &--sm {
+      max-width: 1200px;
+    }
+    &--lg {
+      max-width: 100%;
+    }
+}
+
 .container {
-    max-width: 1520px;
+  max-width: 1520px;
 }
 
 .auth-content-wrapper {

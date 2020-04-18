@@ -13,12 +13,25 @@ body {
     color: #5F5F5F;
 }
 
+textarea,
+select,
+input[type="text"],
+input[type="number"],
+input[type="tel"],
+input[type="search"],
+input[type="file"],
 a {
 	&:hover,
 	&:focus,
 	&:active {
 		outline: 0;
 	}
+}
+
+button {
+    &:focus {
+        outline: 0;
+    }
 }
 
 img {
