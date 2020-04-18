@@ -78,15 +78,15 @@ export const ProfilePage = () => {
                                     </button>
                                     <span className="btn-like__count">15</span>
                                 </div>
-                                <div className="inline-avatars">
-                                    <div className="inline-avatars__images">
+                                <div className="inline-objects">
+                                    <div className="inline-objects__images">
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                     </div>
-                                    <div className="inline-avatars__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
+                                    <div className="inline-objects__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
                                 </div>
                             </footer>
                         </article>
@@ -104,15 +104,15 @@ export const ProfilePage = () => {
                                     </button>
                                     <span className="btn-like__count">15</span>
                                 </div>
-                                <div className="inline-avatars">
-                                    <div className="inline-avatars__images">
+                                <div className="inline-objects">
+                                    <div className="inline-objects__images">
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                     </div>
-                                    <div className="inline-avatars__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
+                                    <div className="inline-objects__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
                                 </div>
                             </footer>
                         </article>
@@ -130,15 +130,15 @@ export const ProfilePage = () => {
                                     </button>
                                     <span className="btn-like__count">15</span>
                                 </div>
-                                <div className="inline-avatars">
-                                    <div className="inline-avatars__images">
+                                <div className="inline-objects">
+                                    <div className="inline-objects__images">
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                     </div>
-                                    <div className="inline-avatars__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
+                                    <div className="inline-objects__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
                                 </div>
                             </footer>
                         </article>
@@ -156,15 +156,15 @@ export const ProfilePage = () => {
                                     </button>
                                     <span className="btn-like__count">15</span>
                                 </div>
-                                <div className="inline-avatars">
-                                    <div className="inline-avatars__images">
+                                <div className="inline-objects">
+                                    <div className="inline-objects__images">
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                         <UserCard showBorder avatarSize={28} />
                                     </div>
-                                    <div className="inline-avatars__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
+                                    <div className="inline-objects__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
                                 </div>
                             </footer>
                         </article>

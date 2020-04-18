@@ -2,7 +2,7 @@
 //  Inline avatars
 // --------------------------------------------------
 
-.inline-avatars {
+.inline-objects {
     @extend .d-flex, .align-items-center;
 
     &__images {
@@ -29,5 +29,14 @@
 
     &--vertical {
         @extend .flex-column, .align-items-center;
+    }
+
+    &--spread {
+        .inline-objects__images {
+            @extend .mr-0;
+            > * {
+               @extend .mr-0;
+            }
+        }
     }
 }

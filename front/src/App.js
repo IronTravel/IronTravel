@@ -4,12 +4,12 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 //Components
 import { HomePage } from './pages/HomePage';
 import { AuthPage } from './pages/AuthPage';
-
 import { ProfilePage } from './pages/ProfilePage';
 import { SettingsPage } from './pages/SettingsPage';
 import { PersonalityPage } from './pages/PersonalityPage';
 import { SearchMatchPage } from "./pages/SearchMatchPage";
 import { MyTravelsPage } from "./pages/MyTravelsPage";
+import { MyToursPage } from './pages/MyToursPage';
 
 import { Google } from "./pages/GoolePage";
 
@@ -26,6 +26,7 @@ export const App = withAuth(() => {
                 <Route path="/profile" exact component={ProfilePage} />
                 <Route path="/search" exact component={SearchMatchPage} />
                 <Route path="/my-travels" exact component={MyTravelsPage} />
+                <Route path="/my-tours" exact component={MyToursPage} />
                 <Route path="/settings" exact component={SettingsPage} />
                 <Route path="/settings/personality" exact component={PersonalityPage} />
 
