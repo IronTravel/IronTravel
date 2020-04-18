@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, useParams } from 'react-router-dom';
 
 //Components
 import { HomePage } from './pages/HomePage';
@@ -11,33 +11,33 @@ import { SearchMatchPage } from "./pages/SearchMatchPage";
 import { MyTravelsPage } from "./pages/MyTravelsPage";
 import { MyToursPage } from './pages/MyToursPage';
 import { MusicHobbiesPage } from './pages/Music-HobbiesPage';
-import {ChangePassword} from "./components/Settings/ChangePassword";
+import { ChangePassword } from "./components/Settings/ChangePassword";
 import { Google } from "./pages/GoolePage";
-
-
 
 // HOCs
 import { withAuth } from './components/withAuthHOC';
 
 export const App = withAuth(() => {
-    return (
-        // <main className="container">
-        <Router>
-            <Switch>
-                <Route path="/" exact component={HomePage} />
-                <Route path="/auth" exact component={AuthPage} />
-                <Route path="/profile" exact component={ProfilePage} />
-                <Route path="/search" exact component={SearchMatchPage} />
-                <Route path="/my-travels" exact component={MyTravelsPage} />
-                <Route path="/my-tours" exact component={MyToursPage} />
-                <Route path="/settings" exact component={SettingsPage} />
-                <Route path="/settings/personality" exact component={PersonalityPage} />
-                <Route path="/settings/change-password" exact component={ChangePassword} />
-                <Route path="/settings/music-hobbies" exact component={MusicHobbiesPage} />
-                <Route path="/google/login" exact component={Google} />
-                
-            </Switch>
-        </Router>
-        // </main>
-    )
+
+  const slug = window.location.pathname;
+
+  return (
+    <main className={`main-wrapper ${slug === '/auth' ? 'main-wrapper--sm' : 'main-wrapper--lg'}`}>
+      <Router>
+        <Switch>
+          <Route path="/" exact component={HomePage} />
+          <Route path="/auth" exact component={AuthPage} />
+          <Route path="/profile" exact component={ProfilePage} />
+          <Route path="/search" exact component={SearchMatchPage} />
+          <Route path="/my-travels" exact component={MyTravelsPage} />
+          <Route path="/my-tours" exact component={MyToursPage} />
+          <Route path="/settings" exact component={SettingsPage} />
+          <Route path="/settings/personality" exact component={PersonalityPage} />
+          <Route path="/settings/change-password" exact component={ChangePassword} />
+          <Route path="/settings/music-hobbies" exact component={MusicHobbiesPage} />
+          <Route path="/google/login" exact component={Google} />
+        </Switch>
+      </Router>
+    </main>
+  )
 });
