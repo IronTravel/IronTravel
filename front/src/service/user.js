@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const service = axios.create({
-    baseURL: 'http://localhost:3005/',
+    baseURL: process.env.API_URL,
     withCredentials: true
 });
 
@@ -9,7 +9,7 @@ export const allUser = async () => {
     return await service.get('/users');
 }
 
-export const editUser = async (data ) => {
+export const editUser = async (data) => {
     console.log(data)
     return await service.post("/users/edit", data);
 }

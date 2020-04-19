@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>instagram</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="My-travels---Create-Copy-3" transform="translate(-587.000000, -1428.000000)" stroke="#FFFFFF" stroke-width="2">
+            <g id="entry-3" transform="translate(256.000000, 1410.000000)">
+                <g id="entry_type" transform="translate(313.000000, 0.000000)">
+                    <g id="instagram" transform="translate(19.000000, 19.000000)">
+                        <rect id="Rectangle" x="0" y="0" width="22" height="22" rx="5"></rect>
+                        <path d="M15.4,10.307 C15.6784347,12.1846688 14.7213284,14.029229 13.0257892,14.8826412 C11.3302499,15.7360535 9.27855342,15.4059077 7.93632285,14.0636771 C6.59409228,12.7214466 6.26394652,10.6697501 7.11735877,8.97421082 C7.97077103,7.27867157 9.81533125,6.32156532 11.693,6.6 C13.6102744,6.88430771 15.1156923,8.38972556 15.4,10.307 Z" id="Path"></path>
+                        <line x1="17.05" y1="4.95" x2="17.061" y2="4.95" id="Path"></line>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

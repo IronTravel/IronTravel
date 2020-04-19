@@ -4,4 +4,185 @@
 
 .travel-timeline {
 
+    &:before {
+        @extend .position-fixed, .d-block;
+        content: '';
+        height: 100vh;
+        top: 0;
+        left: 50%;
+        transform: translateX(-210px);
+        border-left: 2px solid #D2D2D2;
+        border-right: 2px solid #fff;
+        z-index: -1;
+    }
+
+    &__post {
+        @extend .position-relative;
+        margin-bottom: 100px;
+
+        &__header {
+            @extend .text-right;
+
+            .date {
+                font-weight: 600;
+                font-style: italic;
+                font-size: 15px;
+                color: #5F5F5F;
+            }
+
+            .action {
+                @extend .mb-5, .mt-1;
+                font-style: italic;
+                font-size: 14px;
+                color: #989898;
+                text-align: right;
+            }
+
+            .btn-like {
+                @extend .mb-2, .mr-2;
+            }
+            .btn-like,
+            .inline-objects {
+                @extend .justify-content-end;
+            }
+        }
+
+        .post-action {
+            @extend .position-absolute, .d-flex, .justify-content-center, .align-items-center;
+            background: #EE3263;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: 10px solid #F0F4F7;
+            top: -13px;
+            right: -80px;
+        }
+
+        &__body {
+            padding-left: 100px;
+        }
+    }
+}
+
+.travel-link {
+    @extend .d-flex, .align-items-center, .justify-content-end, .mb-5;
+
+    > * {
+        @extend .mr-2;
+    }
+
+    .link-network {
+        background: transparent;
+        padding: 0;
+        border: none;
+        filter: grayscale(100%);
+
+        &--enabled {
+            filter: grayscale(0%);
+        }
+    }
+}
+
+.music-post {
+    @extend .d-flex, .mt-5;
+
+    &__img {
+        @extend .position-relative;
+        top: 30px;
+        z-index: 2;
+
+        img {
+            width: 160px;
+        }
+    }
+
+    &__content {
+        @extend .d-inline-block, .position-relative;
+        left: -60px;
+        padding: 1.5rem 4rem 1.5rem 5rem;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 5px 10px 0 rgba(0,0,0,0.03);
+    }
+        &__title {
+            font-weight: 700;
+            font-size: 24px;
+            color: #392E4E;
+        }
+        &__artist {
+            font-size: 14px;
+            color: #EE3263;
+        }
+        &__data {
+            @extend .mb-0;
+            font-weight: 700;
+            font-size: 13px;
+            color: #5F5F5F;
+
+            dt {
+                @extend .mr-1, .float-left;
+            }
+
+            dd {
+                @extend .mb-0;
+            }
+        }
+}
+
+.instagram-post {
+    @extend .d-inline-flex, .position-relative, .mt-5;
+
+    &__img {
+        @extend .d-inline-flex, .position-relative;
+        top: 30px;
+        z-index: 2;
+        overflow: hidden;
+        border-radius: 8px;
+
+        img {
+            @extend .mr-3;
+            width: 320px;
+        }
+    }
+
+    &__content {
+        @extend .d-inline-flex, .position-absolute;
+        width: 100%;
+        min-width: 600px;
+        min-height: 60px;
+        top: 101%;
+        left: 40px;
+        padding: 1.5rem 1.3rem 1.5rem 1.3rem;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 5px 10px 0 rgba(0,0,0,0.03);
+
+        p {
+            @extend .mb-0;
+        }
+    }
+}
+
+.twitter-post {
+    @extend .position-relative;
+    margin-top: 100px;
+
+    &__quotes {
+        @extend .position-absolute, .d-block;
+        top: -40px;
+        width: 180px;
+    }
+
+    &__content {
+        @extend .d-inline-flex;
+        width: 70%;
+        padding: 2rem 2rem 1rem;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 5px 10px 0 rgba(0,0,0,0.03);
+        font-style: italic;
+        font-size: 18px;
+        color: #5F5F5F;
+        letter-spacing: -0.5px;
+    }
 }
