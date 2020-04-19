@@ -77,10 +77,10 @@ router.post("/logout", isLoggedIn(), (req, res) => {
 //WHOAMI//
 router.get('/whoami', isLoggedIn(), async (req, res) => {
     if (req.user) {
-        console.log(req.user)
+        //console.log(req.user)
         return res.json(req.user)
     } else {
-        console.log("No user login", req.user)
+        //console.log("No user login", req.user)
         return res.status(401).json({ status: 'No user logged in' })
     }
 })

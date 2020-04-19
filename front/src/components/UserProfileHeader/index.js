@@ -15,8 +15,9 @@ export const UserProfileHeader = () => {
     const user = useUser()
     const setUser = useUserSetter()
 
-    const [userAboutMe, setUserAboutMe] = useState([]);
+    const user = useUser();
 
+    const [userAboutMe, setUserAboutMe] = useState([]);
     const fetchUAboutMe = () => randomAboutMe().then(aboutMe => setUserAboutMe(aboutMe.data.join(' 🌍 ').toString()));
 
     const { handleSubmit, register, errors } = useForm();
@@ -54,16 +55,16 @@ export const UserProfileHeader = () => {
                     <div className="key">Tours</div>
                 </div>
                 <div className="profile-header__info__data profile-header__info__data--user">
-                    {user && 
+
                     <div className="big-avatar">
-                        <img src={user.avatar} alt="" />
+                        <img src={user && user.avatar || defaultAvatar} alt="" />
                     </div>
+
+                    {user &&
+                        <div className="value">{user.name} {user.lastName}</div>
                     }
-                    {user && 
-                    <div className="value">{user.name} {user.lastName} </div>
-                    }
-                    {userAboutMe && 
-                    <div className="key">{userAboutMe}</div>
+                    {userAboutMe &&
+                        <div className="key">{userAboutMe}</div>
                     }
                 </div>
                 <div className="profile-header__info__data">
