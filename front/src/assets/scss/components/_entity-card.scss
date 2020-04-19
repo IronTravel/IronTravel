@@ -74,6 +74,7 @@
 
         &__tagline {
             max-width: 180px;
+            min-height: 36px;
             text-align: center;
             margin-left: auto;
             margin-right: auto;
@@ -117,6 +118,8 @@
 
             &:hover {
                 background: #ececec;
+                color: #808080;
+                text-decoration: none;
             }
 
             span {
@@ -158,6 +161,7 @@
         &__tagline {
             font-weight: 300;
             font-size: 14px;
+            min-height: 36px;
             color: #5F5F5F;
             letter-spacing: -0.4px;
             text-align: center;

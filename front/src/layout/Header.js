@@ -18,16 +18,15 @@ import ChatIcon from '../assets/svgs/icon-chat.svg';
 import BellIcon from '../assets/svgs/icon-bell.svg';
 
 
-
 export const Header = withRouter(({ history }) => {
     const user = useUser()
 
     const setUser = useUserSetter();
     const handleLogOut = () => {
-      logout().then(() => {
-        setUser('');
-        history.push('/auth')
-      })
+        logout().then(() => {
+            setUser('');
+            history.push('/auth')
+        })
     }
     return (
         <header className="main-header">
@@ -43,20 +42,20 @@ export const Header = withRouter(({ history }) => {
                 <Link to="/my-tours">My Tours</Link>
             </nav>
             <div className="user-menu">
-              <div className="user-menu__icon-btn">
-                <Notifications icon={<ChatIcon />} />
-              </div>
-              <div className="user-menu__icon-btn">
-                <Notifications icon={<BellIcon />} />
-              </div>
-              <button className="user-menu__user-btn" onClick={handleLogOut}>
-                {user && 
-                  <UserCard
-                    avatar={user.avatar}
-                    name={user.name}
-                  />
-                }
-              </button>
+                <div className="user-menu__icon-btn">
+                    <Notifications icon={<ChatIcon />} />
+                </div>
+                <div className="user-menu__icon-btn">
+                    <Notifications icon={<BellIcon />} />
+                </div>
+                <button className="user-menu__user-btn" onClick={handleLogOut}>
+                    {user &&
+                        <UserCard
+                            avatar={user.avatar}
+                            name={user.name}
+                        />
+                    }
+                </button>
             </div>
         </header>
     )
