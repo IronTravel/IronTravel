@@ -10,18 +10,27 @@ const User = new mongoose.Schema(
         name: String,
         lastName: String,
         initials: String,
+        fullname: String,
         dob: {
             date: Date,
             age: Number
         },
         googleId: Number,
+        spotifyId: Number,
+        instagramId: Number,
+        main_image: String,
         avatar: String,
-        description: {type: String, default: ""},
-        Country: String,
+        description: { type: String, default: "" },
+        country: String,
         favourite_color: String,
+        notifications: {
+            date: Date,
+            description: String,
+            related_user: [{ type: mongoose.Schema.ObjectId, ref: "user" }],
+        },
         followers: [{ type: mongoose.Schema.ObjectId, ref: "user" }],
         following: [{ type: mongoose.Schema.ObjectId, ref: "user" }],
-        my_travels: [{ type: mongoose.Schema.ObjectId, ref: "travelProfile" }],
+        my_travels: [{ type: mongoose.Schema.ObjectId, ref: "travel" }],
         my_tours: [{ type: mongoose.Schema.ObjectId, ref: "tour" }],
         my_places: [{ type: mongoose.Schema.ObjectId, ref: "place" }],
         music: [{ type: mongoose.Schema.ObjectId, ref: "musicGenres" }],
@@ -29,9 +38,9 @@ const User = new mongoose.Schema(
         life_style: [{ type: mongoose.Schema.ObjectId, ref: "lifeStyle" }],
         hobbies: [{ type: mongoose.Schema.ObjectId, ref: "hobby" }],
     },
-  {
-    timestamps: true
-  }
+    {
+        timestamps: true
+    }
 );
 
 module.exports = mongoose.model("user", User);

@@ -63,6 +63,35 @@ const withDbConnection = async (fn, disconnectEnd = true) => {
 };
 
 // -------------------------
+// Get Random from Array (ONLY FOR SEEDS)
+// -------------------------
+const getRandomFromArray = (array, n, returnArrayOfIds) => {
+    let newArr = [];
+
+    for (let i = 0; i < n; i++) {
+        newArr.push(array[Math.floor(Math.random() * array.length)]);
+    }
+
+    return returnArrayOfIds ? newArr.map(e => e._id) : newArr;
+};
+
+// -------------------------
+// Get Random Text
+// -------------------------
+const getRandomText = async (paragraphs) => {
+    return axios({
+        method: 'get',
+        url: 'https://baconipsum.com/api/',
+        params: {
+            'type': 'meat-and-filler',
+            'start-with-lorem': '1',
+            paras: paragraphs || 1
+        },
+        responseType: 'json',
+    })
+}
+
+// -------------------------
 // Get Spotify Token
 // -------------------------
 const getSpotityToken = async () => {
@@ -108,26 +137,14 @@ const isLoggedOut = (redirectRoute = `${process.env.FRONT_URL}`) => (req, res, n
     }
 };
 
-// -------------------------
-// GETRANDOM FROM ARRAY
-// -------------------------
-const getRandom = (array, n, returnArrayOfIds) => {
-    let newArr = [];
-
-    for (let i = 0; i < n; i++) {
-        newArr.push(array[Math.floor(Math.random() * array.length)]);
-    }
-
-    return returnArrayOfIds ? newArr.map(user => user._id) : newArr;
-};
-
 module.exports = {
     hashPassword,
     checkHashedPassword,
     withDbConnection,
     dropIfExists,
+    getRandomFromArray,
+    getRandomText,
     getSpotityToken,
     isLoggedIn,
-    isLoggedOut,
-    getRandom,
+    isLoggedOut
 };

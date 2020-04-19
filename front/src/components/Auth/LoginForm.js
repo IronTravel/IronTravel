@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form'
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, Redirect } from 'react-router-dom';
 
 //Context
-import { useUserSetter } from '../../context/user';
+import { useUser, useUserSetter } from '../../context/user';
 
 //Service
 import { login } from '../../service/auth';
@@ -13,6 +13,7 @@ export const LoginForm = withRouter(({ history }) => {
     const [formSubmitError, setFormSubmitError] = useState('');
     const { handleSubmit, register, errors } = useForm();
 
+    const user = useUser();
     const setUser = useUserSetter();
 
     const onFormSubmit = (data) => {

@@ -31,7 +31,7 @@ export const App = withAuth(() => {
                     {/* <Route path="/google/login" exact component={Google} /> */}
 
                     <Route path="/auth" exact component={AuthPage} />
-                    <Route path="/profile" exact component={ProfilePage} />
+                    <Route path="/profile/:id?" component={ProfilePage} />
                     <Route path="/search" exact component={SearchMatchPage} />
                     <Route path="/my-travels" exact component={MyTravelsPage} />
                     <Route path="/my-tours" exact component={MyToursPage} />
