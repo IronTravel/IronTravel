@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 
 // Components
 import { Header } from '../layout/Header';
@@ -6,7 +6,21 @@ import { UserCard } from '../components/UserCard';
 import { UserProfileHeader } from '../components/UserProfileHeader';
 import { LikeButton } from '../components/LikeButton';
 
+import { aboutMe } from '../service/data'
+
 export const ProfilePage = () => {
+
+    const [userAboutMe, setUserAboutMe] = useState([]);
+
+    const fetchUAboutMe = () => aboutMe().then(aboutMe => setUserAboutMe(aboutMe.data));
+
+    console.log(userAboutMe)
+
+    useEffect(() => {
+
+        fetchUAboutMe()
+    }, []);
+
     return (
         <>
             <Header />
@@ -23,38 +37,33 @@ export const ProfilePage = () => {
                             <div className="section-box__body px-4">
                                 <section className="content-box">
                                     <h4 className="content-box__title">About Me</h4>
-                                    <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                                    {userAboutMe && 
+                                    <p>{userAboutMe.description}</p>
+                                    // <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                                    }
                                 </section>
                                 <section className="content-box">
                                     <h4 className="content-box__title">Personality</h4>
                                     <div className="content-box__pills">
-                                        <span className="pill-shape pill-shape--secondary">Creative</span>
-                                        <span className="pill-shape pill-shape--secondary">Determined</span>
-                                        <span className="pill-shape pill-shape--secondary">Empathetic</span>
-                                        <span className="pill-shape pill-shape--secondary">Fun</span>
-                                        <span className="pill-shape pill-shape--secondary">Honest</span>
-                                        <span className="pill-shape pill-shape--secondary">Prankster</span>
-                                        <span className="pill-shape pill-shape--secondary">Proactive</span>
+                                        {userAboutMe.personality && userAboutMe.personality.map((e,i) => 
+                                        <span className="pill-shape pill-shape--secondary" key={i}>{e.name}</span>
+                                        )}
                                     </div>
                                 </section>
                                 <section className="content-box">
                                     <h4 className="content-box__title">Lifestyle</h4>
                                     <div className="content-box__pills">
-                                        <span className="pill-shape pill-shape--primary">Athlete</span>
-                                        <span className="pill-shape pill-shape--primary">Movie lover</span>
-                                        <span className="pill-shape pill-shape--primary">Culture enthusiast</span>
-                                        <span className="pill-shape pill-shape--primary">Gamer</span>
-                                        <span className="pill-shape pill-shape--primary">Travel junkie</span>
+                                    {userAboutMe.life_style && userAboutMe.life_style.map((e,i) => 
+                                        <span className="pill-shape pill-shape--primary" key={i}>{e.name}</span>
+                                        )}
                                     </div>
                                 </section>
                                 <section className="content-box">
                                     <h4 className="content-box__title">Hobbies</h4>
                                     <div className="content-box__pills">
-                                        <span className="pill-shape pill-shape--terciary">Running</span>
-                                        <span className="pill-shape pill-shape--terciary">Volunteer Work</span>
-                                        <span className="pill-shape pill-shape--terciary">Swimming</span>
-                                        <span className="pill-shape pill-shape--terciary">Hiking</span>
-                                        <span className="pill-shape pill-shape--terciary">Exercise</span>
+                                    {userAboutMe.hobbies && userAboutMe.hobbies.map((e,i) => 
+                                        <span className="pill-shape pill-shape--terciary" key={i}>{e.name}</span>
+                                        )}
                                     </div>
                                 </section>
                             </div>

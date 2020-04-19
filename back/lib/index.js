@@ -8,8 +8,8 @@ const axios = require("axios");
 const cheerio = require('cheerio');
 
 const salt = bcrypt.genSaltSync(10);
-// const DBURL = process.env.DBURL;
-const DBURL = process.env.DBURL_PRODUCTION
+const DBURL = process.env.DBURL;
+// const DBURL = process.env.DBURL_PRODUCTION
 
 // -------------------------
 // Hash Password
