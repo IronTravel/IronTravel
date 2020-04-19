@@ -19,7 +19,11 @@
         "seed-entries": "node bin/entries.js",
         "seed-prueba": "node bin/prueba.js",
         "seed-prueba1": "node bin/pruebarest-mus.js",
-        "seeds": "node bin/musicGenres.js && node bin/personalities.js && node bin/amenities.js && node bin/lifestyles.js && node bin/hobbies.js && node bin/users.js && node bin/entries.js && node bin/city.js && node bin/restaurant.js && node bin/museum.js && node bin/landmark.js"
+        "seed-restaurant-img": "node bin/restaurant-images.js",
+        "seed-landmark-img": "node bin/landmark-images.js",
+        "seed-museum-img": "node bin/museum-images.js",
+        "seed-country": "node bin/country.js",
+        "seeds": "node bin/musicGenres.js && node bin/users.js && node bin/personalities.js && node bin/amenities.js && node bin/lifestyles.js && node bin/hobbies.js && node bin/city.js && node bin/restaurant.js && node bin/museum.js && node bin/landmark.js && node bin/restaurant-images.js && bin/landmark-images.js && bin/museum-images.js"
     },
     "dependencies": {
         "axios": "^0.19.2",

@@ -28,7 +28,7 @@ export const App = withAuth(() => {
             <Router>
                 <Switch>
                     {/* <Route path="/" exact component={HomePage} /> */}
-                    <Route path="/google/login" exact component={Google} />
+                    {/* <Route path="/google/login" exact component={Google} /> */}
 
                     <Route path="/auth" exact component={AuthPage} />
                     <Route path="/profile/:id?" component={ProfilePage} />
