@@ -3,11 +3,10 @@ const router = express.Router();
 const _ = require("lodash");
 
 //Lib
-const { isLoggedIn, hashPassword,checkHashedPassword } = require('../lib')
+const { isLoggedIn, hashPassword, checkHashedPassword, uploadCloudinaryAvatar } = require('../lib')
 
 //Models
 const User = require("../models/User");
-
 
 //ALL USERS//
 router.get('/', isLoggedIn(), async (req, res) => {
@@ -79,5 +78,19 @@ router.post('/edit', isLoggedIn(), async (req, res) => {
     }
 
   })
+
+//cambiar avatar
+router.post("/image", isLoggedIn(), uploadCloudinaryAvatar.single("avatar"), async (req, res) => {
+  const id = req.user.id
+    try {
+      const user = await User.findById(id);
+      user.avatar = req.file.url
+      await user.save()
+      return res.json({status:"Upload completed", user: user})
+    }catch (error){
+      console.log(error)
+    }
+  }
+)
 
 module.exports = router;

@@ -1,20 +1,43 @@
 import React, { useState, useEffect } from 'react'
+import { useForm } from "react-hook-form";
 
-import { useUser } from "../../context/user";
+import { useUser, useUserSetter } from "../../context/user";
 
 import { randomAboutMe } from '../../service/data'
+import { updateAvatar } from '../../service/user';
+
+const cloudinary = require("cloudinary-core");
+
+//Nombre del cloudinary que sale en la web
+const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
 
 export const UserProfileHeader = () => {
     const user = useUser()
+    const setUser = useUserSetter()
 
     const [userAboutMe, setUserAboutMe] = useState([]);
 
     const fetchUAboutMe = () => randomAboutMe().then(aboutMe => setUserAboutMe(aboutMe.data.join(' 🌍 ').toString()));
 
+    const { handleSubmit, register, errors } = useForm();
+
     useEffect(() => {
         fetchUAboutMe()
     }, []);
 
+    const onSubmit = data => {
+        const myAvatar = data.avatar[0];
+        console.log(myAvatar)
+        updateAvatar(myAvatar)
+        .then((res) => {
+            console.log("changed file")
+            setUser(res.data.user)
+        })
+        .catch((error) => {
+            console.log("error updating")
+            console.log(error)
+        })
+    }   
 
     return (
         <div className="profile-header">
@@ -52,6 +75,15 @@ export const UserProfileHeader = () => {
                     <div className="key">Following</div>
                 </div>
             </div>
+            <div>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div>
+                        <input name="avatar" type="file" ref={register()} />
+                    </div>
+                    <button type="submit">Change Profile Pic</button>
+                </form>
+            </div>
         </div>
     )
 }
+

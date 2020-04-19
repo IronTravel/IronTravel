@@ -5,7 +5,14 @@ const { MongoError } = require("mongodb");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
-const cheerio = require('cheerio');
+const multer = require("multer");
+const cloudinaryStorage = require("multer-storage-cloudinary");
+const cloudinary = require("cloudinary");
+const _ = require("lodash")
+
+
+
+
 
 const salt = bcrypt.genSaltSync(10);
 const DBURL = process.env.DBURL;
@@ -88,6 +95,22 @@ const getSpotityToken = async () => {
 };
 
 // -------------------------
+// Cloudinary
+// -------------------------
+const storage = cloudinaryStorage({
+    cloudinary,
+    folder: "Wetravel",
+    allowedFormats: ["jpg", "png"],
+    filename: function(req, file, cb) {
+        const userID = _.get(req, "user._id")
+        const userFile = userID ? `avatar${userID}` : file;
+        cb(undefined, userFile)
+    }
+  });
+  
+  const uploadCloudinaryAvatar = multer({ storage });
+
+// -------------------------
 // LoggedIn or not
 // -------------------------
 const isLoggedIn = (redirectRoute = `${process.env.FRONT_URL}/auth`) => (req, res, next) => {
@@ -130,4 +153,5 @@ module.exports = {
     isLoggedIn,
     isLoggedOut,
     getRandom,
+    uploadCloudinaryAvatar,
 };
