@@ -284,6 +284,7 @@
 
 // module.exports = mongoose.model("travel", Travel);
 
+// *****************************************************************************************************************************************
 
 // image:"https://content.skyscnr.com/m/139e66b951813eed/original/eyeem_65408921.jpg.jpg?resize=1800px:1800px&#038;quality=100"
 // name: The Blue Lagoon, 
@@ -307,7 +308,6 @@
 // country: Grecia
 // city: Atenas
 
-
 // image:"https://content.skyscnr.com/0fb8578abe113048d7ee9a9873dafe92/GettyImages-176421733.jpg"
 // name:La Gran Muralla China
 // country:China
@@ -322,9 +322,6 @@
 // name:Cataratas del Niágara,
 // country:EEUU/Canada
 // city:
-
-
-// *****************************************************************************************************************************************
 
 // image:"https://viajes.nationalgeographic.com.es/medio/2017/04/24/bali-indonesia_5ae3dbfe.jpg"
 // name:Bali, 

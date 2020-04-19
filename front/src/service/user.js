@@ -18,6 +18,13 @@ export const editUser = async data => {
     return await service.post("/users/edit", data);
 }
 
+export const updateAvatar = async (avatarFile) => {
+    console.log(avatarFile)
+    const data = new FormData();
+    data.append("avatar", avatarFile)
+    return await service.post("users/image", data)
+}
+
 export const editPass = async data => {
     return await service.post("/users/update-password", data)
 }
