@@ -7,6 +7,9 @@ import { useUserSetter } from "../context/user";
 // Service
 import { logout } from '../service/auth';
 
+//Context
+import { useUser } from "../context/user";
+
 // Components
 import LogoWeTravelSM from '../assets/svgs/logo-wetravel-sm.svg';
 import { UserCard } from '../components/UserCard';
@@ -14,21 +17,22 @@ import { Notifications } from '../components/Notifications';
 import ChatIcon from '../assets/svgs/icon-chat.svg';
 import BellIcon from '../assets/svgs/icon-bell.svg';
 
+
+
 export const Header = withRouter(({ history }) => {
+    const user = useUser()
 
     const setUser = useUserSetter();
     const handleLogOut = () => {
-        logout().then(() => {
-            console.log('here')
-            setUser('');
-            history.push('/auth')
-        })
+      logout().then(() => {
+        setUser('');
+        history.push('/auth')
+      })
     }
-
     return (
-        <header className="main-header" >
+        <header className="main-header">
             <div className="main-logo">
-                <LogoWeTravelSM />
+                <Link to="/settings"><LogoWeTravelSM /> </Link>
             </div>
             <div className="current-section">My Profile</div>
             <div className="header-search">
@@ -39,18 +43,20 @@ export const Header = withRouter(({ history }) => {
                 <Link to="/my-tours">My Tours</Link>
             </nav>
             <div className="user-menu">
-                <div className="user-menu__icon-btn">
-                    <Notifications icon={<ChatIcon />} />
-                </div>
-                <div className="user-menu__icon-btn">
-                    <Notifications icon={<BellIcon />} />
-                </div>
-                <button className="user-menu__user-btn" onClick={handleLogOut}>
-                    <UserCard
-                        avatar=""
-                        name="John Smith"
-                    />
-                </button>
+              <div className="user-menu__icon-btn">
+                <Notifications icon={<ChatIcon />} />
+              </div>
+              <div className="user-menu__icon-btn">
+                <Notifications icon={<BellIcon />} />
+              </div>
+              <button className="user-menu__user-btn" onClick={handleLogOut}>
+                {user && 
+                  <UserCard
+                    avatar={user.avatar}
+                    name={user.name}
+                  />
+                }
+              </button>
             </div>
         </header>
     )

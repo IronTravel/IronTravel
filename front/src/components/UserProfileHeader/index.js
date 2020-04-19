@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 
-import defaultAvatar from '../../assets/images/avatar.png';
+import { useUser } from "../../context/user";
+
+import { randomAboutMe } from '../../service/data'
 
 export const UserProfileHeader = () => {
+    const user = useUser()
+
+    const [userAboutMe, setUserAboutMe] = useState([]);
+
+    const fetchUAboutMe = () => randomAboutMe().then(aboutMe => setUserAboutMe(aboutMe.data.join(' 🌍 ').toString()));
+
+    useEffect(() => {
+        fetchUAboutMe()
+    }, []);
+
+
     return (
         <div className="profile-header">
             <div className="profile-header__bg">
@@ -18,11 +31,17 @@ export const UserProfileHeader = () => {
                     <div className="key">Tours</div>
                 </div>
                 <div className="profile-header__info__data profile-header__info__data--user">
+                    {user && 
                     <div className="big-avatar">
-                        <img src={defaultAvatar} alt="" />
+                        <img src={user.avatar} alt="" />
                     </div>
-                    <div className="value">John Smith</div>
-                    <div className="key">Creative, Athlete, Running</div>
+                    }
+                    {user && 
+                    <div className="value">{user.name} {user.lastName} </div>
+                    }
+                    {userAboutMe && 
+                    <div className="key">{userAboutMe}</div>
+                    }
                 </div>
                 <div className="profile-header__info__data">
                     <div className="value">34K</div>
