@@ -168,8 +168,8 @@ withDbConnection(async () => {
                 const response = await axios({
                     url: "https://www.googleapis.com/customsearch/v1",
                     params: {
-                        key: process.env.KEY_GOOGLE9,
-                        cx: process.env.CX_GOOGLE9,
+                        key: process.env.KEY_GOOGLE7,
+                        cx: process.env.CX_GOOGLE7,
                         q: museum.name,
                         searchType: "image",
                         fileType: "jpg",

@@ -35,19 +35,6 @@ router.get('/aboutMe/random', isLoggedIn(), async(req, res) => {
 //List Populate all aboutMe
 router.get('/aboutMe/user', isLoggedIn(), async (req, res) => {
   const populate = await User.findById(req.user.id).populate([{ path: "hobbies" }, { path: "music"}, { path: "life_style" },{ path: "personality" }])
-  // const musics = populate.music.map(e => e.name)
-  const hobbies = populate.hobbies.map(e => e.name)
-  const personalities = populate.personality.map(e => e.name)
-  const life_styles = populate.life_style.map(e => e.name)
-
-  // const randomMusic = musics[Math.floor(Math.random() * musics.length)];
-  const randomHobby = hobbies[Math.floor(Math.random() * hobbies.length)];
-  const randomPersonality = personalities[Math.floor(Math.random() * personalities.length)];
-  const randomLifeStyle = life_styles[Math.floor(Math.random() * life_styles.length)];
-  const prueba = []
-  
-  prueba.push(randomMusic,randomHobby,randomPersonality ,randomLifeStyle)
-  console.log(prueba)
   return res.json(populate)
 })
 

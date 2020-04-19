@@ -29,7 +29,8 @@ await dropIfExists(Museum);
       );
       await Museum.create(response.data.response.groups.map((e) => e.items.map((i) => i.venue)).pop())
       await City.findByIdAndUpdate(city._id, 
-        { $addToSet: { museums: response.data.response.groups.map((e) => e.items.map((i) => i.venue.id)).pop() } }
+        // { $addToSet: { museums: response.data.response.groups.map((e) => e.items.map((i) => i.venue.id)).pop() } }
+        { museums: response.data.response.groups.map((e) => e.items.map((i) => i.venue.id)).pop() }
       )
       console.log(`${city.name} museums (${++cityCount} of ${cities.length})`);
     } catch (error) {
