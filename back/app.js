@@ -7,27 +7,27 @@ const mongoose = require("mongoose");
 const logger = require("morgan");
 const path = require("path");
 const DBURL = process.env.DBURL;
-const session=require("express-session")
+const session = require("express-session")
 const cors = require("cors");
 const MongoStore = require("connect-mongo")(session);
 
 mongoose
-  .connect(DBURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(x => {
-    console.log(
-      `Connected to Mongo! Database name: "${x.connections[0].name}"`
-    );
-  })
-  .catch(err => {
-    console.error("Error connecting to mongo", err);
-  });
+    .connect(DBURL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(x => {
+        console.log(
+            `Connected to Mongo! Database name: "${x.connections[0].name}"`
+        );
+    })
+    .catch(err => {
+        console.error("Error connecting to mongo", err);
+    });
 
 const app_name = require("./package.json").name;
 const debug = require("debug")(
-  `${app_name}:${path.basename(__filename).split(".")[0]}`
+    `${app_name}:${path.basename(__filename).split(".")[0]}`
 );
 
 const app = express();
@@ -38,10 +38,10 @@ const app = express();
 //   origin: function(origin, callback) {
 //     // if (!origin) return callback(null, true);
 //     if (whitelist.indexOf(origin) !== -1) {
-//       // corsOptions = { origin: true } 
+//       // corsOptions = { origin: true }
 //       callback(null, true);
 //     } else {
-//       // corsOptions = { origin: false } 
+//       // corsOptions = { origin: false }
 //       callback(new Error("Not allowed by CORS"));
 //     }
 //   },
@@ -49,10 +49,10 @@ const app = express();
 // };
 
 var corsOptions = {
-  origin: true,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  exposedHeaders: ['x-auth-token']
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    exposedHeaders: ['x-auth-token']
 };
 // app.use(cors(corsOption));
 
@@ -61,7 +61,7 @@ var corsOptions = {
 // var corsOptionsDelegate = function (req, callback) {
 //   var corsOptions;
 //   if (whitelist.indexOf(req.header('Origin')) !== -1) {
-//     corsOptions = {  
+//     corsOptions = {
 //       origin: include,
 //     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 //     preflightContinue: false,
@@ -84,12 +84,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(
-  session({
-    secret: "keyboard cat",
-    resave: true,
-    saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: mongoose.connection })
-  })
+    session({
+        secret: "keyboard cat",
+        resave: true,
+        saveUninitialized: true,
+        store: new MongoStore({ mongooseConnection: mongoose.connection })
+    })
 );
 require("./passport")(app);
 
