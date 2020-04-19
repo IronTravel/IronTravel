@@ -48,7 +48,7 @@ axios({
   responseType: "json"
 }).then(response => {
   withDbConnection(async () => {
-    await dropIfExists(User);
+    // await dropIfExists(User);
 
     // const musicgGenres = await MusicGenre.find({});
     // response.data.forEach(user => {

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Travel = new mongoose.Schema(
   {
+    image:String,
     travel_type: String,
     trip: String,
     city: String,

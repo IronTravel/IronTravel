@@ -9,6 +9,7 @@ const cheerio = require('cheerio');
 
 const salt = bcrypt.genSaltSync(10);
 const DBURL = process.env.DBURL;
+// const DBURL = process.env.DBURL_PRODUCTION
 
 // -------------------------
 // Hash Password
@@ -89,7 +90,7 @@ const getSpotityToken = async () => {
 // -------------------------
 // LoggedIn or not
 // -------------------------
-const isLoggedIn = (redirectRoute = `${process.env.FRONT_URL}/login`) => (req, res, next) => {
+const isLoggedIn = (redirectRoute = `${process.env.FRONT_URL}/auth`) => (req, res, next) => {
     if (req.user) {
         return next();
     } else {
