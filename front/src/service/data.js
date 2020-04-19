@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const service = axios.create({
-    baseURL: 'http://localhost:3005/',
+    baseURL: process.env.API_URL,
     withCredentials: true
 });
 
@@ -34,7 +34,7 @@ export const addAboutMe = async (data, aboutMe) => {
 }
 
 //Delete
-export const deleteAboutMe= async (ID, aboutMe) => {
+export const deleteAboutMe = async (ID, aboutMe) => {
     return await service.get(`data/${aboutMe}/delete/${ID}`);
 }
 
