@@ -47,16 +47,25 @@
                 position: relative;
 
                 .big-avatar {
+                    @extend .position-absolute;
                     width: 175px;
                     height: 175px;
                     margin: auto;
                     border-radius: 50%;
                     overflow: hidden;
                     border: 6px solid #F2F2F4;
-                    position: absolute;
                     top: -175px;
                     left: 50%;
                     transform: translateX(-50%);
+
+                    img {
+                        @extend .position-absolute;
+                        width: 180px;
+                        max-width: initial;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }
                 }
 
                 .value {

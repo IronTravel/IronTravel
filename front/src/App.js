@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 
 //Components
 // import { HomePage } from './pages/HomePage';
-// import { Google } from "./pages/GoolePage";
+import { Google } from "./pages/GoolePage";
 import { AuthPage } from './pages/AuthPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { SettingsPage } from './pages/SettingsPage';
