@@ -9,13 +9,14 @@ export const allTravel = async () => {
     return await service.get('/travels');
 }
 
-export const createTravel = async () => {
-    return await service.post('/travels/create');
+export const createTravel = async data => {
+    console.log("eeeeeeeeeeeeeeeeeeeeeee",data)
+    return await service.post('/travels/create', data);
 }
 
 export const editTravel = async idTravel => {
     console.log(idTravel)
-    return await service.post(`/travels/edit/${idTravel}`);
+    return await service.post(`/travels/create/${idTravel}`);
 }
 
 export const deleteTravel = async idTravel => {

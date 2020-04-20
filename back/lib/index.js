@@ -170,6 +170,5 @@ module.exports = {
     getSpotityToken,
     isLoggedIn,
     isLoggedOut,
-    getRandom,
     uploadCloudinaryAvatar,
 };

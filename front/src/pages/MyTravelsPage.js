@@ -8,14 +8,25 @@ import { UserProfileHeader } from '../components/UserProfileHeader';
 import { UserCard } from '../components/UserCard';
 import NewEntity from '../assets/svgs/icon-new.svg';
 
+import { useUserSetter } from "../context/user";
+import { createTravel } from '../service/travel';
+
 export const MyTravelsPage = () => {
+
+    const setUser = useUserSetter();
 
     const [formSubmitError, setFormSubmitError] = useState('');
     const { handleSubmit, register, errors } = useForm();
     const [exampleModal, toggleExampleModal] = useModali({ title: 'New Travel' });
 
     const onNewTravelFormSubmit = (data) => {
-        console.log(data);
+        console.log(data)
+        createTravel(data)
+            .then((res) => {
+                console.log(res.data)
+                setUser(res.data)
+                setFormSubmitError(res.data.status)
+            }) 
     }
 
     return (

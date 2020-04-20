@@ -7,6 +7,8 @@ import { UserProfileHeader } from '../components/UserProfileHeader';
 import { LikeButton } from '../components/LikeButton';
 
 import { aboutMe } from '../service/data'
+import { useUser, useUserSetter } from '../context/user';
+import { whoami } from '../service/auth';
 
 export const ProfilePage = () => {
 
@@ -14,10 +16,13 @@ export const ProfilePage = () => {
 
     const fetchUAboutMe = () => aboutMe().then(aboutMe => setUserAboutMe(aboutMe.data));
 
-    console.log(userAboutMe)
+    // const setUser = useUserSetter();
+
 
     useEffect(() => {
-
+        // whoami().then((res) => {
+        
+        // })
         fetchUAboutMe()
     }, []);
 

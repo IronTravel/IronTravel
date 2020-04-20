@@ -25,6 +25,7 @@ export const SettingsPage = () => {
     const { handleSubmit, register, errors } = useForm();
 
     const onFormSubmit = (data) => {
+        console.log(data)
         editUser(data)
             .then((res) => {
                 setUser(res.data)
