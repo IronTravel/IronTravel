@@ -28,6 +28,7 @@ export const Header = withRouter(({ history }) => {
             history.push('/auth')
         })
     }
+
     return (
         <header className="main-header">
             <div className="main-logo">
@@ -52,7 +53,7 @@ export const Header = withRouter(({ history }) => {
                     {user &&
                         <UserCard
                             avatar={user.avatar}
-                            name={user.name}
+                            name={user.fullName}
                         />
                     }
                 </button>

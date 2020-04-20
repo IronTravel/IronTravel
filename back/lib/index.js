@@ -142,12 +142,11 @@ const storage = cloudinaryStorage({
 // -------------------------
 // LoggedIn or not
 // -------------------------
-const isLoggedIn = (redirectRoute = `${process.env.FRONT_URL}/auth`) => (req, res, next) => {
+const isLoggedIn = (redirectRoute = `${process.env.FRONT_URL}/profile`) => (req, res, next) => {
     if (req.user) {
         return next();
     } else {
-        // return res.status(401).json({ status: 'Content is private, please login' })
-        return res.redirect(redirectRoute);
+        return res.status(401).json({ status: 'Content is private, please login' })
     }
 };
 
@@ -155,8 +154,7 @@ const isLoggedOut = (redirectRoute = `${process.env.FRONT_URL}`) => (req, res, n
     if (!req.user) {
         return next();
     } else {
-        // return res.status(401).json({ status: 'You are already logged in' })
-        return res.redirect(redirectRoute);
+        return res.status(401).json({ status: 'You are already logged in' })
     }
 };
 

@@ -15,16 +15,15 @@ import { MusicHobbiesPage } from './pages/Music-HobbiesPage';
 import { ChangePassword } from "./components/Settings/ChangePassword";
 import { NotFoundPage } from './pages/NotFoundPage';
 import { TravelPage } from './pages/TravelPage';
+import { Layout } from './layout/Layout';
 
 // HOCs
 import { withAuth } from './components/withAuthHOC';
 
 export const App = withAuth(() => {
 
-    const slug = window.location.pathname;
-
     return (
-        <main className={`main-wrapper ${slug === '/auth' ? 'main-wrapper--sm' : 'main-wrapper--lg'}`}>
+        <Layout>
             <Router>
                 <Switch>
                     {/* <Route path="/" exact component={HomePage} /> */}
@@ -49,6 +48,6 @@ export const App = withAuth(() => {
                     <Route path="/" component={NotFoundPage} />
                 </Switch>
             </Router>
-        </main>
+        </Layout>
     )
 });

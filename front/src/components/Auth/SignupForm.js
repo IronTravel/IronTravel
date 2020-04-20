@@ -38,9 +38,9 @@ export const RegisterForm = withRouter(({ history }) => {
                         <label className="field__label" htmlFor="name">Name*</label>
                         <input className="field__input-text" placeholder="Your Name" name="name" id="name" type="text" ref={register({ required: true })} />
                     </div>
-                    <div className={`field-wrapper ${errors?.lastname && 'field-wrapper--error'}`}>
-                        <label className="field__label" htmlFor="lastname">Last Name*</label>
-                        <input className="field__input-text" placeholder="Your Last Name" name="lastname" id="lastname" type="text" ref={register({ required: true })} />
+                    <div className={`field-wrapper ${errors?.lastName && 'field-wrapper--error'}`}>
+                        <label className="field__label" htmlFor="lastName">Last Name*</label>
+                        <input className="field__input-text" placeholder="Your Last Name" name="lastName" id="lastName" type="text" ref={register({ required: true })} />
                     </div>
                     <div className={`field-wrapper ${errors?.username && 'field-wrapper--error'}`}>
                         <label className="field__label" htmlFor="username">E-mail*</label>

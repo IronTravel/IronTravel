@@ -8,21 +8,30 @@ const { isLoggedIn, hashPassword, checkHashedPassword, uploadCloudinaryAvatar } 
 //Models
 const User = require("../models/User");
 
+//ALL USERS//
+router.get('/', isLoggedIn(), async (req, res) => {
+    const { id } = req.user;
+    const users = await User.find({ _id: { $ne: id } })
+        .populate([
+            { path: "personality" },
+            { path: "life_style" },
+            { path: "hobbies" }
+        ]);
+
+    return res.json(users);
+})
+
 //GET USER//
 router.get('/:id', isLoggedIn(), async (req, res) => {
     const { id } = req.params;
-    const user = await User.findById(id);
+    const user = await User.findById(id)
+        .populate([
+            { path: "personality" },
+            { path: "life_style" },
+            { path: "hobbies" }
+        ]);
+
     return res.json(user);
-})
-
-//ALL USERS//
-router.get('/', isLoggedIn(), async (req, res) => {
-    const users = await User.find()
-        .populate('personality')
-        .populate('life_style')
-        .populate('hobbies');
-
-    return res.json(users);
 })
 
 //CHANGE USER PASSWORD
@@ -60,13 +69,19 @@ router.post('/edit', isLoggedIn(), async (req, res) => {
     const id = req.user.id;
 
     try {
-        const user = await User.findById(id);
-        console.log(user);
+        const user = await User.findById(id)
+            .populate([
+                { path: "personality" },
+                { path: "life_style" },
+                { path: "hobbies" }
+            ]);
+
         if (user) {
             console.log(user.description, "antes");
             user.email = email
             user.name = name
             user.lastName = lastName
+            user.fullName = `${name} ${lastName}`
             user.description = description
             user.gender = gender
             user.dob.date = birthday

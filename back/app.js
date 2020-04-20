@@ -113,4 +113,7 @@ app.use("/travels", travels);
 const tours = require("./routes/tours");
 app.use("/tours", tours);
 
+const entries = require("./routes/entries");
+app.use("/entries", entries);
+
 module.exports = app;

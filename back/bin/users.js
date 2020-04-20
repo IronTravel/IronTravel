@@ -16,8 +16,8 @@ axios({
             return transformedData.results.map(item => {
                 return {
                     name: item.name.first,
-                    lastname: item.name.last,
-                    fullname: `${item.name.first} ${item.name.last}`,
+                    lastName: item.name.last,
+                    fullName: `${item.name.first} ${item.name.last}`,
                     initials: `${item.name.first[0]}${item.name.last[0]}`,
                     password: hashPassword("123456"),
                     gender: item.gender,

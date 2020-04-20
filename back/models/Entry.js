@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Entry = new mongoose.Schema(
     {
-        author: { type: mongoose.Schema.ObjectId, ref: 'User' },
+        author: { type: mongoose.Schema.ObjectId, ref: 'user' },
         body: String,
         type: { type: String, enum: ['text', 'photo', 'video'] },
         date: { type: Date, default: Date.now },
