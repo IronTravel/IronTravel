@@ -28,6 +28,7 @@ export const Header = withRouter(({ history }) => {
             history.push('/auth')
         })
     }
+
     return (
         <header className="main-header">
             <div className="main-logo">

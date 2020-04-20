@@ -6,6 +6,7 @@ import { Header } from '../layout/Header';
 import { UserCard } from '../components/UserCard';
 import { UserProfileHeader } from '../components/UserProfileHeader';
 import { LikeButton } from '../components/LikeButton';
+import { LikesFaces } from '../components/LikesFaces';
 
 // Context
 import { useUser, useUserSetter } from '../context/user';
@@ -55,7 +56,7 @@ export const ProfilePage = () => {
                                 }
 
                                 {
-                                    user && user.personality.length > 0 &&
+                                    user && user.personality &&
                                     <section className="content-box">
                                         <h4 className="content-box__title">Personality</h4>
                                         <div className="content-box__pills">
@@ -67,7 +68,7 @@ export const ProfilePage = () => {
                                 }
 
                                 {
-                                    user && user.life_style.length > 0 &&
+                                    user && user.life_style &&
                                     <section className="content-box">
                                         <h4 className="content-box__title">Lifestyle</h4>
                                         <div className="content-box__pills">
@@ -79,7 +80,7 @@ export const ProfilePage = () => {
                                 }
 
                                 {
-                                    user && user.hobbies.length > 0 &&
+                                    user && user.hobbies &&
                                     <section className="content-box">
                                         <h4 className="content-box__title">Hobbies</h4>
                                         <div className="content-box__pills">
@@ -94,96 +95,29 @@ export const ProfilePage = () => {
                     </div>
 
                     {/* ProfilePosts Component */}
-                    {
-                        entries &&
-                        <div className="col-6 px-4">
-                            <article className="post-box section-box section-box--shadow">
-                                <header className="post-box__header">
-                                    <UserCard avatarSize={38} name="John Smith" time="5 hours ago" />
-                                </header>
-                                <div className="post-box__body">
-                                    <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-                                </div>
-                                <footer className="post-box__footer">
-                                    <LikeButton className="mr-4" />
-                                    <div className="inline-objects">
-                                        <div className="inline-objects__images">
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                        </div>
-                                        <div className="inline-objects__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
+                    <div className="col-6 px-4">
+                        {
+                            entries && entries.map((entry, i) => (
+                                <article key={i} className="post-box section-box section-box--shadow">
+                                    <header className="post-box__header">
+                                        <UserCard
+                                            avatar={entry.author.avatar}
+                                            avatarSize={38}
+                                            name={entry.author.fullName}
+                                            time={entry.data} />
+                                    </header>
+                                    <div className="post-box__body">
+                                        <p>{entry.body}</p>
                                     </div>
-                                </footer>
-                            </article>
-                            <article className="post-box section-box section-box--shadow">
-                                <header className="post-box__header">
-                                    <UserCard avatarSize={38} name="John Smith" time="5 hours ago" />
-                                </header>
-                                <div className="post-box__body">
-                                    <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-                                </div>
-                                <footer className="post-box__footer">
-                                    <LikeButton className="mr-4" />
-                                    <div className="inline-objects">
-                                        <div className="inline-objects__images">
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                        </div>
-                                        <div className="inline-objects__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
-                                    </div>
-                                </footer>
-                            </article>
-                            <article className="post-box section-box section-box--shadow">
-                                <header className="post-box__header">
-                                    <UserCard avatarSize={38} name="John Smith" time="5 hours ago" />
-                                </header>
-                                <div className="post-box__body">
-                                    <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-                                </div>
-                                <footer className="post-box__footer">
-                                    <LikeButton className="mr-4" />
-                                    <div className="inline-objects">
-                                        <div className="inline-objects__images">
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                        </div>
-                                        <div className="inline-objects__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
-                                    </div>
-                                </footer>
-                            </article>
-                            <article className="post-box section-box section-box--shadow">
-                                <header className="post-box__header">
-                                    <UserCard avatarSize={38} name="John Smith" time="5 hours ago" />
-                                </header>
-                                <div className="post-box__body">
-                                    <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-                                </div>
-                                <footer className="post-box__footer">
-                                    <LikeButton className="mr-4" />
-                                    <div className="inline-objects">
-                                        <div className="inline-objects__images">
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                        </div>
-                                        <div className="inline-objects__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
-                                    </div>
-                                </footer>
-                            </article>
-                        </div>
+                                    <footer className="post-box__footer">
+                                        <LikeButton count={entry.likes.length} className="mr-4" />
+                                        {entry.likes && <LikesFaces entries={entry.likes} />}
+                                    </footer>
+                                </article>
 
-                    }
+                            ))
+                        }
+                    </div>
 
                     {/* ProfileAside Component */}
                     <div className="col-3">

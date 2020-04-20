@@ -23,34 +23,34 @@ export const UserProfileHeader = ({ data }) => {
             </div>
             <div className="profile-header__info">
                 <div className="profile-header__info__data">
-                    <div className="value">73</div>
+                    <div className="value">{user?.travels?.length || 0}</div>
                     <div className="key">Travels</div>
                 </div>
                 <div className="profile-header__info__data">
-                    <div className="value">289</div>
+                    <div className="value">{user?.tours?.length || 0}</div>
                     <div className="key">Tours</div>
                 </div>
                 <div className="profile-header__info__data profile-header__info__data--user">
                     {
                         user &&
                         <div className="big-avatar">
-                            <img src={user && user.avatar || defaultAvatar} alt="" />
+                            <img src={user?.avatar || defaultAvatar} alt="" />
                         </div>
                     }
 
-                    <div className="value">{user && user.fullName}</div>
+                    <div className="value">{user?.fullName}</div>
                     {
                         <div className="key">
-                            {user.personality && handleGetRandom(user.personality)}, {user.life_style && handleGetRandom(user.life_style)}, {user.hobbies && handleGetRandom(user.hobbies)}
+                            {user.personality && handleGetRandom(user.personality)} 🌎 {user.life_style && handleGetRandom(user.life_style)} 🌎 {user.hobbies && handleGetRandom(user.hobbies)}
                         </div>
                     }
                 </div>
                 <div className="profile-header__info__data">
-                    <div className="value">34K</div>
+                    <div className="value">{user?.followers?.length || 0}</div>
                     <div className="key">Followers</div>
                 </div>
                 <div className="profile-header__info__data">
-                    <div className="value">789</div>
+                    <div className="value">{user?.following?.length || 0}</div>
                     <div className="key">Following</div>
                 </div>
             </div>

@@ -20,7 +20,7 @@ export const withAuth = Component => () => {
     return (
         <UserContext.Provider value={{ user, setUser, loading }}>
             {loading && <Loading />}
-            <Component />
+            {!loading && <Component />}
         </UserContext.Provider>
     );
 };
