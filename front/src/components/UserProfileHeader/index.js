@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useForm } from "react-hook-form";
 
 import { useUser, useUserSetter } from "../../context/user";
+import defaultAvatar from '../../assets/images/avatar.png';
 
 import { randomAboutMe } from '../../service/data'
 import { updateAvatar } from '../../service/user';
@@ -14,8 +15,6 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
 export const UserProfileHeader = () => {
     const user = useUser()
     const setUser = useUserSetter()
-
-    const user = useUser();
 
     const [userAboutMe, setUserAboutMe] = useState([]);
     const fetchUAboutMe = () => randomAboutMe().then(aboutMe => setUserAboutMe(aboutMe.data.join(' 🌍 ').toString()));

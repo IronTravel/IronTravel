@@ -5,7 +5,7 @@ const Tour = new mongoose.Schema(
         description: String,
         tour_type: String,
         city: String,
-        country: String,
+        country: { type: mongoose.Schema.ObjectId, ref: "country" },
         tour_partner: { type: mongoose.Schema.ObjectId, ref: "user" },
         organizer: { type: mongoose.Schema.ObjectId, ref: "user" },
         start_date: Date,
