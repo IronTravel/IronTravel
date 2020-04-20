@@ -7,19 +7,38 @@ const { isLoggedIn } = require('../lib');
 
 //Models
 const Tour = require("../models/Tour");
+const Country = require("../models/Country");
+const User = require("../models/User");
 
 //ALL TOURS//
 router.get('/', isLoggedIn(), async (req, res) => {
-    const tour = await Tour.find() 
-    return res.json(tour)
+  const id = req.user.id  
+   const tours = await User.findById(id).populate({ path: "my_tours" , populate: {path: "country"}})
+  return res.json(tours)
   })
 
 //CREATE TOUR//
 router.post('/create', isLoggedIn(), async (req, res) => {
-    const { city } = req.body;
-    const tour = await Tour.create({city})
-    return res.json(tour)
-  })
+  const id = req.user.id
+  const { name, type, city, country, description, end, start } = req.body;
+  try {
+    const countryID = await Country.findOne({name:country})
+    const tour = await Tour.create({
+        name:name,
+        tour_type:type,
+        city:city,
+        country:countryID._id,
+        start_date: start, 
+        end_date:end,
+        description:description
+    })
+  const user = await User.findByIdAndUpdate(id, {$addToSet: {my_tours: tour.id}})
+  return res.json(user)
+  } catch (error ){
+    console.log(error)
+    return res.json({status:"No se ha creado correctamente."})
+  }
+})
 
 //EDIT TOUR//
 router.post('/edit/:id', isLoggedIn(), async (req, res) => {

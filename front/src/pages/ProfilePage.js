@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+// Context
+import { useUser } from '../context/user';
+
+// Service
+import { getUser } from '../service/user'
+import { getUserEntries } from '../service/entries';
+
 // Components
 import { Header } from '../layout/Header';
 import { UserCard } from '../components/UserCard';
 import { UserProfileHeader } from '../components/UserProfileHeader';
 import { LikeButton } from '../components/LikeButton';
 import { LikesFaces } from '../components/LikesFaces';
-
-// Context
-import { useUser, useUserSetter } from '../context/user';
-
-// Service
-import { getUser } from '../service/user'
-import { getUserEntries } from '../service/entries';
 
 export const ProfilePage = () => {
 

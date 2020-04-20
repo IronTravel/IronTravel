@@ -1,20 +1,46 @@
 import React, { useState, useEffect } from 'react'
 import _ from 'lodash';
-import defaultAvatar from '../../assets/images/avatar.png';
+import { useForm } from "react-hook-form";
 
 // Context
-import { useUser } from "../../context/user";
+import { useUser, useUserSetter } from "../../context/user";
+import defaultAvatar from '../../assets/images/avatar.png';
+import { randomAboutMe } from '../../service/data'
+import { updateAvatar } from '../../service/user';
+
+const cloudinary = require("cloudinary-core");
+
+//Nombre del cloudinary que sale en la web
+const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
 
 export const UserProfileHeader = ({ data }) => {
+    const user = useUser()
+    const setUser = useUserSetter()
 
     const loggedInUser = useUser();
     const [user, setUser] = useState({});
+
+    const { handleSubmit, register, errors } = useForm();
 
     useEffect(() => {
         setUser(data || loggedInUser)
     }, []);
 
     const handleGetRandom = (arr) => arr[_.random(0, arr.length - 1)]?.name || '';
+
+    const onSubmit = data => {
+        const myAvatar = data.avatar[0];
+        console.log(myAvatar)
+        updateAvatar(myAvatar)
+            .then((res) => {
+                console.log("changed file")
+                setUser(res.data.user)
+            })
+            .catch((error) => {
+                console.log("error updating")
+                console.log(error)
+            })
+    }
 
     return (
         <div className="profile-header">
@@ -54,6 +80,16 @@ export const UserProfileHeader = ({ data }) => {
                     <div className="key">Following</div>
                 </div>
             </div>
-        </div >
+        </div>
+
+        <div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div>
+                    <input name="avatar" type="file" ref={register()} />
+                </div>
+                <button type="submit">Change Profile Pic</button>
+            </form>
+        </div>
     )
 }
+
