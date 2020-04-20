@@ -7,20 +7,20 @@ import { whoami } from '../../service/auth';
 
 export const withAuth = Component => () => {
 
-  const [user, setUser] = useState();
-  const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState();
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    whoami()
-      .then(res => setUser(res.data))
-      .catch(e => console.error('No user logged in...'))
-      .finally(() => setLoading(false));
-  }, []);
+    useEffect(() => {
+        whoami()
+            .then(res => setUser(res.data))
+            .catch(e => console.error('No user logged in...'))
+            .finally(() => setLoading(false));
+    }, []);
 
-  return (
-    <UserContext.Provider value={{ user, setUser, loading }}>
-      {loading && <Loading />}
-      <Component />
-    </UserContext.Provider>
-  );
+    return (
+        <UserContext.Provider value={{ user, setUser, loading }}>
+            {loading && <Loading />}
+            <Component />
+        </UserContext.Provider>
+    );
 };

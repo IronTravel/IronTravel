@@ -1,10 +1,4 @@
-import axios from 'axios';
-
-const service = axios.create({
-    baseURL: process.env.API_URL,
-    withCredentials: true
-});
-
+import service from './_base';
 
 export const allTours = async () => {
     return await service.get('/tours');

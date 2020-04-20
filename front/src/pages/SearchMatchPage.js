@@ -18,10 +18,7 @@ export const SearchMatchPage = () => {
     const [users, setUsers] = useState();
 
     useEffect(() => {
-        allUser().then(res => {
-            setUsers(res.data)
-            console.log(res.data[0])
-        });
+        allUser().then(res => setUsers(res.data));
     }, []);
 
     const handleGetRandom = (arr) => arr[_.random(0, arr.length - 1)]?.name || '';
@@ -49,7 +46,7 @@ export const SearchMatchPage = () => {
                                             </div>
                                             <span className="entity-card__body__user-value">76</span>
                                         </div>
-                                        <h2 className="entity-card__body__title">{user.fullname}</h2>
+                                        <h2 className="entity-card__body__title">{user.fullName}</h2>
                                         <p className="entity-card__body__tagline">
                                             {handleGetRandom(user.personality)}, {handleGetRandom(user.life_style)}, {handleGetRandom(user.hobbies)}
                                         </p>

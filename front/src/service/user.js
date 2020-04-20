@@ -1,15 +1,10 @@
-import axios from 'axios';
-
-const service = axios.create({
-    baseURL: process.env.API_URL,
-    withCredentials: true
-});
+import service from './_base';
 
 export const allUser = async () => {
     return await service.get('/users');
 }
 
-export const getUser = async idUser => {
+export const getUser = async (idUser) => {
     return await service.get(`/users/${idUser}`);
 }
 

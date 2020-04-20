@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { randomAboutMe } from '../../service/data'
-import { useUser } from "../../context/user";
+import _ from 'lodash';
 import defaultAvatar from '../../assets/images/avatar.png';
 
-export const UserProfileHeader = () => {
+// Context
+import { useUser } from "../../context/user";
 
-    const user = useUser();
+export const UserProfileHeader = ({ data }) => {
 
-    const [userAboutMe, setUserAboutMe] = useState([]);
-    const fetchUAboutMe = () => randomAboutMe().then(aboutMe => setUserAboutMe(aboutMe.data.join(' 🌍 ').toString()));
+    const loggedInUser = useUser();
+    const [user, setUser] = useState({});
 
     useEffect(() => {
-        fetchUAboutMe()
+        setUser(data || loggedInUser)
     }, []);
+
+    const handleGetRandom = (arr) => arr[_.random(0, arr.length - 1)]?.name || '';
 
     return (
         <div className="profile-header">
@@ -29,16 +31,18 @@ export const UserProfileHeader = () => {
                     <div className="key">Tours</div>
                 </div>
                 <div className="profile-header__info__data profile-header__info__data--user">
-
-                    <div className="big-avatar">
-                        <img src={user && user.avatar || defaultAvatar} alt="" />
-                    </div>
-
-                    {user &&
-                        <div className="value">{user.name} {user.lastName}</div>
+                    {
+                        user &&
+                        <div className="big-avatar">
+                            <img src={user && user.avatar || defaultAvatar} alt="" />
+                        </div>
                     }
-                    {userAboutMe &&
-                        <div className="key">{userAboutMe}</div>
+
+                    <div className="value">{user && user.fullName}</div>
+                    {
+                        <div className="key">
+                            {user.personality && handleGetRandom(user.personality)}, {user.life_style && handleGetRandom(user.life_style)}, {user.hobbies && handleGetRandom(user.hobbies)}
+                        </div>
                     }
                 </div>
                 <div className="profile-header__info__data">
@@ -50,6 +54,6 @@ export const UserProfileHeader = () => {
                     <div className="key">Following</div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
