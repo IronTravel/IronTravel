@@ -8,21 +8,29 @@ const { isLoggedIn, hashPassword, checkHashedPassword } = require('../lib');
 //Models
 const User = require("../models/User");
 
-//GET USER//
-router.get('/:id', isLoggedIn(), async (req, res) => {
-    const { id } = req.params;
-    const user = await User.findById(id);
-    return res.json(user);
-})
-
 //ALL USERS//
 router.get('/', isLoggedIn(), async (req, res) => {
     const users = await User.find()
-        .populate('personality')
-        .populate('life_style')
-        .populate('hobbies');
+        .populate([
+            { path: "personality" },
+            { path: "life_style" },
+            { path: "hobbies" }
+        ]);
 
     return res.json(users);
+})
+
+//GET USER//
+router.get('/:id', isLoggedIn(), async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findById(id)
+        .populate([
+            { path: "personality" },
+            { path: "life_style" },
+            { path: "hobbies" }
+        ]);
+
+    return res.json(user);
 })
 
 //CHANGE USER PASSWORD
