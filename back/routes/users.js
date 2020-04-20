@@ -10,7 +10,8 @@ const User = require("../models/User");
 
 //ALL USERS//
 router.get('/', isLoggedIn(), async (req, res) => {
-    const users = await User.find()
+    const { id } = req.user;
+    const users = await User.find({ _id: { $ne: id } })
         .populate([
             { path: "personality" },
             { path: "life_style" },
@@ -68,13 +69,19 @@ router.post('/edit', isLoggedIn(), async (req, res) => {
     const id = req.user.id;
 
     try {
-        const user = await User.findById(id);
-        console.log(user);
+        const user = await User.findById(id)
+            .populate([
+                { path: "personality" },
+                { path: "life_style" },
+                { path: "hobbies" }
+            ]);
+
         if (user) {
             console.log(user.description, "antes");
             user.email = email
             user.name = name
             user.lastName = lastName
+            user.fullName = `${name} ${lastName}`
             user.description = description
             user.gender = gender
             user.dob.date = birthday

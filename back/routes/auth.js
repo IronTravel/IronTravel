@@ -78,8 +78,14 @@ router.post("/logout", isLoggedIn(), (req, res) => {
 //WHOAMI//
 router.get('/whoami', isLoggedIn(), async (req, res) => {
     if (req.user) {
-        //console.log(req.user)
-        res.json(_.omit(req.user, ["_id", "password", "__v"]));
+        const { id } = req.user;
+        const user = await User.findById(id)
+            .populate([
+                { path: "personality" },
+                { path: "life_style" },
+                { path: "hobbies" }
+            ]);
+        res.json(_.omit(user, ["_id", "password", "__v"]));
     } else {
         //console.log("No user login", req.user)
         return res.status(401).json({ status: 'No user logged in' })

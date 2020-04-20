@@ -16,7 +16,8 @@ const Entry = require("../models/Entry");
 //GET USER ENTRIES//
 router.get('/:userId', isLoggedIn(), async (req, res) => {
     const { userId } = req.params;
-    const userEntries = await Entry.find({ author: userId }).populate('author')
+    const userEntries = await Entry.find({ author: userId })
+        .populate([{ path: "author" }, { path: "likes" }])
     return res.json(userEntries)
 })
 
