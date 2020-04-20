@@ -13,8 +13,9 @@ const User = require("../models/User");
 //ALL TRAVELS//
 router.get('/', isLoggedIn(), async (req, res) => {
   const id = req.user.id  
-  const travels = await User.findByIdd(id).populate({ path: "my_travels" }.populate({path: "country"}))
-  // const travels = await User.findByIdd(id).populate({ path: "my_travels" , populate: {path: "country"}})  
+  // const travels = await User.findById(id).populate({ path: "my_travels" }.populate({path: "country"}))
+    const travels = await User.findById(id).populate({ path: "my_travels" , populate: {path: "country"}})  
+  console.log(travels)
   return res.json(travels)
   })
 
@@ -22,18 +23,22 @@ router.get('/', isLoggedIn(), async (req, res) => {
 router.post('/create', isLoggedIn(), async (req, res) => {
     const id = req.user.id
     const { name, from, to, country } = req.body;
-    
-    const countryID = await Country.findOne({name:country})
-    console.log(countryID.id)
-    console.log(countryID._id)
-    const travel = await Travel.create({
-        name:name,
-        from:from,
-        to:to,
-        country:countryID._id
+    try {
+      const countryID = await Country.findOne({name:country})
+      console.log(countryID.id)
+      console.log(countryID._id)
+      const travel = await Travel.create({
+          name:name,
+          from:from,
+          to:to,
+          country:countryID._id
       })
-    await User.findByIdAndUpdate(id, {$addToSet: {my_travels: travel.id}})
-    return res.json(travel)
+    const user = await User.findByIdAndUpdate(id, {$addToSet: {my_travels: travel.id}})
+    return res.json(user)
+    } catch (error ){
+      console.log(error)
+      return res.json({status:"No se ha creado correctamente."})
+    }
   })
 
 //EDIT TRAVEL//

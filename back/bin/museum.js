@@ -41,4 +41,4 @@ withDbConnection(async () => {
             );
             break;
         }
-    });
+    }});

@@ -16,6 +16,8 @@ export const ProfilePage = () => {
 
     const fetchUAboutMe = () => aboutMe().then(aboutMe => setUserAboutMe(aboutMe.data));
 
+    console.log(userAboutMe)
+
     // const setUser = useUserSetter();
 
 

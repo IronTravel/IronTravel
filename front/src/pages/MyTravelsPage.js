@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form'
 import Modali, { useModali } from 'modali';
 
@@ -9,25 +9,37 @@ import { UserCard } from '../components/UserCard';
 import NewEntity from '../assets/svgs/icon-new.svg';
 
 import { useUserSetter } from "../context/user";
-import { createTravel } from '../service/travel';
+import { allTravel, createTravel } from '../service/travel';
 
 export const MyTravelsPage = () => {
 
-    const setUser = useUserSetter();
+    // const setUser = useUserSetter();
 
     const [formSubmitError, setFormSubmitError] = useState('');
     const { handleSubmit, register, errors } = useForm();
     const [exampleModal, toggleExampleModal] = useModali({ title: 'New Travel' });
 
+const [userTravel, SetUserTravel] = useState([])
+
+
+
+const fetchUserTravel = () => allTravel().then(userTravel => SetUserTravel(userTravel.data));
+
+console.log(userTravel.my_travels)
+
+
     const onNewTravelFormSubmit = (data) => {
         console.log(data)
         createTravel(data)
             .then((res) => {
-                console.log(res.data)
-                setUser(res.data)
+                fetchUserTravel()
                 setFormSubmitError(res.data.status)
             }) 
     }
+
+    useEffect(() => {
+        fetchUserTravel()
+    }, [])
 
     return (
         <>
@@ -42,7 +54,34 @@ export const MyTravelsPage = () => {
                             <p className="entity-card--button__tagline">The start of a new jorney…</p>
                         </button>
                     </div>
-                    <div className="col-3">
+                    {userTravel.my_travels && userTravel.my_travels.map((e,i) => 
+                    <div className="col-3" key={i}>
+                        <article className="entity-card entity-card--travel">
+                            <header className="entity-card__header">
+                                <div className="entity-card__header__bg">
+                                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80" alt="" />
+                                </div>
+                            </header>
+                            <div className="entity-card__body">
+                                <h2 className="entity-card__body__title">{e.name}</h2>
+                                <p className="entity-card__body__tagline">Last update: 2 hours ago</p>
+                                <div className="entity-card__body__data">
+                                    <div className="inline-objects inline-objects--vertical">
+                                        <span className="mt-3 mb-2">Seen by</span>
+                                        <div className="inline-objects__images inline-objects__images--centered">
+                                            <UserCard showBorder avatarSize={28} />
+                                            <UserCard showBorder avatarSize={28} />
+                                            <UserCard showBorder avatarSize={28} />
+                                            <UserCard showBorder avatarSize={28} />
+                                            <UserCard showBorder avatarSize={28} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                     )}
+                    {/* <div className="col-3">
                         <article className="entity-card entity-card--travel">
                             <header className="entity-card__header">
                                 <div className="entity-card__header__bg">
@@ -141,32 +180,7 @@ export const MyTravelsPage = () => {
                                 </div>
                             </div>
                         </article>
-                    </div>
-                    <div className="col-3">
-                        <article className="entity-card entity-card--travel">
-                            <header className="entity-card__header">
-                                <div className="entity-card__header__bg">
-                                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80" alt="" />
-                                </div>
-                            </header>
-                            <div className="entity-card__body">
-                                <h2 className="entity-card__body__title">Machu Pichu</h2>
-                                <p className="entity-card__body__tagline">Last update: 2 hours ago</p>
-                                <div className="entity-card__body__data">
-                                    <div className="inline-objects inline-objects--vertical">
-                                        <span className="mt-3 mb-2">Seen by</span>
-                                        <div className="inline-objects__images inline-objects__images--centered">
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
@@ -199,7 +213,7 @@ export const MyTravelsPage = () => {
                             <input className="field__input-text" placeholder="Your destination" name="country" id="country" type="text" ref={register({ required: false })} />
                         </div>
                         <div className="field-wrapper--button mt-4">
-                            <button className="btn btn--primary btn--w-full" type="submit">Create</button>
+                            <button className="btn btn--primary btn--w-full" type="submit" onClick={toggleExampleModal}>Create</button>
                         </div>
                         <div className="form-errors">{formSubmitError}</div>
                     </form>
