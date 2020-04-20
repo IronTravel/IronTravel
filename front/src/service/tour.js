@@ -10,8 +10,8 @@ export const allTours = async () => {
     return await service.get('/tours');
 }
 
-export const createTours = async () => {
-    return await service.post('/tours/create');
+export const createTour = async data => {
+    return await service.post('/tours/create', data);
 }
 
 export const editTours = async idTours => {

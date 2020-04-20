@@ -10,7 +10,6 @@ export const allTravel = async () => {
 }
 
 export const createTravel = async data => {
-    console.log("eeeeeeeeeeeeeeeeeeeeeee",data)
     return await service.post('/travels/create', data);
 }
 
