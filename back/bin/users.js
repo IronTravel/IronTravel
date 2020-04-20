@@ -17,7 +17,7 @@ axios({
                 return {
                     name: item.name.first,
                     lastName: item.name.last,
-                    fullName: `${item.name.first} ${item.name.last}`,
+                    //fullName: `${item.name.first} ${item.name.last}`,
                     initials: `${item.name.first[0]}${item.name.last[0]}`,
                     password: hashPassword("123456"),
                     gender: item.gender,

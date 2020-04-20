@@ -10,7 +10,7 @@ const User = new mongoose.Schema(
         name: String,
         lastName: String,
         initials: String,
-        fullName: String,
+        //fullName: String,
         dob: {
             date: Date,
             age: Number
@@ -39,8 +39,14 @@ const User = new mongoose.Schema(
         hobbies: [{ type: mongoose.Schema.ObjectId, ref: "hobby" }],
     },
     {
-        timestamps: true
+        timestamps: true,
+        toJSON: { virtuals: true }
     }
 );
 
+User.virtual('fullName').get(function () {
+    return this.name.split(' ')[0] + ' ' + this.lastName.split(' ')[0];
+});
+
 module.exports = mongoose.model("user", User);
+

@@ -25,7 +25,7 @@ router.post("/signup", isLoggedOut(), async (req, res) => {
             const newUser = await User.create({
                 name: name,
                 lastName: lastName,
-                fullName: `${name} ${lastName}`,
+                //fullName: `${name} ${lastName}`,
                 email: email,
                 password: hashPassword(password),
             });
