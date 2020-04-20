@@ -81,7 +81,7 @@ router.post('/edit', isLoggedIn(), async (req, res) => {
             user.email = email
             user.name = name
             user.lastName = lastName
-            user.fullName = `${name} ${lastName}`
+            //user.fullName = `${name} ${lastName}`
             user.description = description
             user.gender = gender
             user.dob.date = birthday
@@ -100,16 +100,16 @@ router.post('/edit', isLoggedIn(), async (req, res) => {
 
 //cambiar avatar
 router.post("/image", isLoggedIn(), uploadCloudinaryAvatar.single("avatar"), async (req, res) => {
-  const id = req.user.id
+    const id = req.user.id
     try {
-      const user = await User.findById(id);
-      user.avatar = req.file.url
-      await user.save()
-      return res.json({status:"Upload completed", user: user})
-    }catch (error){
-      console.log(error)
+        const user = await User.findById(id);
+        user.avatar = req.file.url
+        await user.save()
+        return res.json({ status: "Upload completed", user: user })
+    } catch (error) {
+        console.log(error)
     }
-  }
+}
 )
 
 module.exports = router;
