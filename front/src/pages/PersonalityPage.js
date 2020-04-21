@@ -32,8 +32,8 @@ export const PersonalityPage = () => {
 
     useEffect(() => {
         whoami().then((res) => {
-            setUserPersonaLityList(res.data.personality);
-            setUserLifeStyleList(res.data.life_style);
+            setUserPersonaLityList(res.data.personality.map(e => e._id));
+            setUserLifeStyleList(res.data.life_style.map(e => e._id));
             personalities().then(res => setPersonalityList(res.data));
             lifestyles().then(res => setLifeStylesList(res.data));
             fetchUAboutMe()

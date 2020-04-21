@@ -25,15 +25,13 @@ export const MusicHobbiesPage = () => {
 
     const fetchUAboutMe = () => randomAboutMe().then(aboutMe => setUserAboutMe(aboutMe.data));
 
-    console.log(userAboutMe)
-
     const [formSubmitError, setFormSubmitError] = useState('');
     const { handleSubmit, register, errors } = useForm();
 
     useEffect(() => {
         whoami().then((res) => {
+            setUserHobbyList(res.data.hobbies.map(e => e._id))
             setUserMusicList(res.data.music);
-            setUserHobbyList(res.data.hobbies);
             musicgenres().then(res => setMusicGenreList(res.data));
             hobbies().then(res => setHobbiesList(res.data));
             fetchUAboutMe()

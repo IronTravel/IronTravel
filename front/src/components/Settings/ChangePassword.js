@@ -29,6 +29,7 @@ export const ChangePassword = () => {
         if(data.newPassword === data.confirmNewPassword) {
             editPass(data)
                 .then((res) => {
+                    console.log(res.data)
                     setUser(res.data)
                     setFormSubmitError(res.data.status)
                 })

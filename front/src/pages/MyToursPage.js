@@ -55,7 +55,7 @@ export const MyToursPage = () => {
                         <article className="entity-card entity-card--travel">
                             <header className="entity-card__header">
                                 <div className="entity-card__header__bg">
-                                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80" alt="" />
+                                    <img src={e.photos[0]} alt="" />
                                 </div>
                             </header>
                             <div className="entity-card__body">

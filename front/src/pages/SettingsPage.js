@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form'
 import moment from 'moment'
@@ -12,8 +12,17 @@ import { useUser, useUserSetter } from "../context/user";
 
 //Service
 import { editUser } from '../service/user';
+import { whoami } from '../service/auth';
 
 export const SettingsPage = () => {
+
+
+    useEffect(() => {
+        whoami().then((res) => {
+            console.log(res.data)
+        });
+        
+    }, []);
 
     const user = useUser()
     const setUser = useUserSetter();
@@ -25,6 +34,7 @@ export const SettingsPage = () => {
         console.log(data)
         editUser(data)
             .then((res) => {
+                console.log(res.data)
                 setUser(res.data)
                 setFormSubmitError(res.data.status)
             })
