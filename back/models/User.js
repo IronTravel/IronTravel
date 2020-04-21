@@ -10,14 +10,11 @@ const User = new mongoose.Schema(
         name: String,
         lastName: String,
         initials: String,
-        //fullName: String,
         dob: {
             date: Date,
             age: Number
         },
         googleId: Number,
-        spotifyId: Number,
-        instagramId: Number,
         main_image: String,
         avatar: String,
         description: { type: String, default: "" },
@@ -37,6 +34,14 @@ const User = new mongoose.Schema(
         personality: [{ type: mongoose.Schema.ObjectId, ref: "personality" }],
         life_style: [{ type: mongoose.Schema.ObjectId, ref: "lifeStyle" }],
         hobbies: [{ type: mongoose.Schema.ObjectId, ref: "hobby" }],
+        spotify: {
+            user_id: String,
+            token: String
+        },
+        instagram: {
+            user_id: String,
+            token: String
+        }
     },
     {
         timestamps: true,

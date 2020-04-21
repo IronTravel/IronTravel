@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Parser from 'html-react-parser';
 import { UserCard } from '../UserCard';
 
-export const LikesFaces = ({ entries }) => {
+export const LikesFaces = ({ entries, inverted }) => {
 
     const [entriesQty, setEntriesQty] = useState('hola');
 
@@ -26,7 +26,7 @@ export const LikesFaces = ({ entries }) => {
 
     return (
         entries &&
-        <div className="inline-objects">
+        <div className={`inline-objects ${inverted && 'inline-objects--inverted'}`}>
             <div className="inline-objects__images">
                 {
                     entries.slice(0, 5).map((like, i) => (

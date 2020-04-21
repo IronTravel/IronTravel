@@ -98,6 +98,7 @@
 
     &__content {
         @extend .d-inline-block, .position-relative;
+        min-width: 600px;
         left: -60px;
         padding: 1.5rem 4rem 1.5rem 5rem;
         background: #fff;

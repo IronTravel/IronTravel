@@ -116,4 +116,7 @@ app.use("/tours", tours);
 const entries = require("./routes/entries");
 app.use("/entries", entries);
 
+const spotify = require("./routes/spotify");
+app.use("/spotify", spotify);
+
 module.exports = app;

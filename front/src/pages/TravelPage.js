@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import moment from 'moment';
+
+// Service
+import { getRecentlyPlayer } from '../service/spotify';
 
 // Components
 import { Header } from '../layout/Header';
 import { UserCard } from '../components/UserCard';
 import { LikeButton } from '../components/LikeButton';
+import { AudioPlayer } from '../components/AudioPlayer';
 
 import TravelIconMusic from '../assets/svgs/icon-music.svg';
 import TravelIconTwitter from '../assets/svgs/icon-twitter.svg';
@@ -14,6 +19,9 @@ import iconSpotify from '../assets/images/icon-spotify.png';
 import iconQuotes from '../assets/images/icon-quotes.png';
 
 export const TravelPage = () => {
+
+    const [entries, getEntries] = useState([]);
+    const [audio, setAudio] = useState('');
 
     const handleLinkNetwork = (network) => {
         switch (network) {
@@ -26,6 +34,19 @@ export const TravelPage = () => {
                 break;
         }
     }
+
+    const formatTime = (time) => {
+        const date = new Date();
+        date.setTime(time);
+        return date.getMinutes() + ":" + date.getSeconds();
+    }
+
+    useEffect(() => {
+        getRecentlyPlayer(10)
+            .then(res => {
+                getEntries(res.data)
+            })
+    }, [])
 
     return (
         <>
@@ -48,48 +69,71 @@ export const TravelPage = () => {
                             <img onClick={() => handleLinkNetwork('instagram')} src={iconInstagram} alt="icon instagram" />
                         </button>
                         <button className="link-network">
-                            <img onClick={() => handleLinkNetwork('spotify')} src={iconSpotify} alt="icon spotify" />
+                            <a href={`${process.env.API_URL}spotify/`}>
+                                <img src={iconSpotify} alt="icon spotify" />
+                            </a>
+                            {/* <img onClick={() => handleLinkNetwork('spotify')} src={iconSpotify} alt="icon spotify" /> */}
                         </button>
+                        {/* <button onClick={handleGetMusic}>Get Music</button> */}
                     </div>
 
-                    <article className="row travel-timeline__post travel-timeline__post--music">
-                        <header className="col-4 travel-timeline__post__header">
-                            <time className="date">August 7, 2020 @ 1:30pm</time>
-                            <div className="action">Listened to</div>
-                            <LikeButton inverted />
-                            <div className="inline-objects inline-objects--inverted">
-                                <div className="inline-objects__images">
-                                    <UserCard showBorder avatarSize={28} />
-                                    <UserCard showBorder avatarSize={28} />
-                                    <UserCard showBorder avatarSize={28} />
-                                    <UserCard showBorder avatarSize={28} />
-                                    <UserCard showBorder avatarSize={28} />
-                                </div>
-                                <div className="inline-objects__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
-                            </div>
-                            <div className="post-action">
-                                <TravelIconMusic />
-                            </div>
-                        </header>
-                        <div className="col-8 travel-timeline__post__body">
-                            <article className="music-post">
-                                <figure className="music-post__img">
-                                    <img src="https://i.pinimg.com/originals/ca/16/49/ca164940a1aa2b0a3536aedf2d839a13.jpg" alt="" />
-                                </figure>
-                                <div className="music-post__content">
-                                    <h3 className="music-post__title">Way back home (feat. Conor Maynard)</h3>
-                                    <p className="music-post__artist">SHAUN, Conor Maynard and Sam Feldt</p>
-                                    <dl className="music-post__data">
-                                        <dt>Duration: </dt>
-                                        <dd>3:12</dd>
-                                        <dt>Year: </dt>
-                                        <dd>2018</dd>
-                                    </dl>
+                    <AudioPlayer audio={audio} />
+
+                    {/* <audio ref={player}>
+                        <source />
+                    </audio> */}
+
+                    {
+                        entries?.map((entry, i) => (
+                            <article key={i} className="row travel-timeline__post travel-timeline__post--music">
+                                <header className="col-4 travel-timeline__post__header">
+                                    <time className="date">{moment(entry.played_at).format('MMMM Do, YYYY [@] HH:mm')}</time>
+                                    <div className="action">Listened to</div>
+
+                                    <LikeButton count={entry.likes?.length} inverted />
+                                    {
+                                        entry.likes &&
+                                        <LikesFaces inverted entries={entry.likes} />
+                                    }
+
+                                    <div className="post-action">
+                                        <TravelIconMusic />
+                                    </div>
+                                </header>
+                                <div className="col-8 travel-timeline__post__body">
+                                    <article className="music-post">
+                                        <figure className="music-post__img">
+                                            <img src={entry.image} alt="" />
+                                        </figure>
+                                        <div className="music-post__content">
+                                            <h3 className="music-post__title">{entry.artists}</h3>
+                                            <p className="music-post__artist">{entry.song}</p>
+                                            <dl className="music-post__data">
+                                                {
+                                                    entry?.duration_ms &&
+                                                    <>
+                                                        <dt>Duration: </dt>
+                                                        <dd>{formatTime(entry.duration_ms)}</dd>
+                                                    </>
+                                                }
+                                                {
+                                                    entry?.year &&
+                                                    <>
+                                                        <dt>Year: </dt>
+                                                        <dd>2018</dd>
+                                                    </>
+                                                }
+                                            </dl>
+                                            <button onClick={() => setAudio(entry.preview_url)}>Play</button>
+                                            {/* <button onClick={() => playIt(entry.preview_url)}>Play</button> */}
+                                        </div>
+                                    </article>
                                 </div>
                             </article>
-                        </div>
-                    </article>
-                    <article className="row travel-timeline__post travel-timeline__post--twitter">
+                        ))
+                    }
+
+                    {/* <article className="row travel-timeline__post travel-timeline__post--twitter">
                         <header className="col-4 travel-timeline__post__header">
                             <time className="date">August 7, 2020 @ 1:30pm</time>
                             <div className="action">Listened to</div>
@@ -148,6 +192,7 @@ export const TravelPage = () => {
                             </article>
                         </div>
                     </article>
+                */}
                 </div>
             </div>
 
