@@ -3,6 +3,7 @@ import moment from 'moment';
 
 // Service
 import { getRecentlyPlayer } from '../service/spotify';
+import { getPosts } from '../service/instagram';
 
 // Components
 import { Header } from '../layout/Header';
@@ -21,6 +22,7 @@ import iconQuotes from '../assets/images/icon-quotes.png';
 export const TravelPage = () => {
 
     const [entries, getEntries] = useState([]);
+    const [entriesIg, getEntriesIg] = useState([]);
     const [audio, setAudio] = useState('');
 
     const handleLinkNetwork = (network) => {
@@ -38,14 +40,12 @@ export const TravelPage = () => {
     const formatTime = (time) => {
         const date = new Date();
         date.setTime(time);
-        return date.getMinutes() + ":" + date.getSeconds();
+        return `${date.getMinutes()} : ${(date.getSeconds()).toString().padStart(2, '0')}`;
     }
 
     useEffect(() => {
-        getRecentlyPlayer(10)
-            .then(res => {
-                getEntries(res.data)
-            })
+        getRecentlyPlayer(10).then(res => getEntries(res.data));
+        getPosts().then(res => { getEntriesIg(res.data) });
     }, [])
 
     return (
@@ -66,7 +66,10 @@ export const TravelPage = () => {
                     <div className="travel-link">
                         <span className="font-italic">Travel linked with:</span>
                         <button className="link-network">
-                            <img onClick={() => handleLinkNetwork('instagram')} src={iconInstagram} alt="icon instagram" />
+                            <a href={`${process.env.API_URL}instagram/`}>
+                                <img src={iconInstagram} alt="icon instagram" />
+                            </a>
+                            {/* <img onClick={() => handleLinkNetwork('instagram')} src={iconInstagram} alt="icon instagram" /> */}
                         </button>
                         <button className="link-network">
                             <a href={`${process.env.API_URL}spotify/`}>
@@ -74,14 +77,9 @@ export const TravelPage = () => {
                             </a>
                             {/* <img onClick={() => handleLinkNetwork('spotify')} src={iconSpotify} alt="icon spotify" /> */}
                         </button>
-                        {/* <button onClick={handleGetMusic}>Get Music</button> */}
                     </div>
 
                     <AudioPlayer audio={audio} />
-
-                    {/* <audio ref={player}>
-                        <source />
-                    </audio> */}
 
                     {
                         entries?.map((entry, i) => (
@@ -133,6 +131,37 @@ export const TravelPage = () => {
                         ))
                     }
 
+                    {
+                        entriesIg?.map((entry, i) => (
+                            <article key={i} className="row travel-timeline__post travel-timeline__post--instagram">
+                                <header className="col-4 travel-timeline__post__header">
+                                    <time className="date">{moment(entry.posted_at).format('MMMM Do, YYYY [@] HH:mm')}</time>
+                                    <div className="action">Listened to</div>
+
+                                    <LikeButton count={entry.likes?.length} inverted />
+                                    {
+                                        entry.likes &&
+                                        <LikesFaces inverted entries={entry.likes} />
+                                    }
+
+                                    <div className="post-action">
+                                        <TravelIconInstagram />
+                                    </div>
+                                </header>
+                                <div className="col-8 travel-timeline__post__body">
+                                    <article className="instagram-post">
+                                        <figure className="instagram-post__img">
+                                            <img src={entry.image} alt="" />
+                                        </figure>
+                                        <div className="instagram-post__content">
+                                            <p>{entry.caption}</p>
+                                        </div>
+                                    </article>
+                                </div>
+                            </article>
+                        ))
+                    }
+
                     {/* <article className="row travel-timeline__post travel-timeline__post--twitter">
                         <header className="col-4 travel-timeline__post__header">
                             <time className="date">August 7, 2020 @ 1:30pm</time>
@@ -157,37 +186,6 @@ export const TravelPage = () => {
                                 <div className="twitter-post__content">
                                     <img className="twitter-post__quotes" src={iconQuotes} alt="" />
                                     <p>Donec id elit non mi porta gravida at eget metus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Curabitur blandit tempus porttitor.</p>
-                                </div>
-                            </article>
-                        </div>
-                    </article>
-                    <article className="row travel-timeline__post travel-timeline__post--instagram">
-                        <header className="col-4 travel-timeline__post__header">
-                            <time className="date">August 7, 2020 @ 1:30pm</time>
-                            <div className="action">Listened to</div>
-                            <LikeButton inverted />
-                            <div className="inline-objects inline-objects--inverted">
-                                <div className="inline-objects__images">
-                                    <UserCard showBorder avatarSize={28} />
-                                    <UserCard showBorder avatarSize={28} />
-                                    <UserCard showBorder avatarSize={28} />
-                                    <UserCard showBorder avatarSize={28} />
-                                    <UserCard showBorder avatarSize={28} />
-                                </div>
-                                <div className="inline-objects__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
-                            </div>
-                            <div className="post-action">
-                                <TravelIconInstagram />
-                            </div>
-                        </header>
-                        <div className="col-8 travel-timeline__post__body">
-                            <article className="instagram-post">
-                                <figure className="instagram-post__img">
-                                    <img src="https://i.pinimg.com/originals/ca/16/49/ca164940a1aa2b0a3536aedf2d839a13.jpg" alt="" />
-                                    <img src="https://i.pinimg.com/originals/ca/16/49/ca164940a1aa2b0a3536aedf2d839a13.jpg" alt="" />
-                                </figure>
-                                <div className="instagram-post__content">
-                                    <p>Donec id elit non mi porta gravida at eget metus. Cras justo odio, dapibus ac facilisis in.</p>
                                 </div>
                             </article>
                         </div>
