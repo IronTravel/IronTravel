@@ -31,11 +31,11 @@ export const ProfilePage = () => {
             });
         } else {
             setUser(loggedInUser);
-            // whoami().then((res) => {
-            //     setUser(res.data)
-            //     console.log(res.data._id)
-            //     // getUserEntries(res.data._id).then(res => setEntries(res.data));
-            // });
+            whoami().then((res) => {
+                setUser(res.data)
+                console.log(res.data._id)
+                // getUserEntries(res.data._id).then(res => setEntries(res.data));
+            });
             getUserEntries(loggedInUser._id).then(res => setEntries(res.data));
         }
     }, []);

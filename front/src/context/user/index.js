@@ -12,7 +12,12 @@ export const useUserSetter = () => {
     return userState.setUser;
 };
 
-export const useUserIsLoading = () => {
+export const useLoading = () => {
     const userState = useContext(UserContext);
     return userState.loading;
+};
+
+export const useSetLoading = () => {
+    const userState = useContext(UserContext);
+    return userState.setLoading;
 };

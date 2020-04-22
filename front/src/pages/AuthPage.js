@@ -17,7 +17,7 @@ export const AuthPage = () => {
     return (
         !user ?
             <div className='main-wrapper main-wrapper--sm'>
-                <div className="row auth-content-wrapper" >
+                <div className="row special-content-wrapper" >
                     <div className="col col-6">
                         <LogoWeTravel className="mb-4" />
                         <h2 className="auth-title">Welcome to WeTravel</h2>
@@ -31,8 +31,8 @@ export const AuthPage = () => {
                         </AuthTabs>
                     </div>
                 </div >
-                <div className="auth-bg"></div>
-                <div className="auth-faces"></div>
+                <div className="special-bg"></div>
+                <div className="bg-faces"></div>
             </div> :
             <Redirect to='/profile' />
     )
