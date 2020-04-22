@@ -47,4 +47,8 @@
     &-body {
         background-color: #F2F2F4;
     }
+
+    .modali-button {
+        @extend .btn, .btn--primary;
+    }
 }

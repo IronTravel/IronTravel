@@ -12,6 +12,8 @@ import NewEntity from '../assets/svgs/icon-new.svg';
 
 import { allTravel, createTravel, deleteTravel, oneTravel, editTravel } from '../service/travel';
 import { allCountries } from '../service/data'
+import { Edit, Trash2, MoreVertical } from 'react-feather';
+import { DropDownMenu } from '../components/DropDownMenu';
 
 export const MyTravelsPage = () => {
 
@@ -27,11 +29,8 @@ export const MyTravelsPage = () => {
     const [idTravel, setIDTravel] = useState()
     const [editOneTravel, setEditOneTravel] = useState()
 
-
     const fetchUserTravel = () => allTravel().then(userTravel => setUserTravel(userTravel.data));
-
     const fetchCountries = () => allCountries().then(allcountries => setCountries(allcountries.data))
-
 
     const onNewTravelFormSubmit = (data) => {
         console.log(data)
@@ -107,41 +106,52 @@ export const MyTravelsPage = () => {
                             <p className="entity-card--button__tagline">The start of a new jorney…</p>
                         </button>
                     </div>
-                    {userTravel && userTravel.map((e, i) =>
+                    {userTravel && userTravel.map((travel, i) =>
                         <div className="col-3" key={i}>
                             <article className="entity-card entity-card--travel">
-                                <Link to={`travel/${travel._id}`}>
-                                    <header className="entity-card__header">
+
+                                <header className="entity-card__header">
+                                    <Link to={`travel/${travel._id}`}>
                                         <div className="entity-card__header__bg">
                                             <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80" alt="" />
                                         </div>
-                                    </header>
-                                    <button className="button" onClick={() => {
-                                        setEditTravelModal()
-                                        oneTravel(e._id).then((res) => setEditOneTravel(res.data))
-                                    }} />
-                                    <button className="button" onClick={() => {
-                                        setDeleteTravelModal()
-                                        setTravel(e._id)
-                                    }} />
-                                    <div className="entity-card__body">
-                                        <h2 className="entity-card__body__title">{travel.name}</h2>
-                                        {
-                                            travel.entries.length > 0 &&
-                                            <p className="entity-card__body__tagline">Last update: 2 hours ago</p>
-                                        }
+                                    </Link>
+                                </header>
 
-                                        <div className="entity-card__body__data">
-                                            {
-                                                travel.likes &&
-                                                <>
-                                                    <span className="mt-3 mb-2">Seen by</span>
-                                                    <LikesFaces entries={entry.likes} />
-                                                </>
-                                            }
-                                        </div>
+                                <div className="entity-card__body">
+                                    <DropDownMenu icon={<MoreVertical size={16} />}>
+                                        <button className="button" onClick={() => {
+                                            setEditTravelModal()
+                                            oneTravel(travel._id).then((res) => setEditOneTravel(res.data))
+                                        }}>
+                                            <Edit size={14} />
+                                            <span>Editar</span>
+                                        </button>
+                                        <button className="button" onClick={() => {
+                                            setDeleteTravelModal()
+                                            setTravel(travel._id)
+                                        }}>
+                                            <Trash2 size={14} />
+                                            <span>Eliminar</span>
+                                        </button>
+                                    </DropDownMenu>
+
+                                    <h2 className="entity-card__body__title">{travel.name}</h2>
+                                    {
+                                        travel.entries.length > 0 &&
+                                        <p className="entity-card__body__tagline">Last update: 2 hours ago</p>
+                                    }
+
+                                    <div className="entity-card__body__data">
+                                        {
+                                            travel.likes &&
+                                            <>
+                                                <span className="mt-3 mb-2">Seen by</span>
+                                                <LikesFaces entries={entry.likes} />
+                                            </>
+                                        }
                                     </div>
-                                </Link>
+                                </div>
                             </article>
                         </div>
                     )}
@@ -253,12 +263,14 @@ export const MyTravelsPage = () => {
             {/* Delete Modal */}
             <Modali.Modal {...deleteTravelModal} className="modal">
                 <div className="auth-card__body">
-                    <strong className="mb-2">Are you sure??</strong>
+                    <p className="mb-3"><strong> You are about to delete a Travel. This is an irreversible action, are you sure you want to continue?</strong></p>
                     <div>
-                        <Modali.Button label="Delete" isStyleDestructive onClick={() => {
-                            deleteTravel(travel).then(fetchUserTravel())
-                            setDeleteTravelModal()
-                        }} />
+                        <Modali.Button label="Delete"
+                            isStyleDestructive onClick={() => {
+                                deleteTravel(travel).then(fetchUserTravel())
+                                setDeleteTravelModal()
+                            }}
+                        />
                     </div>
                 </div>
             </Modali.Modal>

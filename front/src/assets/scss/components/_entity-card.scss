@@ -7,7 +7,6 @@
     background: #fff;
     border-radius: 8px;
     border: 1px solid #D8D8D8;
-    overflow: hidden;
 
     a {
         &:hover,
@@ -37,8 +36,24 @@
     }
 
     &__body {
-        position: relative;
+        @extend .position-relative;
         padding: 50px 20px 20px 20px;
+
+        .dropdownmenu {
+            @extend .position-absolute;
+            right: 15px;
+
+            &__btn {
+                padding-left: 20px;
+                padding-bottom: 20px;
+            }
+
+            &__options {
+                min-width: 130px;
+                top: 30px;
+                right: -23px;
+            }
+        }
 
         &__user-value {
             @extend .position-absolute, .text-center;
