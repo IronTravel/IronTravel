@@ -4,11 +4,10 @@ import { useLocation, useParams } from 'react-router-dom';
 import _ from 'lodash';
 
 // Context
-import { useUser, useUserSetter } from "../../context/user";
+import { useUser } from "../../context/user";
 import defaultAvatar from '../../assets/images/avatar.png';
 import { randomAboutMe } from '../../service/data'
 import { updateAvatar } from '../../service/user';
-import { whoami } from '../../service/auth';
 import { Save } from 'react-feather';
 
 const cloudinary = require("cloudinary-core");
@@ -19,14 +18,11 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
 
 export const UserProfileHeader = ({ data }) => {
 
-    const user = useUser()
-
-    const setUser = useUserSetter();
     const location = useLocation();
     const { id } = useParams();
 
     const loggedInUser = useUser();
-    // const [user, setUser] = useState({});
+    const [user, setUser] = useState({});
     const [hasImageLoaded, setHasImageLoaded] = useState(false);
     const [inUserSettigns, setIUserSettigns] = useState(false);
 

@@ -23,7 +23,6 @@ export const ProfilePage = () => {
     const [entries, setEntries] = useState();
     const { id } = useParams();
 
-
     useEffect(() => {
         if (id) {
             getUser(id).then(res => {
@@ -31,12 +30,12 @@ export const ProfilePage = () => {
                 getUserEntries(id).then(res => setEntries(res.data));
             });
         } else {
-            //setUser(loggedInUser);
-            whoami().then((res) => {
-                setUser(res.data)
-                console.log(res.data._id)
-                // getUserEntries(res.data._id).then(res => setEntries(res.data));
-            });
+            setUser(loggedInUser);
+            // whoami().then((res) => {
+            //     setUser(res.data)
+            //     console.log(res.data._id)
+            //     // getUserEntries(res.data._id).then(res => setEntries(res.data));
+            // });
             getUserEntries(loggedInUser._id).then(res => setEntries(res.data));
         }
     }, []);
