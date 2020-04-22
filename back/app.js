@@ -119,4 +119,11 @@ app.use("/entries", entries);
 const followers = require("./routes/followers");
 app.use("/followers", followers);
 
+const spotify = require("./routes/spotify");
+app.use("/spotify", spotify);
+
+const instagram = require("./routes/instagram");
+app.use("/instagram", instagram);
+
+
 module.exports = app;

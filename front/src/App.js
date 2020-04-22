@@ -40,7 +40,7 @@ export const App = withAuth(() => {
                     <Route path="/settings/change-password" exact component={ChangePassword} />
                     <Route path="/settings/music-hobbies" exact component={MusicHobbiesPage} />
 
-                    <Route path="/travel" exact component={TravelPage} />
+                    <Route path="/travel/:travel_id?" exact component={TravelPage} />
 
                     <Route exact path="/" component={() => (
                         <Redirect to="/auth" />

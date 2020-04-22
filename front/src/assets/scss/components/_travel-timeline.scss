@@ -4,16 +4,18 @@
 
 .travel-timeline {
 
-    &:before {
-        @extend .position-fixed, .d-block;
-        content: '';
-        height: 100vh;
-        top: 0;
-        left: 50%;
-        transform: translateX(-210px);
-        border-left: 2px solid #D2D2D2;
-        border-right: 2px solid #fff;
-        z-index: -1;
+    &--with-entries {
+        &:before {
+            @extend .position-fixed, .d-block;
+            content: '';
+            height: 100vh;
+            top: 0;
+            left: 50%;
+            transform: translateX(-210px);
+            border-left: 2px solid #D2D2D2;
+            border-right: 2px solid #fff;
+            z-index: -1;
+        }
     }
 
     &__post {
@@ -64,7 +66,31 @@
     }
 }
 
-.travel-link {
+.travel-link-empty {
+    @extend .d-flex, .flex-wrap, .justify-content-center, .align-items-center, .mt-4;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    background: transparent;
+    border: 2px dashed #ABABAB;
+    border-radius: 8px;
+    transition: all .45s;
+
+    &__icons {
+        @extend .d-flex, .justify-content-center, .align-items-center, .mb-3;
+        flex: 0 1 100%;
+    }
+
+    p {
+        flex: 0 1 100%;
+        font-weight: 700;
+        font-size: 20px;
+        color: #919191;
+        letter-spacing: -0.6px;
+        text-align: center;
+    }
+}
+
+.travel-link-summary {
     @extend .d-flex, .align-items-center, .justify-content-end, .mb-5;
 
     > * {
@@ -75,11 +101,14 @@
         background: transparent;
         padding: 0;
         border: none;
-        filter: grayscale(100%);
 
-        &--enabled {
-            filter: grayscale(0%);
+        a > img {
+            filter: grayscale(100%);
         }
+
+        // img {
+        //     cursor: pointer;
+        // }
     }
 }
 
@@ -98,6 +127,7 @@
 
     &__content {
         @extend .d-inline-block, .position-relative;
+        min-width: 600px;
         left: -60px;
         padding: 1.5rem 4rem 1.5rem 5rem;
         background: #fff;
@@ -127,20 +157,33 @@
                 @extend .mb-0;
             }
         }
+        &__audio-control {
+            @extend .position-absolute;
+            color: #B8B8B8;
+            right: 20px;
+            bottom: 20px;
+            cursor: pointer;
+            transition: all .35s;
+
+            &:hover {
+                color: #757575;
+                transform-origin: center;
+                transform: scale(1.1);
+            }
+        }
 }
 
 .instagram-post {
     @extend .d-inline-flex, .position-relative, .mt-5;
 
     &__img {
-        @extend .d-inline-flex, .position-relative;
+        @extend .d-inline-flex, .position-relative, .mr-3;
         top: 30px;
         z-index: 2;
         overflow: hidden;
         border-radius: 8px;
 
         img {
-            @extend .mr-3;
             width: 320px;
         }
     }

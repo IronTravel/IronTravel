@@ -9,6 +9,14 @@
     border: 1px solid #D8D8D8;
     overflow: hidden;
 
+    a {
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: none;
+        }
+    }
+
     &__header {
         @extend .position-relative;
 
@@ -134,6 +142,8 @@
 
     &--travel {
         @extend .pb-4;
+        min-height: 455px;
+
         .entity-card__header__bg {
             height: 250px;
         }
