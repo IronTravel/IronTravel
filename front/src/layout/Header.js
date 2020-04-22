@@ -13,15 +13,15 @@ import { useUser } from "../context/user";
 // Components
 import LogoWeTravelSM from '../assets/svgs/logo-wetravel-sm.svg';
 import { UserCard } from '../components/UserCard';
-import { Notifications } from '../components/Notifications';
-import ChatIcon from '../assets/svgs/icon-chat.svg';
-import BellIcon from '../assets/svgs/icon-bell.svg';
-
+import { DropDownMessages } from '../components/DropDownMessages';
+import { DropDownMenu } from '../components/DropDownMenu';
+import { MessageSquare, Bell, Settings, LogOut, User } from 'react-feather';
 
 export const Header = withRouter(({ history }) => {
-    const user = useUser()
 
+    const user = useUser()
     const setUser = useUserSetter();
+
     const handleLogOut = () => {
         logout().then(() => {
             setUser('');
@@ -32,7 +32,7 @@ export const Header = withRouter(({ history }) => {
     return (
         <header className="main-header">
             <div className="main-logo">
-                <Link to="/settings"><LogoWeTravelSM /> </Link>
+                <Link to="/profile"><LogoWeTravelSM /> </Link>
             </div>
             <div className="current-section">My Profile</div>
             <div className="header-search">
@@ -41,22 +41,34 @@ export const Header = withRouter(({ history }) => {
             <nav className="main-nav">
                 <Link to="/my-travels">My Travels</Link>
                 <Link to="/my-tours">My Tours</Link>
+                <Link to="/search">All Users</Link>
             </nav>
             <div className="user-menu">
                 <div className="user-menu__icon-btn">
-                    <Notifications icon={<ChatIcon />} />
+                    <DropDownMessages icon={<MessageSquare size={22} />} />
                 </div>
                 <div className="user-menu__icon-btn">
-                    <Notifications icon={<BellIcon />} />
+                    <DropDownMessages icon={<Bell size={22} />} />
                 </div>
-                <button className="user-menu__user-btn" onClick={handleLogOut}>
-                    {user &&
-                        <UserCard
-                            avatar={user.avatar}
-                            name={user.fullName}
-                        />
-                    }
-                </button>
+                {
+                    user &&
+                    <div className="user-menu__user-btn">
+                        <DropDownMenu icon={<UserCard avatar={user.avatar} name={user.fullName} />}>
+                            <Link to="/profile">
+                                <User size={15} />
+                                <span>My Profile</span>
+                            </Link>
+                            <Link to="/settings">
+                                <Settings size={15} />
+                                <span>Settings</span>
+                            </Link>
+                            <button onClick={handleLogOut}>
+                                <LogOut size={14} />
+                                <span>Log out</span>
+                            </button>
+                        </DropDownMenu>
+                    </div>
+                }
             </div>
         </header>
     )

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import { useForm } from 'react-hook-form';
+import { useLocation, useParams } from 'react-router-dom';
 import _ from 'lodash';
-import { useForm } from "react-hook-form";
 
 // Context
 import { useUser, useUserSetter } from "../../context/user";
 import defaultAvatar from '../../assets/images/avatar.png';
 import { randomAboutMe } from '../../service/data'
 import { updateAvatar } from '../../service/user';
+import { Save } from 'react-feather';
 
 const cloudinary = require("cloudinary-core");
 
@@ -15,20 +17,27 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
 
 export const UserProfileHeader = ({ data }) => {
 
+    const location = useLocation();
+    const { id } = useParams();
+
     const loggedInUser = useUser();
     const [user, setUser] = useState({});
+    const [hasImageLoaded, setHasImageLoaded] = useState(false);
+    const [inUserSettigns, setIUserSettigns] = useState(false);
 
-    const { handleSubmit, register, errors } = useForm();
+    const { handleSubmit, register, errors, reset } = useForm();
 
     useEffect(() => {
-        setUser(data || loggedInUser)
-    }, []);
+        setUser(id ? data : loggedInUser)
+        setIUserSettigns(location.pathname.includes('settings'))
+    }, [id]);
 
     const handleGetRandom = (arr) => arr[_.random(0, arr.length - 1)]?.name || '';
+    const handleChange = (e) => setHasImageLoaded(!!e.target.files.length)
 
-    const onSubmit = data => {
+    const onSubmit = (data, e) => {
         const myAvatar = data.avatar[0];
-        console.log(myAvatar)
+
         updateAvatar(myAvatar)
             .then((res) => {
                 console.log("changed file")
@@ -56,12 +65,32 @@ export const UserProfileHeader = ({ data }) => {
                         <div className="key">Tours</div>
                     </div>
                     <div className="profile-header__info__data profile-header__info__data--user">
-                        {
-                            user &&
-                            <div className="big-avatar">
-                                <img src={user?.avatar || defaultAvatar} alt="" />
-                            </div>
-                        }
+                        <form className="big-avatar-wrapper" onSubmit={handleSubmit(onSubmit)}>
+                            {
+                                user &&
+                                <>
+                                    <label className={`${inUserSettigns && 'clickable'}`}>
+                                        <div className="big-avatar">
+                                            <img src={user?.avatar || defaultAvatar} alt="" />
+                                        </div>
+                                        {
+                                            inUserSettigns &&
+                                            <input className="big-avatar__upload-btn" type="file"
+                                                name="avatar"
+                                                accept="image/png, image/jpeg"
+                                                onChange={(e) => handleChange(e)}
+                                                ref={register()} />
+                                        }
+                                    </label>
+                                    {
+                                        hasImageLoaded &&
+                                        <button className="big-avatar__save" type="submit">
+                                            <Save size={20} />
+                                        </button>
+                                    }
+                                </>
+                            }
+                        </form>
 
                         <div className="value">{user?.fullName}</div>
                         {
@@ -79,15 +108,6 @@ export const UserProfileHeader = ({ data }) => {
                         <div className="key">Following</div>
                     </div>
                 </div>
-            </div>
-
-            <div>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div>
-                        <input name="avatar" type="file" ref={register()} />
-                    </div>
-                    <button type="submit">Change Profile Pic</button>
-                </form>
             </div>
         </>
     )

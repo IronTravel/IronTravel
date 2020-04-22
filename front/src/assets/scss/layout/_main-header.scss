@@ -36,7 +36,7 @@
     .main-nav {
         @extend .d-flex, .align-items-center, .justify-content-between, .px-4;
         width: 100%;
-        max-width: 200px;
+        max-width: 320px;
         height: inherit;
 
         a {
@@ -58,10 +58,20 @@
         }
 
         &__user-btn {
-            @extend .pr-4;
-
             .user-card {
                 color: #fff;
+                &__img {
+                    @extend .mr-2;
+                }
+            }
+        }
+
+        .dropdownmenu {
+            @extend .d-inline-flex;
+            height: 50px;
+
+            &__options {
+                top: 50px;
             }
         }
     }
