@@ -130,18 +130,3 @@ export const SettingsPage = () => {
         </>
     )
 }
-
-
-
-
-// //en la linea 91
-// <div className="col col-6 mb-2">
-// <div className="field-wrapper field-wrapper--select">
-//     <label className="field__label" htmlFor="gender">Gender</label>
-//     <select className="field__input-select" name="gender" id="gender">
-//         <option className="placeholder" selected disabled>Select an option...</option>
-//         <option value="male">Male</option>
-//         <option value="female">Female</option>
-//     </select>
-// </div>
-// </div>

@@ -5,12 +5,14 @@ export const allTravel = async () => {
 }
 
 export const createTravel = async data => {
+    console.log(data)
     return await service.post('/travels/create', data);
 }
 
-export const editTravel = async idTravel => {
-    console.log(idTravel)
-    return await service.post(`/travels/create/${idTravel}`);
+export const editTravel = async (data, id) => {
+    console.log(id)
+    console.log(data)
+    return await service.post(`/travels/edit/${id}`, data);
 }
 
 export const deleteTravel = async idTravel => {

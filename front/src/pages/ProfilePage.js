@@ -133,22 +133,24 @@ export const ProfilePage = () => {
 
                     {/* ProfileAside Component */}
                     <div className="col-3">
-                    {user && user.my_travels.map((e,i) => 
-                        <section className="section-box" key={i}>
+                    
+                        <section className="section-box">
                             <div className="section-box__header mb-4">
                                 <h2 className="section-box__title px-4">My Travels</h2>
                             </div>
                             <div className="section-box__body px-4">
                                 <div className="image-grid">
-                                    <div className="image-box">
+                                {user && user.my_travels.map((e,i) => 
+                                    <div className="image-box" key={i}>
                                         <a href="#">
                                             <img src="https://via.placeholder.com/150/150" />
                                         </a>
                                     </div>
+                                    )}
                                 </div>
                             </div>
                         </section>
-                        )}
+                        
                         <section className="section-box">
                             <div className="section-box__header mb-4">
                                 <h2 className="section-box__title px-4">My Tours</h2>

@@ -1,5 +1,10 @@
 import service from './_base';
 
+
+export const allCountries = async () => {
+    return await service.get('data/countries');
+}
+
 //HOBBY//
 //All
 export const hobbies = async () => {
