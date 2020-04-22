@@ -1,12 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 
-export const AudioPlayer = ({ audio }) => {
+export const AudioPlayer = ({ audio, pause }) => {
 
     const player = useRef(null);
 
     useEffect(() => {
+        const audioPlayer = player.current;
+
         if (audio) {
-            const audioPlayer = player.current;
             audioPlayer.volume = 0;
 
             audioPlayer.pause();
@@ -14,13 +15,15 @@ export const AudioPlayer = ({ audio }) => {
             audioPlayer.play();
 
             const volumeInterval = setInterval(() => {
-                audioPlayer.volume <= 0.5 ?
-                    audioPlayer.volume += 0.1 :
+                audioPlayer.volume <= 0.3 ?
+                    audioPlayer.volume += 0.02 :
                     clearInterval(volumeInterval);
-            }, 1000);
-
+            }, 500);
+        } else {
+            audioPlayer.pause();
         }
-    }, [audio])
+
+    }, [audio, pause])
 
     return (
         <audio ref={player}>

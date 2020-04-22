@@ -12,64 +12,65 @@ const User = require("../models/User");
 
 //ALL TRAVELS//
 router.get('/', isLoggedIn(), async (req, res) => {
-  const id = req.user.id  
-   const travels = await User.findById(id).populate({ path: "my_travels" , populate: {path: "country"}})
-  return res.json(travels)
-  })
+    const { id } = req.user
+    const user = await User.findById(id, { password: 0, __v: 0 })
+        .populate({ path: "my_travels", populate: { path: "country" } })
+    return res.json(user.my_travels)
+})
 
 //CREATE TRAVEL//
 router.post('/create', isLoggedIn(), async (req, res) => {
     const id = req.user.id
     const { name, from, to, country } = req.body;
     try {
-      const countryID = await Country.findOne({name:country})
-      const travel = await Travel.create({
-          name:name,
-          from:from,
-          to:to,
-          country:countryID._id
-      })
-    const user = await User.findByIdAndUpdate(id, {$addToSet: {my_travels: travel.id}})
-    return res.json(user)
-    } catch (error ){
-      console.log(error)
-      return res.json({status:"No se ha creado correctamente."})
+        const countryID = await Country.findOne({ name: country })
+        const travel = await Travel.create({
+            name: name,
+            from: from,
+            to: to,
+            country: countryID._id
+        })
+        const user = await User.findByIdAndUpdate(id, { $addToSet: { my_travels: travel.id } })
+        return res.json(user)
+    } catch (error) {
+        console.log(error)
+        return res.json({ status: "No se ha creado correctamente." })
     }
-  })
+})
 
 //EDIT TRAVEL//
 router.post('/edit/:id', isLoggedIn(), async (req, res) => {
     const { city } = req.body;
     const id = req.params.id
     try {
-        const travel = await Travel.findById(id) 
-        if(travel){
+        const travel = await Travel.findById(id)
+        if (travel) {
             travel.city = city
             await travel.save()
             return res.json(travel)
         } else {
-            return res.json({status:"No puedes cambiar el dato"})
+            return res.json({ status: "No puedes cambiar el dato" })
         }
-    } catch (error){
+    } catch (error) {
         return res.json(error)
 
     }
-  })
+})
 
 //DELETE TRAVEL//
 router.get('/delete/:id', isLoggedIn(), async (req, res) => {
-    const id = req.params.id
-    console.log(id)
-    const travel = await Travel.findOneAndDelete({_id: id})
-     
-    return res.json({status:`${id} eliminado`, travel})
-  })
+    const id = req.params.id;
+    console.log(id);
+    const travel = await Travel.findOneAndDelete({ _id: id });
+
+    return res.json({ status: `${id} eliminado`, travel });
+})
 
 //ONE TRAVEL//
 router.get('/:id', isLoggedIn(), async (req, res) => {
-    const id = req.params.id
-    const travel = await Travel.findById(id)    
-    return res.json(travel)
-  })
+    const { id } = req.params;
+    const travel = await Travel.findById(id);
+    return res.json(travel);
+})
 
 module.exports = router;

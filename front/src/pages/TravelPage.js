@@ -1,29 +1,41 @@
 import React, { useRef, useState, useEffect } from 'react';
-import moment from 'moment';
+import { useParams } from 'react-router-dom';
+
+// Context
+import { useUser } from '../context/user';
 
 // Service
-import { getRecentlyPlayer } from '../service/spotify';
-import { getPosts } from '../service/instagram';
+import { getTravel } from '../service/travel';
+// import { getRecentlyPlayer } from '../service/spotify';
+// import { getPosts } from '../service/instagram';
 
 // Components
 import { Header } from '../layout/Header';
-import { UserCard } from '../components/UserCard';
-import { LikeButton } from '../components/LikeButton';
 import { AudioPlayer } from '../components/AudioPlayer';
-
-import TravelIconMusic from '../assets/svgs/icon-music.svg';
-import TravelIconTwitter from '../assets/svgs/icon-twitter.svg';
-import TravelIconInstagram from '../assets/svgs/icon-instagram.svg';
 
 import iconInstagram from '../assets/images/icon-instagram.png';
 import iconSpotify from '../assets/images/icon-spotify.png';
-import iconQuotes from '../assets/images/icon-quotes.png';
+
+import { InstagramPost } from '../components/InstagramPost';
+import { SpotifyPost } from '../components/SpotifyPost';
 
 export const TravelPage = () => {
 
-    const [entries, getEntries] = useState([]);
-    const [entriesIg, getEntriesIg] = useState([]);
+    const user = useUser();
+    const { travel_id } = useParams();
+    const [travel, setTravel] = useState();
     const [audio, setAudio] = useState('');
+
+    const isOwner = () => user.my_travels.includes(travel_id)
+
+    useEffect(() => {
+        getTravel(travel_id).
+            then(res => setTravel(res.data))
+        // getRecentlyPlayer(10)
+        //     .then(res => setEntries(res.data));
+        // getPosts()
+        //     .then(res => { setEntriesIg(res.data) });
+    }, [])
 
     const handleLinkNetwork = (network) => {
         switch (network) {
@@ -36,17 +48,6 @@ export const TravelPage = () => {
                 break;
         }
     }
-
-    const formatTime = (time) => {
-        const date = new Date();
-        date.setTime(time);
-        return `${date.getMinutes()} : ${(date.getSeconds()).toString().padStart(2, '0')}`;
-    }
-
-    useEffect(() => {
-        getRecentlyPlayer(10).then(res => getEntries(res.data));
-        getPosts().then(res => { getEntriesIg(res.data) });
-    }, [])
 
     return (
         <>
@@ -62,138 +63,73 @@ export const TravelPage = () => {
                     </div>
                 </div>
 
-                <div className="travel-timeline">
-                    <div className="travel-link">
-                        <span className="font-italic">Travel linked with:</span>
-                        <button className="link-network">
-                            <a href={`${process.env.API_URL}instagram/`}>
-                                <img src={iconInstagram} alt="icon instagram" />
-                            </a>
-                            {/* <img onClick={() => handleLinkNetwork('instagram')} src={iconInstagram} alt="icon instagram" /> */}
-                        </button>
-                        <button className="link-network">
-                            <a href={`${process.env.API_URL}spotify/`}>
-                                <img src={iconSpotify} alt="icon spotify" />
-                            </a>
-                            {/* <img onClick={() => handleLinkNetwork('spotify')} src={iconSpotify} alt="icon spotify" /> */}
-                        </button>
-                    </div>
+                <div className={`travel-timeline ${travel?.entries.length && 'travel-timeline--with-entries'}`}>
+                    {
+                        isOwner &&
+                        <>
+                            {
+                                !travel?.entries.length &&
+                                <div className="travel-link-empty">
+                                    <div className="travel-link-empty__icons">
+                                        {
+                                            travel_id &&
+                                            <>
+                                                <a href={`${process.env.API_URL}instagram/?travel_id=${travel_id}`}>
+                                                    <img src={iconInstagram} alt="icon instagram" />
+                                                </a>
+                                                <a href={`${process.env.API_URL}spotify/?travel_id=${travel_id}`}>
+                                                    <img src={iconSpotify} alt="icon spotify" />
+                                                </a>
+                                            </>
+                                        }
+                                    </div>
+                                    <p>Link your travel with your Social Networks</p>
+                                </div>
+                            }
+
+                            {
+                                travel?.entries.length &&
+                                <div className="travel-link-summary">
+                                    <span className="font-italic">Travel linked with:</span>
+                                    <span className="link-network">
+                                        {
+                                            user?.instagram?.user_id ?
+                                                <img onClick={() => handleLinkNetwork('instagram')} src={iconInstagram} alt="icon instagram" /> :
+
+                                                travel_id && <a href={`${process.env.API_URL}instagram/?travel_id=${travel_id}`}>
+                                                    <img src={iconInstagram} alt="icon instagram" />
+                                                </a>
+                                        }
+                                    </span>
+                                    <span className="link-network">
+                                        {
+                                            user?.spotify?.user_id ?
+                                                <img onClick={() => handleLinkNetwork('spotify')} src={iconSpotify} alt="icon spotify" /> :
+
+                                                travel_id && <a href={`${process.env.API_URL}spotify/?travel_id=${travel_id}`}>
+                                                    <img src={iconSpotify} alt="icon spotify" />
+                                                </a>
+                                        }
+                                    </span>
+                                </div>
+                            }
+                        </>
+                    }
 
                     <AudioPlayer audio={audio} />
 
                     {
-                        entries?.map((entry, i) => (
-                            <article key={i} className="row travel-timeline__post travel-timeline__post--music">
-                                <header className="col-4 travel-timeline__post__header">
-                                    <time className="date">{moment(entry.played_at).format('MMMM Do, YYYY [@] HH:mm')}</time>
-                                    <div className="action">Listened to</div>
-
-                                    <LikeButton count={entry.likes?.length} inverted />
-                                    {
-                                        entry.likes &&
-                                        <LikesFaces inverted entries={entry.likes} />
-                                    }
-
-                                    <div className="post-action">
-                                        <TravelIconMusic />
-                                    </div>
-                                </header>
-                                <div className="col-8 travel-timeline__post__body">
-                                    <article className="music-post">
-                                        <figure className="music-post__img">
-                                            <img src={entry.image} alt="" />
-                                        </figure>
-                                        <div className="music-post__content">
-                                            <h3 className="music-post__title">{entry.artists}</h3>
-                                            <p className="music-post__artist">{entry.song}</p>
-                                            <dl className="music-post__data">
-                                                {
-                                                    entry?.duration_ms &&
-                                                    <>
-                                                        <dt>Duration: </dt>
-                                                        <dd>{formatTime(entry.duration_ms)}</dd>
-                                                    </>
-                                                }
-                                                {
-                                                    entry?.year &&
-                                                    <>
-                                                        <dt>Year: </dt>
-                                                        <dd>2018</dd>
-                                                    </>
-                                                }
-                                            </dl>
-                                            <button onClick={() => setAudio(entry.preview_url)}>Play</button>
-                                            {/* <button onClick={() => playIt(entry.preview_url)}>Play</button> */}
-                                        </div>
-                                    </article>
-                                </div>
-                            </article>
-                        ))
+                        travel?.entries.map((entry, i) => {
+                            if (entry.type === 'instagram')
+                                return <InstagramPost key={i} data={entry.content} />
+                            if (entry.type === 'spotify')
+                                return <SpotifyPost key={i} data={entry.content} />
+                            if (entry.type === 'twitter')
+                                return <TwitterPost key={i} data={entry.content} />
+                        })
                     }
-
-                    {
-                        entriesIg?.map((entry, i) => (
-                            <article key={i} className="row travel-timeline__post travel-timeline__post--instagram">
-                                <header className="col-4 travel-timeline__post__header">
-                                    <time className="date">{moment(entry.posted_at).format('MMMM Do, YYYY [@] HH:mm')}</time>
-                                    <div className="action">Listened to</div>
-
-                                    <LikeButton count={entry.likes?.length} inverted />
-                                    {
-                                        entry.likes &&
-                                        <LikesFaces inverted entries={entry.likes} />
-                                    }
-
-                                    <div className="post-action">
-                                        <TravelIconInstagram />
-                                    </div>
-                                </header>
-                                <div className="col-8 travel-timeline__post__body">
-                                    <article className="instagram-post">
-                                        <figure className="instagram-post__img">
-                                            <img src={entry.image} alt="" />
-                                        </figure>
-                                        <div className="instagram-post__content">
-                                            <p>{entry.caption}</p>
-                                        </div>
-                                    </article>
-                                </div>
-                            </article>
-                        ))
-                    }
-
-                    {/* <article className="row travel-timeline__post travel-timeline__post--twitter">
-                        <header className="col-4 travel-timeline__post__header">
-                            <time className="date">August 7, 2020 @ 1:30pm</time>
-                            <div className="action">Listened to</div>
-                            <LikeButton inverted />
-                            <div className="inline-objects inline-objects--inverted">
-                                <div className="inline-objects__images">
-                                    <UserCard showBorder avatarSize={28} />
-                                    <UserCard showBorder avatarSize={28} />
-                                    <UserCard showBorder avatarSize={28} />
-                                    <UserCard showBorder avatarSize={28} />
-                                    <UserCard showBorder avatarSize={28} />
-                                </div>
-                                <div className="inline-objects__text"><b>Michael,</b> <b>Astrid</b> and <br /> 6 more liked this</div>
-                            </div>
-                            <div className="post-action">
-                                <TravelIconTwitter />
-                            </div>
-                        </header>
-                        <div className="col-8 travel-timeline__post__body">
-                            <article className="twitter-post">
-                                <div className="twitter-post__content">
-                                    <img className="twitter-post__quotes" src={iconQuotes} alt="" />
-                                    <p>Donec id elit non mi porta gravida at eget metus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Curabitur blandit tempus porttitor.</p>
-                                </div>
-                            </article>
-                        </div>
-                    </article>
-                */}
                 </div>
             </div>
-
         </>
     )
 }

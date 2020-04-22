@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const Restaurant = new mongoose.Schema(
     {
         name: String,
-        location:Object,
-        categories:Object,
-        images:String
+        location: Object,
+        categories: Object,
+        images: String
     },
     {
         timestamps: true

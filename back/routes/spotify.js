@@ -5,6 +5,7 @@ const axios = require('axios');
 
 //Models
 const User = require("../models/User");
+const Travel = require("../models/Travel");
 
 //Lib
 const { isLoggedIn } = require('../lib');
@@ -15,8 +16,13 @@ const client_secret = process.env.CLIENT_SECRET_SPOTIFY
 const redirect_uri = process.env.REDIRECT_URI_SPOTIFY;
 const grant_type = process.env.GRANT_TYPE_SPOTIFY;
 
+let travelID;
+
 // SPOTIFY
 router.get("/", isLoggedIn(), (req, res) => {
+
+    const { travel_id } = req.query;
+    travelID = travel_id;
 
     res.redirect('https://accounts.spotify.com/authorize' +
         '?response_type=code' +
@@ -56,8 +62,40 @@ router.get("/callback", isLoggedIn(), async (req, res) => {
         }
     });
 
+    // Save Entries
+    const recentlyPlayed = await axios({
+        url: `https://api.spotify.com/v1/me/player/recently-played?limit=10`,
+        headers: { 'Authorization': `Bearer ${spotifyToken.data.access_token}` },
+        transformResponse: [(data) => {
+            let transformedData = JSON.parse(data);
+
+            return transformedData.items.map(item => {
+                return {
+                    "spotify_id": item.track.id,
+                    "song": item.track.name,
+                    "artists": item.track.artists.map(artist => artist.name).join(', '),
+                    "duration_ms": item.track.duration_ms,
+                    "image": item.track.album.images[0].url,
+                    "release_date": item.track.album.release_date,
+                    "played_at": item.played_at,
+                    "spotify_url": item.track.external_urls.spotify,
+                    "preview_url": item.track.preview_url
+                }
+            })
+        }],
+    });
+
+    let entries = recentlyPlayed.data.map(entry => {
+        return {
+            type: 'spotify',
+            content: entry
+        }
+    })
+
+    await Travel.findByIdAndUpdate(travelID, { $push: { entries } })
+
     // Redirect to Front
-    res.redirect(`${process.env.FRONT_URL}/travel`);
+    res.redirect(`${process.env.FRONT_URL}/travel/${travelID}`);
 });
 
 
@@ -82,6 +120,7 @@ router.get("/recentlyplayed/:limit", isLoggedIn(), async (req, res) => {
                         "artists": item.track.artists.map(artist => artist.name).join(', '),
                         "duration_ms": item.track.duration_ms,
                         "image": item.track.album.images[0].url,
+                        "release_date": item.track.album.release_date,
                         "played_at": item.played_at,
                         "spotify_url": item.track.external_urls.spotify,
                         "preview_url": item.track.preview_url
@@ -90,7 +129,15 @@ router.get("/recentlyplayed/:limit", isLoggedIn(), async (req, res) => {
             }],
         });
 
-        res.json(recentlyPlayed.data);
+        let entries = recentlyPlayed.data.map(entry => {
+            return {
+                type: 'spotify',
+                content: entry
+            }
+        })
+
+        await Travel.findByIdAndUpdate(travelID, { $push: { entries } })
+        const travel = await Travel.findById(travelID)
 
     } catch (error) {
         res.status(401).json({ status: 'Token expired' });

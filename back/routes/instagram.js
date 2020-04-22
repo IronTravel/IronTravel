@@ -5,6 +5,7 @@ const axios = require('axios');
 
 //Models
 const User = require("../models/User");
+const Travel = require("../models/Travel");
 
 //Lib
 const { isLoggedIn } = require('../lib');
@@ -15,8 +16,13 @@ const grant_type = process.env.GRANT_TYPE_INSTAGRAM;
 const redirect_uri = process.env.REDIRECT_URI_INSTAGRAM;
 const scopes = process.env.SCOPES_INSTAGRAM;
 
+let travelID;
+
 // INSTAGRAM
 router.get("/", isLoggedIn(), (req, res) => {
+
+    const { travel_id } = req.query;
+    travelID = travel_id;
 
     res.redirect('https://api.instagram.com/oauth/authorize/' +
         '?client_id=' + app_id +
@@ -26,6 +32,9 @@ router.get("/", isLoggedIn(), (req, res) => {
 });
 
 router.get("/callback", isLoggedIn(), async (req, res) => {
+
+    const { id } = req.user;
+    const currentUser = await User.findById(id);
 
     // Get Token
     const instagramData = await axios({
@@ -71,8 +80,36 @@ router.get("/callback", isLoggedIn(), async (req, res) => {
         }
     });
 
+    // Save Entries
+    const recentPosts = await axios({
+        url: `https://graph.instagram.com/me/media?fields=caption,children,comments,comments_count,id,ig_id,is_comment_enabled,like_count,media_type,media_url,owner,permalink,shortcode,thumbnail_url,timestamp,username&access_token=${instagramData.data.access_token}`,
+        transformResponse: [(data) => {
+            let transformedData = JSON.parse(data);
+
+            return transformedData.data.map(item => {
+                return {
+                    "instagram_id": item.id,
+                    "caption": item.caption,
+                    "media_type": item.media_type,
+                    "image": item.media_url,
+                    "permalink": item.permalink,
+                    "posted_at": item.timestamp
+                }
+            })
+        }],
+    });
+
+    let entries = recentPosts.data.map(entry => {
+        return {
+            type: 'instagram',
+            content: entry
+        }
+    })
+
+    await Travel.findByIdAndUpdate(travelID, { $addToSet: { entries } })
+
     // Redirect to Front
-    res.redirect(`${process.env.FRONT_URL}/travel`);
+    res.redirect(`${process.env.FRONT_URL}/travel/${travelID}`);
 });
 
 // Get Media
@@ -100,7 +137,17 @@ router.get("/recentposts/", isLoggedIn(), async (req, res) => {
             }],
         });
 
-        res.json(recentPosts.data);
+        let entries = recentPosts.data.map(entry => {
+            return {
+                type: 'instagram',
+                content: entry
+            }
+        })
+
+        await Travel.findByIdAndUpdate(travelID, { $addToSet: { entries } })
+        const travel = await Travel.findById(travelID)
+
+        res.json(travel.entries);
 
     } catch (error) {
         res.status(401).json({ status: 'Token expired' });

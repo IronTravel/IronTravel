@@ -8,13 +8,7 @@ const Travel = new mongoose.Schema(
         main_image: String,
         country: { type: mongoose.Schema.ObjectId, ref: "country" },
         partners: [{ type: mongoose.Schema.ObjectId, ref: "user" }],
-        entries: [
-            {
-                date: Date,
-                type: { type: String, enum: ["photo", "music", "post"] },
-                likes: [{ type: mongoose.Schema.ObjectId, ref: "user" }],
-            }
-        ]
+        entries: Array
     },
     {
         timestamps: true
