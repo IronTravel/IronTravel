@@ -116,4 +116,7 @@ app.use("/tours", tours);
 const entries = require("./routes/entries");
 app.use("/entries", entries);
 
+const followers = require("./routes/followers");
+app.use("/followers", followers);
+
 module.exports = app;

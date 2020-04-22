@@ -39,6 +39,7 @@ export const MusicHobbiesPage = () => {
         
     }, []);
 
+
     const handleChecked = (hasValue, id, set, list) => { 
         if (hasValue) {
             let copy = [...list];
@@ -50,7 +51,7 @@ export const MusicHobbiesPage = () => {
     }
 
     const onFormSubmit = async (data) => {
-        var keys = _.keys(_.pickBy(data));
+        let keys = _.keys(_.pickBy(data));
         const hobbies = hobbiesList.map(e => e._id)
 
         let newArrayMusicGenres = []

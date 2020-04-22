@@ -70,6 +70,14 @@ router.post('/edit/:id', isLoggedIn(), async (req, res) => {
 router.get('/delete/:id', isLoggedIn(), async (req, res) => {
     const id = req.params.id
     console.log(id)
+    const userID = req.user.id
+
+    await User.findByIdAndUpdate(
+      userID,
+      { $pull: { my_tours: id } },
+      { safe: true, multi: true }
+    );
+
     const tour = await Tour.findOneAndDelete({_id: id})
     console.log("eliminado correctamente")
     return res.json({status:`${id} eliminado`})
