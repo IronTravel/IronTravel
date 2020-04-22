@@ -1,0 +1,56 @@
+//
+//  DropdownMenu
+// --------------------------------------------------
+
+.dropdownmenu {
+    @extend .position-relative;
+
+    &__btn {
+        background: transparent;
+        border: none;
+    }
+
+    &__options {
+        @extend .position-absolute, .d-flex;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        flex-direction: column;
+        min-width: 170px;
+        background: #fff;
+        border-radius: 8px;
+        z-index: 100;
+        top: 37px;
+        right: 0;
+        box-shadow: 0 10px 30px 0 rgba(0,0,0,.3);
+        user-select: none;
+
+        &:before {
+            @extend .position-absolute, .d-block;
+            content: '';
+            top: -10px;
+            right: 29px;
+            border-bottom: 10px solid #fff;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+        }
+
+        a, button {
+            background: #fff;
+            border: none;
+            padding: .5rem 1rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 13px;
+            color: #979797;
+            text-decoration: none;
+
+            span {
+                @extend .pl-2;
+            }
+
+            &:hover {
+                 background: darken(#fff, 5%);
+            }
+        }
+    }
+}

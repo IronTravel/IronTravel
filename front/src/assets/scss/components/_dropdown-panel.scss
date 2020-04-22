@@ -3,7 +3,7 @@
 // --------------------------------------------------
 
 .dropdown-panel {
-    @extend .position-absolute, .d-none;
+    @extend .position-absolute;
     width: 400px;
     background: #fff;
     border-radius: 8px;
@@ -59,10 +59,6 @@
                 color: darken(#EE3263, 3%);
             }
         }
-    }
-
-    &--visible {
-        @extend .d-block;
     }
 }
 

@@ -58,10 +58,11 @@
         }
 
         &__user-btn {
-            @extend .pr-4;
-
             .user-card {
                 color: #fff;
+                &__img {
+                    @extend .mr-2;
+                }
             }
         }
     }
