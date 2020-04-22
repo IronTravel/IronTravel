@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form'
 import moment from 'moment'
@@ -12,8 +12,17 @@ import { useUser, useUserSetter } from "../context/user";
 
 //Service
 import { editUser } from '../service/user';
+import { whoami } from '../service/auth';
 
 export const SettingsPage = () => {
+
+
+    useEffect(() => {
+        whoami().then((res) => {
+            console.log(res.data)
+        });
+        
+    }, []);
 
     const user = useUser()
     const setUser = useUserSetter();
@@ -25,6 +34,7 @@ export const SettingsPage = () => {
         console.log(data)
         editUser(data)
             .then((res) => {
+                console.log(res.data)
                 setUser(res.data)
                 setFormSubmitError(res.data.status)
             })
@@ -120,18 +130,3 @@ export const SettingsPage = () => {
         </>
     )
 }
-
-
-
-
-// //en la linea 91
-// <div className="col col-6 mb-2">
-// <div className="field-wrapper field-wrapper--select">
-//     <label className="field__label" htmlFor="gender">Gender</label>
-//     <select className="field__input-select" name="gender" id="gender">
-//         <option className="placeholder" selected disabled>Select an option...</option>
-//         <option value="male">Male</option>
-//         <option value="female">Female</option>
-//     </select>
-// </div>
-// </div>

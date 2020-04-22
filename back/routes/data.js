@@ -12,6 +12,7 @@ const Personality = require("../models/Personality");
 const LifeStyle = require("../models/LifeStyle");
 const Amenity = require("../models/Amenity");
 const User = require("../models/User")
+const Country = require("../models/Country")
 
 
 router.get('/aboutMe/random', isLoggedIn(), async (req, res) => {
@@ -38,6 +39,14 @@ router.get('/aboutMe/user', isLoggedIn(), async (req, res) => {
         .populate([{ path: "hobbies" }, { path: "music" }, { path: "life_style" }, { path: "personality" }])
     return res.json(populate)
 })
+
+//COUNTRIES//
+//All
+router.get('/countries', isLoggedIn(), async (req, res) => {
+  const countries = await Country.find() 
+  return res.json(countries)
+})
+
 
 //HOBBY//
 //All

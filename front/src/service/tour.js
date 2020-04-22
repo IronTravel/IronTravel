@@ -8,12 +8,11 @@ export const createTour = async data => {
     return await service.post('/tours/create', data);
 }
 
-export const editTours = async idTours => {
-    console.log(idTours)
-    return await service.post(`/tours/edit/${idTours}`);
+export const editTour = async (data, id) => {
+    return await service.post(`/tours/edit/${id}`, data);
 }
 
-export const deleteTours = async idTours => {
+export const deleteTour = async idTours => {
     console.log(idTours)
     return await service.get(`/tours/delete/${idTours}`);
 }

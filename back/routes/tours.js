@@ -42,12 +42,19 @@ router.post('/create', isLoggedIn(), async (req, res) => {
 
 //EDIT TOUR//
 router.post('/edit/:id', isLoggedIn(), async (req, res) => {
-    const { city } = req.body;
+  const { name, type, city, country, description, end, start } = req.body;
     const id = req.params.id
     try {
-        const tour = await Tour.findById(id) 
+      const countryID = await Country.findOne({name:country})
+        const tour = await Tour.findByIdAndUpdate(id) 
         if(tour){
-            tour.city = city
+          tour.name = name,
+          tour.tour_type=type,
+          tour.city = city,
+          tour.country = countryID._id,
+          tour.start_date = start, 
+          tour.end_date = end,
+          tour.description = description
             await tour.save()
             return res.json(tour)
         } else {
@@ -63,15 +70,24 @@ router.post('/edit/:id', isLoggedIn(), async (req, res) => {
 router.get('/delete/:id', isLoggedIn(), async (req, res) => {
     const id = req.params.id
     console.log(id)
-    const tour = await Tour.findOneAndDelete({_id: id})
+    const userID = req.user.id
 
-    return res.json({status:`${id} eliminado`, tour})
+    await User.findByIdAndUpdate(
+      userID,
+      { $pull: { my_tours: id } },
+      { safe: true, multi: true }
+    );
+
+    const tour = await Tour.findOneAndDelete({_id: id})
+    console.log("eliminado correctamente")
+    return res.json({status:`${id} eliminado`})
   })
 
 //ONE TOUR//
 router.get('/:id', isLoggedIn(), async (req, res) => {
     const id = req.params.id
-    const tour = await Tour.findById(id)    
+    const tour = await Tour.findById(id).populate({ path: "country" })
+    console.log(tour)   
     return res.json(tour)
   })
 

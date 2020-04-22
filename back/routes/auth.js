@@ -82,7 +82,9 @@ router.get('/whoami', isLoggedIn(), async (req, res) => {
             .populate([
                 { path: "personality" },
                 { path: "life_style" },
-                { path: "hobbies" }
+                { path: "hobbies" },
+                { path: "my_travels" },
+                { path: "my_tours" },
             ]);
         res.json(user);
     } else {

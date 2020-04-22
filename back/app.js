@@ -116,6 +116,9 @@ app.use("/tours", tours);
 const entries = require("./routes/entries");
 app.use("/entries", entries);
 
+const followers = require("./routes/followers");
+app.use("/followers", followers);
+
 const spotify = require("./routes/spotify");
 app.use("/spotify", spotify);
 

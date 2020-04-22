@@ -20,7 +20,10 @@ router.get('/', isLoggedIn(), async (req, res) => {
 
 //CREATE TRAVEL//
 router.post('/create', isLoggedIn(), async (req, res) => {
+  console.log(req.body)
     const id = req.user.id
+    // const {country} = req.body.reactSelect
+    // console.log("eeeeeeeeeeeeeeeeeeeee", country)
     const { name, from, to, country } = req.body;
     try {
         const countryID = await Country.findOne({ name: country })
@@ -40,18 +43,29 @@ router.post('/create', isLoggedIn(), async (req, res) => {
 
 //EDIT TRAVEL//
 router.post('/edit/:id', isLoggedIn(), async (req, res) => {
-    const { city } = req.body;
+    const { name, from, to, country } = req.body;
+    console.log("SOY NAME", name)
+    console.log("SOY FROM", from)
+    console.log("SOY TO", to)
+    console.log("SOY COUNTRY", country)
     const id = req.params.id
     try {
-        const travel = await Travel.findById(id)
-        if (travel) {
-            travel.city = city
+        const countryID = await Country.findOne({name:country})
+        console.log(countryID)
+        const travel = await Travel.findByIdAndUpdate(id) 
+        if(travel){
+            travel.name = name,
+            travel.from = from,
+            travel.to = to,
+            travel.country = countryID,
             await travel.save()
+            console.log(travel)
             return res.json(travel)
         } else {
             return res.json({ status: "No puedes cambiar el dato" })
         }
-    } catch (error) {
+    } catch (error){
+      console.log(error)
         return res.json(error)
 
     }
@@ -59,18 +73,26 @@ router.post('/edit/:id', isLoggedIn(), async (req, res) => {
 
 //DELETE TRAVEL//
 router.get('/delete/:id', isLoggedIn(), async (req, res) => {
-    const id = req.params.id;
-    console.log(id);
-    const travel = await Travel.findOneAndDelete({ _id: id });
+    const id = req.params.id
+    const userID = req.user.id
 
-    return res.json({ status: `${id} eliminado`, travel });
-})
+  await User.findByIdAndUpdate(
+    userID,
+    { $pull: { my_travels: id } },
+    { safe: true, multi: true }
+  );
+    const travel = await Travel.findOneAndDelete({_id: id})
+    console.log("eliminado correctamente")
+    return res.json({status:`${id} eliminado`})
+  })
 
 //ONE TRAVEL//
 router.get('/:id', isLoggedIn(), async (req, res) => {
-    const { id } = req.params;
-    const travel = await Travel.findById(id);
-    return res.json(travel);
-})
+    const id = req.params.id
+    console.log(id)
+    const travel = await Travel.findById(id).populate({ path: "country" })
+    console.log(travel)    
+    return res.json(travel)
+  })
 
 module.exports = router;

@@ -12,16 +12,30 @@ import defaultAvatar from '../assets/images/avatar.png';
 import StarIcon from '../assets/svgs/icon-star.svg';
 import LikeIcon from '../assets/svgs/icon-like.svg';
 import ProfileIcon from '../assets/svgs/icon-profile.svg';
+import { allFollowers, addFollow, deleteFollow } from '../service/followers';
+
+
 
 export const SearchMatchPage = () => {
 
     const [users, setUsers] = useState();
+    const [followers, setFollowers] = useState();
+
+    console.log(followers)
 
     useEffect(() => {
         allUser().then(res => setUsers(res.data));
+        allFollowers().then(res => setFollowers(res.data));
     }, []);
 
     const handleGetRandom = (arr) => arr[_.random(0, arr.length - 1)]?.name || '';
+
+    const check = (id)=> {
+        const followersID = followers.followers.map(e => e._id)
+        return followersID.includes(id)
+        }
+
+        console.log(followers)
 
     return (
         <>
@@ -48,7 +62,7 @@ export const SearchMatchPage = () => {
                                         </div>
                                         <h2 className="entity-card__body__title">{user.fullName}</h2>
                                         <p className="entity-card__body__tagline">
-                                            {handleGetRandom(user.personality)}, {handleGetRandom(user.life_style)}, {handleGetRandom(user.hobbies)}
+                                            {handleGetRandom(user.personality)} 🌍 {handleGetRandom(user.life_style)} 🌍 {handleGetRandom(user.hobbies)}
                                         </p>
                                         <div className="entity-card__body__data">
                                             <div className="entity-card__data">
@@ -68,10 +82,17 @@ export const SearchMatchPage = () => {
                                         </div>
                                     </div>
                                     <footer className="entity-card__footer">
-                                        <button className="entity-card__footer__btn">
+                                        {user && followers && check(user._id) ?
+                                        <button className="entity-card__footer__btn" onClick={() =>deleteFollow(user._id).then((res)=> setFollowers(res.data)) }>
+                                            <ProfileIcon />
+                                            <span>dis</span>
+                                        </button>
+                                        :
+                                        <button className="entity-card__footer__btn" onClick={() =>addFollow(user._id).then((res)=> setFollowers(res.data)) }>
                                             <LikeIcon />
                                             <span>Connect</span>
                                         </button>
+                                        }
                                         <Link className="entity-card__footer__btn" to={`/profile/${user._id}`}>
                                             <ProfileIcon />
                                             <span>Profile</span>

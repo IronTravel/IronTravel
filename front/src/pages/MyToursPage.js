@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form'
+import moment from 'moment'
 
 import Modali, { useModali } from 'modali';
 
@@ -10,17 +11,28 @@ import { UserCard } from '../components/UserCard';
 import NewEntity from '../assets/svgs/icon-new.svg';
 import StarIcon from '../assets/svgs/icon-star.svg';
 
-import { allTours, createTour } from '../service/tour';
+import { allTours, createTour, editTour, oneTour, deleteTour } from '../service/tour';
+
+import { allCountries } from '../service/data'
 
 export const MyToursPage = () => {
 
     const [formSubmitError, setFormSubmitError] = useState('');
     const { handleSubmit, register, errors } = useForm();
     const [newTourModal, setNewTourModal] = useModali({ title: 'New Tour' });
+    const [editTourModal, setEditTourModal] = useModali({ title: 'Edit Tour' });
+    const [deleteTourModal, setDeleteTourModal] = useModali({ title: 'Delete Tour' });
     
+    const [countries, setCountries] = useState([])
     const [userTour , SetUserTour] = useState([])
+    const [tour, setTour] = useState()
+    const [idTour, setIDTour] = useState()
+    const [editOneTour, setEditOneTour] = useState()
+
 
     const fetchUserTour = () => allTours().then(userTours => SetUserTour(userTours.data));
+
+    const fetchCountries = () => allCountries().then(allcountries => setCountries(allcountries.data))
 
     console.log(userTour)
 
@@ -32,9 +44,23 @@ export const MyToursPage = () => {
                setFormSubmitError(res.data.status)
         }) 
     }
+
+    const onUpdateSubmit = (data) => {
+        const id = idTour
+        
+        console.log(data)
+        console.log(idTour)
+        editTour(data, id)
+        .then((res) => {
+            setEditOneTour(res.data)
+            fetchUserTour()
+             setFormSubmitError(res.data.status)
+         })
+      };
     
     useEffect(() => {
         fetchUserTour()
+        fetchCountries()
     }, [])
     
     return (
@@ -55,9 +81,16 @@ export const MyToursPage = () => {
                         <article className="entity-card entity-card--travel">
                             <header className="entity-card__header">
                                 <div className="entity-card__header__bg">
-                                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80" alt="" />
+                                    <img src={e.photos[0]} alt="" />
                                 </div>
                             </header>
+                            <button className="button" onClick={() => {
+                                    setEditTourModal()
+                                    oneTour(e._id).then((res)=> setEditOneTour(res.data))}} />
+                                <button className="button" onClick={()=>{ 
+                                    setDeleteTourModal()
+                                    setTour(e._id)
+                                    }} />
                             <div className="entity-card__body">
                                 <h2 className="entity-card__body__title">{e.name}</h2>
                                 <p className="entity-card__body__tagline">{e.tour_type}</p>
@@ -131,6 +164,79 @@ export const MyToursPage = () => {
                         </div>
                         <div className="form-errors">{formSubmitError}</div>
                     </form>
+                </div>
+            </Modali.Modal>
+
+            {/* Edit Modal */}
+            <Modali.Modal {...editTourModal} className="modal">
+                <div className="auth-card__body">
+                    <strong className="mb-2">Edit yor Tour</strong>
+                    
+                    {editOneTour && 
+
+                    <form onSubmit={handleSubmit(onUpdateSubmit)}>
+                        <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
+                            <label className="field__label" htmlFor="name">Title or name*</label>
+                            <input className="field__input-text" placeholder="Add a name to identify your travel" defaultValue={editOneTour.name} name="name" id="name" type="text" ref={register({ required: true })} />
+                        </div>
+                        <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
+                            <label className="field__label" htmlFor="name">Type</label>
+                            <input className="field__input-text" placeholder="What kind of tour??" defaultValue={editOneTour.tour_type} name="type" id="Type" type="text" ref={register({ required: true })} />
+                        </div>
+                        <div className="row">
+                            <div className="col-6 pr-1">
+                                <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
+                                    <label className="field__label" htmlFor="from">City</label>
+                                    <input className="field__input-text" placeholder="City" defaultValue={editOneTour.city} name="city" id="city" type="text" ref={register({ required: true })} />
+                                </div>
+                            </div>
+                            <div className="col-6 pl-1">
+                                <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
+                                    <label className="field__label" htmlFor="to">Country</label>
+                                    <input className="field__input-text" placeholder="Country" defaultValue={editOneTour.country.name} name="country" id="country" type="text" ref={register({ required: false })} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-6 pr-1">
+                                <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
+                                    <label className="field__label" htmlFor="from">Start</label>
+                                    <input className="field__input-text" placeholder="Start" defaultValue={editOneTour.start_date ? moment(editOneTour.start_date).format('YYYY-MM-DD') : ""} name="start" id="start" type="date" ref={register({ required: true })} />
+                                </div>
+                            </div>
+                            <div className="col-6 pl-1">
+                                <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}> 
+                                    <label className="field__label" htmlFor="to">End</label>
+                                    <input className="field__input-text" placeholder="End" defaultValue={editOneTour.end_date ? moment(editOneTour.end_date).format('YYYY-MM-DD') : ""} name="end" id="end" type="date" ref={register({ required: true })} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
+                            <label className="field__label" htmlFor="description">Description</label>
+                            <textarea className="field__input-textarea" placeholder="tell us more" id="description" defaultValue={editOneTour.description} name="description" rows="3" ref={register({ required: true })}></textarea>
+                        </div>
+                        <div className="field-wrapper--button mt-4">
+                            <button className="btn btn--primary btn--w-full" type="submit" onClick={() => {
+                                setIDTour(editOneTour._id)
+                                setEditTourModal()
+                                }}>Edit</button>
+                        </div>
+                        <div className="form-errors">{formSubmitError}</div>
+                    </form>
+                    }
+                </div>
+            </Modali.Modal>
+
+            {/* Delete Modal */}
+            <Modali.Modal {...deleteTourModal} className="modal">
+                <div className="auth-card__body">
+                    <strong className="mb-2">Are you sure??</strong>
+                    <div>
+                        <Modali.Button label="Delete" isStyleDestructive onClick={() => {
+                            deleteTour(tour).then(fetchUserTour())
+                            setDeleteTourModal()
+                            }}/>
+                    </div>
                 </div>
             </Modali.Modal>
         </>

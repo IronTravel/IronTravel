@@ -10,7 +10,7 @@ const Tour = new mongoose.Schema(
         organizer: { type: mongoose.Schema.ObjectId, ref: "user" },
         start_date: Date,
         end_date: Date,
-        photos: Array,
+        photos: {type: Array, default: ["https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80"] },
         start_place: String,
         number_of_people: Number,
         duration: Date,
