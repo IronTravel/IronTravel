@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form';
 import Modali, { useModali } from 'modali';
+import { Link } from 'react-router-dom';
 
 // Components
 import { Header } from '../layout/Header';
 import { UserProfileHeader } from '../components/UserProfileHeader';
-import { UserCard } from '../components/UserCard';
 import NewEntity from '../assets/svgs/icon-new.svg';
 
 import { allTravel, createTravel } from '../service/travel';
@@ -26,7 +26,7 @@ export const MyTravelsPage = () => {
             .then((res) => {
                 fetchUserTravel()
                 setFormSubmitError(res.data.status)
-            }) 
+            })
     }
 
     useEffect(() => {
@@ -46,32 +46,35 @@ export const MyTravelsPage = () => {
                             <p className="entity-card--button__tagline">The start of a new jorney…</p>
                         </button>
                     </div>
-                    {userTravel.my_travels && userTravel.my_travels.map((e,i) => 
-                    <div className="col-3" key={i}>
-                        <article className="entity-card entity-card--travel">
-                            <header className="entity-card__header">
-                                <div className="entity-card__header__bg">
-                                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80" alt="" />
-                                </div>
-                            </header>
-                            <div className="entity-card__body">
-                                <h2 className="entity-card__body__title">{e.name}</h2>
-                                <p className="entity-card__body__tagline">Last update: 2 hours ago</p>
-                                <div className="entity-card__body__data">
-                                    <div className="inline-objects inline-objects--vertical">
-                                        <span className="mt-3 mb-2">Seen by</span>
-                                        <div className="inline-objects__images inline-objects__images--centered">
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
-                                            <UserCard showBorder avatarSize={28} />
+                    {userTravel && userTravel.map((travel, i) =>
+                        <div className="col-3" key={i}>
+                            <article className="entity-card entity-card--travel">
+                                <Link to={`travel/${travel._id}`}>
+                                    <header className="entity-card__header">
+                                        <div className="entity-card__header__bg">
+                                            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80" alt="" />
+                                        </div>
+                                    </header>
+                                    <div className="entity-card__body">
+                                        <h2 className="entity-card__body__title">{travel.name}</h2>
+                                        {
+                                            travel.entries.length > 0 &&
+                                            <p className="entity-card__body__tagline">Last update: 2 hours ago</p>
+                                        }
+
+                                        <div className="entity-card__body__data">
+                                            {
+                                                travel.likes &&
+                                                <>
+                                                    <span className="mt-3 mb-2">Seen by</span>
+                                                    <LikesFaces entries={entry.likes} />
+                                                </>
+                                            }
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
+                                </Link>
+                            </article>
+                        </div>
                     )}
                 </div>
             </div>

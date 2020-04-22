@@ -18,7 +18,6 @@ export const deleteTravel = async idTravel => {
     return await service.get(`/travels/delete/${idTravel}`);
 }
 
-export const oneTravel = async idTravel => {
-    console.log(idTravel)
+export const getTravel = async idTravel => {
     return await service.get(`/travels/${idTravel}`);
 }

@@ -14,10 +14,10 @@ const Amenity = require("../models/Amenity");
 const User = require("../models/User")
 
 
-router.get('/aboutMe/random', isLoggedIn(), async(req, res) => {
-  const populate = await User.findById(req.user.id).populate([{ path: "hobbies" }, { path: "music"}, { path: "life_style" },{ path: "personality" }])
-    
-  // const musics = populate.music.map(e => e.name)
+router.get('/aboutMe/random', isLoggedIn(), async (req, res) => {
+    const populate = await User.findById(req.user.id).populate([{ path: "hobbies" }, { path: "music" }, { path: "life_style" }, { path: "personality" }])
+
+    // const musics = populate.music.map(e => e.name)
     const hobbies = populate.hobbies.map(e => e.name)
     const personalities = populate.personality.map(e => e.name)
     const life_styles = populate.life_style.map(e => e.name)
@@ -27,29 +27,30 @@ router.get('/aboutMe/random', isLoggedIn(), async(req, res) => {
     const randomPersonality = personalities[Math.floor(Math.random() * personalities.length)];
     const randomLifeStyle = life_styles[Math.floor(Math.random() * life_styles.length)];
     const finalRandom = []
-    finalRandom.push(randomHobby,randomPersonality ,randomLifeStyle)
+    finalRandom.push(randomHobby, randomPersonality, randomLifeStyle)
     return res.json(finalRandom)
 })
 
 
 //List Populate all aboutMe
 router.get('/aboutMe/user', isLoggedIn(), async (req, res) => {
-  const populate = await User.findById(req.user.id).populate([{ path: "hobbies" }, { path: "music"}, { path: "life_style" },{ path: "personality" }])
-  return res.json(populate)
+    const populate = await User.find({ _id: req.user.id }, { password: 0, __v: 0 })
+        .populate([{ path: "hobbies" }, { path: "music" }, { path: "life_style" }, { path: "personality" }])
+    return res.json(populate)
 })
 
 //HOBBY//
 //All
 router.get('/hobbies', isLoggedIn(), async (req, res) => {
-  const hobbies = await Hobby.find() 
-  return res.json(hobbies)
+    const hobbies = await Hobby.find()
+    return res.json(hobbies)
 })
 
 //Add
-router.post('/hobbies/add',async(req, res) => {
-  const user = req.user.id
-  await User.findByIdAndUpdate(user, {hobbies: req.body})
-  return res.json({status:"added"})
+router.post('/hobbies/add', async (req, res) => {
+    const user = req.user.id
+    await User.findByIdAndUpdate(user, { hobbies: req.body })
+    return res.json({ status: "added" })
 })
 
 //Delete
@@ -67,15 +68,15 @@ router.post('/hobbies/add',async(req, res) => {
 //MUSICGENRE//
 //All
 router.get('/musicgenres', isLoggedIn(), async (req, res) => {
-  const musicgenres = await MusicGenre.find() 
-  return res.json(musicgenres)
+    const musicgenres = await MusicGenre.find()
+    return res.json(musicgenres)
 })
 
 //Add
-router.post('/musicgenres/add',async(req, res) => {
-  const user = req.user.id
-  await User.findByIdAndUpdate(user, {music: req.body})
-  return res.json({status:"added"})
+router.post('/musicgenres/add', async (req, res) => {
+    const user = req.user.id
+    await User.findByIdAndUpdate(user, { music: req.body })
+    return res.json({ status: "added" })
 })
 
 //Delete
@@ -93,15 +94,15 @@ router.post('/musicgenres/add',async(req, res) => {
 //PERSONALITY//
 //All
 router.get('/personalities', isLoggedIn(), async (req, res) => {
-  const personality = await Personality.find() 
-  return res.json(personality)
+    const personality = await Personality.find()
+    return res.json(personality)
 })
 
 //Add
-router.post('/personalities/add',async(req, res) => {
-  const user = req.user.id
-  await User.findByIdAndUpdate(user, {personality: req.body})
-  return res.json({status:"added"})
+router.post('/personalities/add', async (req, res) => {
+    const user = req.user.id
+    await User.findByIdAndUpdate(user, { personality: req.body })
+    return res.json({ status: "added" })
 
 })
 //Delete
@@ -119,15 +120,15 @@ router.post('/personalities/add',async(req, res) => {
 //LIFESTYLE//
 //All
 router.get('/lifestyles', isLoggedIn(), async (req, res) => {
-  const lifestyle = await LifeStyle.find() 
-  return res.json(lifestyle)
+    const lifestyle = await LifeStyle.find()
+    return res.json(lifestyle)
 })
 
 //Add
-router.post('/lifestyles/add',async(req, res) => {
-  const user = req.user.id
-  await User.findByIdAndUpdate(user, {life_style: req.body})
-  return res.json({status:"added"})
+router.post('/lifestyles/add', async (req, res) => {
+    const user = req.user.id
+    await User.findByIdAndUpdate(user, { life_style: req.body })
+    return res.json({ status: "added" })
 })
 
 //Delete
@@ -145,15 +146,15 @@ router.post('/lifestyles/add',async(req, res) => {
 //AMENITIES//
 //All
 router.get('/amenities', async (req, res) => {
-  const amenity = await Amenity.find() 
-  return res.json(amenity)
+    const amenity = await Amenity.find()
+    return res.json(amenity)
 })
 
 //Add
-router.post('/amenities/add',async(req, res) => {
-  const user = req.user.id
-  await User.findByIdAndUpdate(user, {amenities: req.body})
-  return res.json({status:"added"})
+router.post('/amenities/add', async (req, res) => {
+    const user = req.user.id
+    await User.findByIdAndUpdate(user, { amenities: req.body })
+    return res.json({ status: "added" })
 })
 //Delete
 // router.get('/amenities/delete/:id',async(req, res) => {

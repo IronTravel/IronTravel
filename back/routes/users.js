@@ -11,7 +11,7 @@ const User = require("../models/User");
 //ALL USERS//
 router.get('/', isLoggedIn(), async (req, res) => {
     const { id } = req.user;
-    const users = await User.find({ _id: { $ne: id } })
+    const users = await User.find({ _id: { $ne: id } }, { password: 0, __v: 0 })
         .populate([
             { path: "personality" },
             { path: "life_style" },
@@ -24,7 +24,7 @@ router.get('/', isLoggedIn(), async (req, res) => {
 //GET USER//
 router.get('/:id', isLoggedIn(), async (req, res) => {
     const { id } = req.params;
-    const user = await User.findById(id)
+    const user = await User.findById(id, { password: 0, __v: 0 })
         .populate([
             { path: "personality" },
             { path: "life_style" },
