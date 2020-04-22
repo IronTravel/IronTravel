@@ -15,7 +15,7 @@ import LogoWeTravelSM from '../assets/svgs/logo-wetravel-sm.svg';
 import { UserCard } from '../components/UserCard';
 import { DropDownMessages } from '../components/DropDownMessages';
 import { DropDownMenu } from '../components/DropDownMenu';
-import { MessageSquare, Bell, Settings, LogOut } from 'react-feather';
+import { MessageSquare, Bell, Settings, LogOut, User } from 'react-feather';
 
 export const Header = withRouter(({ history }) => {
 
@@ -32,7 +32,7 @@ export const Header = withRouter(({ history }) => {
     return (
         <header className="main-header">
             <div className="main-logo">
-                <Link to="/settings"><LogoWeTravelSM /> </Link>
+                <Link to="/profile"><LogoWeTravelSM /> </Link>
             </div>
             <div className="current-section">My Profile</div>
             <div className="header-search">
@@ -41,6 +41,7 @@ export const Header = withRouter(({ history }) => {
             <nav className="main-nav">
                 <Link to="/my-travels">My Travels</Link>
                 <Link to="/my-tours">My Tours</Link>
+                <Link to="/search">All Users</Link>
             </nav>
             <div className="user-menu">
                 <div className="user-menu__icon-btn">
@@ -52,8 +53,11 @@ export const Header = withRouter(({ history }) => {
                 {
                     user &&
                     <div className="user-menu__user-btn">
-                        <DropDownMenu className="user-menu__user-btn"
-                            icon={<UserCard avatar={user.avatar} name={user.fullName} />}>
+                        <DropDownMenu icon={<UserCard avatar={user.avatar} name={user.fullName} />}>
+                            <Link to="/profile">
+                                <User size={15} />
+                                <span>My Profile</span>
+                            </Link>
                             <Link to="/settings">
                                 <Settings size={15} />
                                 <span>Settings</span>

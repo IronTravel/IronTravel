@@ -29,7 +29,6 @@
         padding: 30px 60px;
 
         &__data {
-            max-width: 300px;
             width: 100%;
             text-align: center;
             color: #5F5F5F;
@@ -45,26 +44,56 @@
 
             &--user {
                 position: relative;
+                min-width: 350px;
 
-                .big-avatar {
-                    @extend .position-absolute;
-                    width: 175px;
-                    height: 175px;
-                    margin: auto;
-                    border-radius: 50%;
-                    overflow: hidden;
-                    border: 6px solid #F2F2F4;
-                    top: -175px;
-                    left: 50%;
-                    transform: translateX(-50%);
-
-                    img {
+                label {
+                    .big-avatar {
                         @extend .position-absolute;
-                        width: 180px;
-                        max-width: initial;
-                        top: 50%;
+                        width: 175px;
+                        height: 175px;
+                        margin: auto;
+                        border-radius: 50%;
+                        overflow: hidden;
+                        border: 6px solid #F2F2F4;
+                        top: -175px;
                         left: 50%;
-                        transform: translate(-50%, -50%);
+                        transform: translateX(-50%);
+
+                            img {
+                                @extend .position-absolute;
+                                width: 180px;
+                                max-width: initial;
+                                top: 50%;
+                                left: 50%;
+                                transform: translate(-50%, -50%);
+                            }
+                    }
+
+                    .big-avatar__upload-btn {
+                        @extend .d-none;
+                        cursor: pointer;
+                    }
+
+                    &.clickable {
+                        cursor: pointer;
+                    }
+                }
+
+                .big-avatar__save {
+                    @extend .position-absolute;
+                    text-align: center;
+                    background: #fff;
+                    border: none;
+                    border-radius: 50%;
+                    width: 40px;
+                    height: 40px;
+                    top: -160px;
+                    right: 75px;
+                    border: 3px solid #bebebe;
+                    box-shadow: 0 10px 30px 0 rgba(0,0,0,0.5);
+
+                    &:hover {
+                        background: #f1f1f1;
                     }
                 }
 
