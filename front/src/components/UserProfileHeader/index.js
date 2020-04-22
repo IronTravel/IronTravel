@@ -26,7 +26,7 @@ export const UserProfileHeader = ({ data }) => {
     const { id } = useParams();
 
     const loggedInUser = useUser();
-    const [user, setUser] = useState({});
+    // const [user, setUser] = useState({});
     const [hasImageLoaded, setHasImageLoaded] = useState(false);
     const [inUserSettigns, setIUserSettigns] = useState(false);
 
