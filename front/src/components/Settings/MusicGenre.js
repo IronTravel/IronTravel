@@ -37,24 +37,24 @@ export const Music = () => {
             <h3>Connect with more people according to the way you are. Click on the features that describes you the best. We will match you with other travelers with alike Music, also, this could help other travelers find you as well.</h3>
         </div>
         <div>
-            <ul>
-                {musicList.length && musicList.map((e, i) => (
+        {musicList.length && musicList.map((e, i) => (
+            <ul style="listStyle:none">
                     <li key={i}>
                         <button onClick={() => addSingleAboutMe(e._id,"musicgenres")}>ADD</button>
                         {e.name}
                     </li>
-                ))}
             </ul>
+            ))}
         </div>
         <div>
-           <ul>
-                {userAboutMe.music && userAboutMe.music.map((e, i) => (
+        {userAboutMe.music && userAboutMe.music.map((e, i) => (
+           <ul  style="listStyle:none">
                     <li key={i}>
                         <button onClick={() => deleteSingleAboutMe(e._id,"musicgenres")}>DELETE</button>
                         {e.name}
                     </li>
-                ))}
             </ul>
+))}
         </div>
         <div className="field-wrapper--button">
             <button className="btn btn--primary btn--w-full" type="submit">Save</button>

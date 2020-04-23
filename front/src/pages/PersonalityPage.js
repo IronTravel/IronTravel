@@ -84,7 +84,7 @@ export const PersonalityPage = () => {
                             </div>
                             <div className="section-box__body">
                                 <Link to="/settings" className="section-box__link">Personal Information</Link>
-                                <Link to="/"className="section-box__link">Account Settings</Link>
+                                {/* <Link to="/"className="section-box__link">Account Settings</Link> */}
                                 <Link to="/settings/change-password" className="section-box__link">Change Password</Link>
                                 <Link to="/settings/personality"className="section-box__link section-box__link--active">Personality and Lifestyle</Link>
                                 <Link to="/settings/music-hobbies"className="section-box__link">Music and Hobbies</Link>
