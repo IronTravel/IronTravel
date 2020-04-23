@@ -46,8 +46,8 @@ export const App = withAuth(() => {
                     <Route path="/settings/personality" exact component={PersonalityPage} />
                     <Route path="/settings/change-password" exact component={ChangePassword} />
                     <Route path="/settings/music-hobbies" exact component={MusicHobbiesPage} />
-
-                    <Route path="/prueba" exact component={ToFollow} />
+                    
+                    <Route path="/city/:id?" exact component={ToFollow} />
 
                     <Route path="/travel/:travel_id?" exact component={TravelPage} />
 
