@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form'
 import { withRouter } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 //Context
-import { useUserSetter } from '../../context/user';
+import { useUser, useUserSetter } from '../../context/user';
 
 //Service
 import { login } from '../../service/auth';
@@ -19,6 +20,7 @@ export const LoginForm = withRouter(({ history }) => {
         login(data)
             .then((res) => {
                 setUser(res.data);
+                toast(`Welcome, ${res.data.fullName}`)
                 history.push("/profile");
             })
             .catch(() => {

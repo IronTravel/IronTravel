@@ -1,32 +1,61 @@
 const MusicGenre = require("../models/MusicGenre");
-const axios = require("axios");
-const { withDbConnection, dropIfExists, getSpotityToken } = require("../lib");
+const { withDbConnection, dropIfExists } = require("../lib");
 
-getSpotityToken().then(result => {
-    const accessToken = result.data.access_token;
-
-    axios({
-        method: "get",
-        url: "https://api.spotify.com/v1/recommendations/available-genre-seeds",
-        headers: {
-            Authorization: "Bearer " + accessToken,
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        responseType: "json"
-    })
-        .then(response => {
-            const genreNames = response.data.genres;
-
-            withDbConnection(async () => {
-                await dropIfExists(MusicGenre);
-                await MusicGenre.create(
-                    genreNames.map(name => {
-                        return { name };
-                    })
-                );
-            });
+withDbConnection(async () => {
+    await dropIfExists(MusicGenre);
+    await MusicGenre.create(
+        ["acoustic",
+            "alternative",
+            "anime",
+            "blues",
+            "bossanova",
+            "british",
+            "children",
+            "classical",
+            "club",
+            "country",
+            "dance",
+            "disco",
+            "drum-and-bass",
+            "dubstep",
+            "electronic",
+            "folk",
+            "funk",
+            "gospel",
+            "groove",
+            "guitar",
+            "hard-rock",
+            "heavy-metal",
+            "hip-hop",
+            "house",
+            "indie",
+            "j-pop",
+            "j-rock",
+            "jazz",
+            "k-pop",
+            "latin",
+            "mandopop",
+            "metal",
+            "opera",
+            "party",
+            "pop",
+            "punk",
+            "punk-rock",
+            "reggae",
+            "reggaeton",
+            "rock",
+            "romance",
+            "sad",
+            "salsa",
+            "samba",
+            "ska",
+            "soul",
+            "synth-pop",
+            "tango",
+            "techno",
+            "trance"
+        ].map(name => {
+            return { name };
         })
-        .catch(error => {
-            console.log("ERROR: " + error);
-        });
+    );
 });

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-
 import { Link } from 'react-router-dom';
-
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify';
 
 import _ from 'lodash';
 
@@ -35,12 +34,13 @@ export const MusicHobbiesPage = () => {
             musicgenres().then(res => setMusicGenreList(res.data));
             hobbies().then(res => setHobbiesList(res.data));
             fetchUAboutMe()
+            toast("Information saved successfully!")
         });
-        
+
     }, []);
 
 
-    const handleChecked = (hasValue, id, set, list) => { 
+    const handleChecked = (hasValue, id, set, list) => {
         if (hasValue) {
             let copy = [...list];
             let newArr = copy.filter(e => e !== id)
@@ -59,7 +59,7 @@ export const MusicHobbiesPage = () => {
         await keys.forEach(e => {
             if (hobbies.indexOf(e) !== -1){
             return newArrayHobbiess.push(e)
-        } 
+        }
         return newArrayMusicGenres.push(e)
     })
 
