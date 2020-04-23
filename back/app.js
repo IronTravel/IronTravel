@@ -119,6 +119,9 @@ app.use("/entries", entries);
 const followers = require("./routes/followers");
 app.use("/followers", followers);
 
+const search = require("./routes/search");
+app.use("/search", search)
+
 const spotify = require("./routes/spotify");
 app.use("/spotify", spotify);
 
