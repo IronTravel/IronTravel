@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
-
 import { Link } from 'react-router-dom';
-
 import { useForm } from 'react-hook-form'
-
+import { toast } from 'react-toastify';
 import _ from 'lodash';
 
 // Components
@@ -38,10 +36,10 @@ export const PersonalityPage = () => {
             lifestyles().then(res => setLifeStylesList(res.data));
             fetchUAboutMe()
         });
-        
+
     }, []);
 
-    const handleChecked = (hasValue, id, set, list) => { 
+    const handleChecked = (hasValue, id, set, list) => {
         if (hasValue) {
             let copy = [...list];
             let newArr = copy.filter(e => e !== id)
@@ -57,15 +55,17 @@ export const PersonalityPage = () => {
 
         let newArrayPersonalities = []
         let newArrayLifeStyles = []
+
         await keys.forEach(e => {
             if (personalities.indexOf(e) !== -1){
                 return newArrayPersonalities.push(e)
-            } 
+            }
             return newArrayLifeStyles.push(e)
         })
 
-            await addAboutMe(newArrayPersonalities, "personalities");
-            await addAboutMe(newArrayLifeStyles, "lifestyles")
+        await addAboutMe(newArrayPersonalities, "personalities");
+        await addAboutMe(newArrayLifeStyles, "lifestyles")
+        toast("Information saved successfully!")
     }
 
     return (

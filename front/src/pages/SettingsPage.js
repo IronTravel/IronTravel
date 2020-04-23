@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify';
 import moment from 'moment'
 
 // Components
@@ -16,12 +17,11 @@ import { whoami } from '../service/auth';
 
 export const SettingsPage = () => {
 
-
     useEffect(() => {
         whoami().then((res) => {
             console.log(res.data)
         });
-        
+
     }, []);
 
     const user = useUser()
@@ -37,6 +37,7 @@ export const SettingsPage = () => {
                 console.log(res.data)
                 setUser(res.data)
                 setFormSubmitError(res.data.status)
+                toast("Information saved successfully!")
             })
     }
 
@@ -56,7 +57,7 @@ export const SettingsPage = () => {
                             </div>
                             <div className="section-box__body">
                                 <Link to="/settings" className="section-box__link section-box__link--active">Personal Information</Link>
-                                <Link to="/" className="section-box__link">Account Settings</Link>
+                                {/* <Link to="/" className="section-box__link">Account Settings</Link> */}
                                 <Link to="/settings/change-password" className="section-box__link">Change Password</Link>
                                 <Link to="/settings/personality" className="section-box__link">Personality and Lifestyle</Link>
                                 <Link to="/settings/music-hobbies" className="section-box__link">Music and Hobbies</Link>

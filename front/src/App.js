@@ -16,6 +16,11 @@ import { ChangePassword } from "./components/Settings/ChangePassword";
 import { NotFoundPage } from './pages/NotFoundPage';
 import { TravelPage } from './pages/TravelPage';
 import { Layout } from './layout/Layout';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+// Toaster
+toast.configure()
 
 // HOCs
 import { withAuth } from './components/withAuthHOC';
