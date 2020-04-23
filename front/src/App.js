@@ -16,7 +16,13 @@ import { ChangePassword } from "./components/Settings/ChangePassword";
 import { NotFoundPage } from './pages/NotFoundPage';
 import { TravelPage } from './pages/TravelPage';
 import { Layout } from './layout/Layout';
+import { toast } from 'react-toastify';
 import { ToFollow } from './components/Profile/ToFollow'
+
+import 'react-toastify/dist/ReactToastify.css';
+
+// Toaster
+toast.configure()
 
 // HOCs
 import { withAuth } from './components/withAuthHOC';
@@ -40,7 +46,7 @@ export const App = withAuth(() => {
                     <Route path="/settings/personality" exact component={PersonalityPage} />
                     <Route path="/settings/change-password" exact component={ChangePassword} />
                     <Route path="/settings/music-hobbies" exact component={MusicHobbiesPage} />
-                    
+
                     <Route path="/prueba" exact component={ToFollow} />
 
                     <Route path="/travel/:travel_id?" exact component={TravelPage} />
