@@ -122,6 +122,9 @@ app.use("/followers", followers);
 const search = require("./routes/search");
 app.use("/search", search)
 
+const city = require("./routes/city");
+app.use("/city", city)
+
 const spotify = require("./routes/spotify");
 app.use("/spotify", spotify);
 

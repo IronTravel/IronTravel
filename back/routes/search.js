@@ -5,6 +5,7 @@ const _ = require("lodash");
 
 //Models
 const City = require("../models/City");
+const User = require("../models/User");
 
 //Lib
 const { isLoggedIn, isLoggedOut } = require('../lib');
@@ -15,11 +16,9 @@ router.post("/",isLoggedIn(), async (req, res) => {
     const {data} = req.body
     console.log(data)
     const found = await City.find( { $and: [ { $or: [{name: { $regex: data, $options: "i" } },{country: { $regex: data, $options: "i" }} ] } ] } )
-    .populate([
+    .populate(
         { path: "restaurant" },
-        { path: "museum" },
-        { path: "landmark" }
-    ]);
+    );
     console.log(found)
     return res.json(found)
 
