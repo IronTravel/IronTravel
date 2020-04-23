@@ -27,11 +27,14 @@ await dropIfExists(Landmark);
       const response = await axios.get(
         `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${landmarkId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
       );
-      await Landmark.create(response.data.response.groups.map((e) => e.items.map((i) => i.venue)).pop())
+      const newLandmark = await Landmark.create(response.data.response.groups.map((e) => e.items.map((i) => i.venue)).pop())
+
+      if(newLandmark){
       await City.findByIdAndUpdate(city._id, 
-        { $addToSet: { landmarks: response.data.response.groups.map((e) => e.items.map((i) => i.venue.id)).pop() } }
+        { $addToSet: { landmarks: newLandmark.map((e) => e._id)} }
       )
       console.log(`${city.name} landmarks (${++cityCount} of ${cities.length})`);
+      }
     } catch (error) {
       console.log(
         error.response.status,
