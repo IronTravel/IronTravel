@@ -15,6 +15,7 @@ import { UserProfileHeader } from '../components/UserProfileHeader';
 import { LikeButton } from '../components/LikeButton';
 import { LikesFaces } from '../components/LikesFaces';
 import { whoami } from '../service/auth';
+import { Link } from 'react-feather';
 
 export const ProfilePage = () => {
 

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify';
 
 // Components
 import { Header } from '../../layout/Header';
@@ -31,12 +32,13 @@ export const ChangePassword = () => {
                 .then((res) => {
                     console.log(res.data)
                     setUser(res.data)
-                    setFormSubmitError(res.data.status)
+                    toast("Information saved successfully!")
                 })
 
         }else{
             setFormSubmitError('New Password and Confirmed Password are diferents');
         }
+        
     }
 
     return (
@@ -55,7 +57,7 @@ export const ChangePassword = () => {
                             </div>
                             <div className="section-box__body">
                                 <Link to="/settings" className="section-box__link">Personal Information</Link>
-                                <Link to="/"className="section-box__link">Account Settings</Link>
+                                {/* <Link to="/"className="section-box__link">Account Settings</Link> */}
                                 <Link to="/settings/change-password" className="section-box__link section-box__link--active">Change Password</Link>
                                 <Link to="/settings/personality"className="section-box__link">Personality and Lifestyle</Link>
                                 <Link to="/settings/music-hobbies"className="section-box__link">Music and Hobbies</Link>
@@ -74,19 +76,19 @@ export const ChangePassword = () => {
                                 <form onSubmit={handleSubmit(onFormSubmit)}>
                                     <div className="row">
                                         <div className="col col-12">
-                                            <div className="field-wrapper">
+                                            <div className={`field-wrapper ${errors?.password && 'field-wrapper--error'}`}>
                                                 <label className="field__label" htmlFor="password">Current Password*</label>
                                                 <input className="field__input-text" placeholder="••••••••••••" name="password" id="password" type="password" ref={register({ required: true })}/>
                                             </div>
                                         </div>
                                         <div className="col col-12">
-                                            <div className="field-wrapper">
+                                            <div className={`field-wrapper ${errors?.newPassword && 'field-wrapper--error'}`}>
                                                 <label className="field__label" htmlFor="newPassword">New Password</label>
                                                 <input className="field__input-text" placeholder="Put your new password" name="newPassword" id="newPassword" type="password" ref={register({ required: true })}/>
                                             </div>
                                         </div>
                                         <div className="col col-12">
-                                            <div className="field-wrapper">
+                                            <div className={`field-wrapper ${errors?.confirmNewPassword && 'field-wrapper--error'}`}>
                                                 <label className="field__label" htmlFor="confirmNewPassword">Confirm New Password*</label>
                                                 <input className="field__input-text" placeholder="Confirm your new password" name="confirmNewPassword" id="confirmNewPassword" type="password" ref={register({ required: true })}/>
                                             </div>
