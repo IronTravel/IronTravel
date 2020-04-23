@@ -27,10 +27,11 @@ withDbConnection(async () => {
             const response = await axios.get(
                 `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${museumId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
             );
-            await Museum.create(response.data.response.groups.map((e) => e.items.map((i) => i.venue)).pop())
+            const newMuseum = await Museum.create(response.data.response.groups.map((e) => e.items.map((i) => i.venue)).pop())
+console.log(newMuseum)
             await City.findByIdAndUpdate(city._id,
-                // { $addToSet: { museums: response.data.response.groups.map((e) => e.items.map((i) => i.venue.id)).pop() } }
-                { museums: response.data.response.groups.map((e) => e.items.map((i) => i.venue.id)).pop() }
+                { $addToSet: { museums: newMuseum.map((e) => e._id)} }
+                // { museums: response.data.response.groups.map((e) => e.items.map((i) => i.venue.id)).pop() }
             )
             console.log(`${city.name} museums (${++cityCount} of ${cities.length})`);
         } catch (error) {

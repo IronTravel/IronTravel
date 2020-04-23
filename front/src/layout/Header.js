@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
 // Context
@@ -10,14 +10,21 @@ import { logout } from '../service/auth';
 //Context
 import { useUser } from "../context/user";
 
+
+
+
 // Components
 import LogoWeTravelSM from '../assets/svgs/logo-wetravel-sm.svg';
 import { UserCard } from '../components/UserCard';
 import { DropDownMessages } from '../components/DropDownMessages';
 import { DropDownMenu } from '../components/DropDownMenu';
 import { MessageSquare, Bell, Settings, LogOut, User } from 'react-feather';
+import { searchUser } from '../service/search';
+import { allUser } from '../service/user';
 
 export const Header = withRouter(({ history }) => {
+
+    const [search, setSearch] = useState("")
 
     const user = useUser()
     const setUser = useUserSetter();
@@ -29,6 +36,14 @@ export const Header = withRouter(({ history }) => {
         })
     }
 
+    const handleSearch = e => {
+        const query = e.target.value;
+        searchUser(query).then(res => {
+            console.log(res.data)
+            setSearch(res.data)
+        })
+      };
+      
     return (
         <header className="main-header">
             <div className="main-logo">
@@ -36,7 +51,12 @@ export const Header = withRouter(({ history }) => {
             </div>
             <div className="current-section">My Profile</div>
             <div className="header-search">
-                <input type="search" />
+                <input type="search" name="search" onChange={handleSearch}/>
+                <div>
+                    {search &&
+                    search.map(e => <Link to={`/${e._id}`}>{e.name}</Link>)}
+                </div>
+    
             </div>
             <nav className="main-nav">
                 <Link to="/my-travels">My Travels</Link>

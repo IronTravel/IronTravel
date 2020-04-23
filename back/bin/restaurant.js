@@ -27,9 +27,9 @@ await dropIfExists(Restaurant);
       const response = await axios.get(
         `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${restaurantId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
       );
-      await Restaurant.create(response.data.response.groups.map((e) => e.items.map((i) => i.venue)).pop())
+      const newRestaurant = await Restaurant.create(response.data.response.groups.map((e) => e.items.map((i) => i.venue)).pop())
       await City.findByIdAndUpdate(city._id, 
-        { $addToSet: { restaurants: response.data.response.groups.map((e) => e.items.map((i) => i.venue.id)).pop() } }
+        { $addToSet: { restaurants: newRestaurant.map((e) => e._id)} }
       )
       console.log(`${city.name} restaurants (${++cityCount} of ${cities.length})`);
     } catch (error) {
