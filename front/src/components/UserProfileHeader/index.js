@@ -58,11 +58,11 @@ export const UserProfileHeader = ({ data }) => {
                 </div>
                 <div className="profile-header__info">
                     <div className="profile-header__info__data">
-                        <div className="value">{user?.travels?.length || 0}</div>
+                        <div className="value">{user?.my_travels?.length || 0}</div>
                         <div className="key">Travels</div>
                     </div>
                     <div className="profile-header__info__data">
-                        <div className="value">{user?.tours?.length || 0}</div>
+                        <div className="value">{user?.my_tours?.length || 0}</div>
                         <div className="key">Tours</div>
                     </div>
                     <div className="profile-header__info__data profile-header__info__data--user">

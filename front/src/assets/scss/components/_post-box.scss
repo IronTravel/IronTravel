@@ -7,12 +7,18 @@
     padding: 2rem;
 
     &__header {
-        @extend .mb-3;
+        @extend .position-relative, .mb-3;
+
+        .dropdownmenu {
+            @extend .position-absolute;
+            right: 0;
+        }
     }
 
     &__body {
         @extend .pb-4, .mb-4;
         border-bottom: 1px solid #D8D8D8;
+        font-size: 15px;
 
         p {
             @extend .mb-0;
@@ -21,5 +27,31 @@
 
     &__footer {
         @extend .d-flex, .align-items-center, .flex-wrap;
+    }
+
+    &--entry-form {
+        padding-bottom: 1rem;
+
+        .post-box__header {
+            @extend .pb-4;
+            border-bottom: 1px solid #D8D8D8;
+        }
+
+        .post-box__body {
+            @extend .d-flex, .align-items-start, .pb-3, .mb-3;
+
+            textarea {
+                flex: 0 1 calc(100% - 50px);
+                color: #919191;
+                font-size: 16px;
+                border: none;
+                height: 70px;
+                resize: none;
+            }
+        }
+
+        .post-box__footer {
+            @extend .d-flex, .align-items-center, .justify-content-between;
+        }
     }
 }

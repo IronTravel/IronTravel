@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link  } from 'react-router-dom';
+import moment from 'moment';
+import _ from 'lodash';
 
 // Context
 import { useUser } from '../context/user';
@@ -7,14 +9,13 @@ import { useUser } from '../context/user';
 // Service
 import { getUser } from '../service/user'
 import { getUserEntries } from '../service/entries';
+import { whoami } from '../service/auth';
 
 // Components
 import { Header } from '../layout/Header';
-import { UserCard } from '../components/UserCard';
 import { UserProfileHeader } from '../components/UserProfileHeader';
-import { LikeButton } from '../components/LikeButton';
-import { LikesFaces } from '../components/LikesFaces';
-import { whoami } from '../service/auth';
+import { PublishBox } from '../components/PublishBox';
+import { Entry } from '../components/Entry';
 
 export const ProfilePage = () => {
 
@@ -27,18 +28,17 @@ export const ProfilePage = () => {
         if (id) {
             getUser(id).then(res => {
                 setUser(res.data);
-                getUserEntries(id).then(res => setEntries(res.data));
+                getUserEntries(id)
+                    .then(res => setEntries( _.orderBy(res.data, ['_id'], ['desc']) ));
             });
         } else {
             setUser(loggedInUser);
             whoami().then((res) => {
                 setUser(res.data)
-                console.log(res.data._id)
-                // getUserEntries(res.data._id).then(res => setEntries(res.data));
             });
             getUserEntries(loggedInUser._id).then(res => setEntries(res.data));
         }
-    }, []);
+    }, [id]);
 
     return (
         <>
@@ -54,7 +54,6 @@ export const ProfilePage = () => {
                             </div>
                             <div className="section-box__body px-4">
                                 {
-                                    console.log(user),
                                     user && user.description &&
                                     <section className="content-box">
                                         <Link to="/settings"><h4 className="content-box__title">About Me</h4></Link>
@@ -104,25 +103,18 @@ export const ProfilePage = () => {
                     {/* ProfilePosts Component */}
                     <div className="col-6 px-4">
                         {
-                            entries && entries.map((entry, i) => (
-                                <article key={i} className="post-box section-box section-box--shadow">
-                                    <header className="post-box__header">
-                                        <UserCard
-                                            avatar={entry.author.avatar}
-                                            avatarSize={38}
-                                            name={entry.author.fullName}
-                                            time={entry.data} />
-                                    </header>
-                                    <div className="post-box__body">
-                                        <p>{entry.body}</p>
-                                    </div>
-                                    <footer className="post-box__footer">
-                                        <LikeButton count={entry.likes.length} className="mr-4" />
-                                        {entry.likes && <LikesFaces entries={entry.likes} />}
-                                    </footer>
-                                </article>
+                            loggedInUser && !id &&
+                            <PublishBox user={loggedInUser} set={(entry) => setEntries([entry, ...entries])} />
+                        }
 
-                            ))
+                        {
+                            entries && entries.map((entry, i) => {
+                                if (entry.hidden) {
+                                    if (entry.author.id === loggedInUser._id)
+                                    return <Entry key={i} entry={entry} setEntry={(entries) => { setEntries(entries) }} />
+                                } else
+                                    return <Entry key={i} entry={entry} setEntry={(entries) => { setEntries(entries) }} />
+                            })
                         }
                     </div>
 

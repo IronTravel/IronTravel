@@ -28,13 +28,15 @@ router.get('/:userId', isLoggedIn(), async (req, res) => {
 //CREATE ENTRY//
 router.post("/", isLoggedIn(), async (req, res, next) => {
 
-    const { body, is_public } = req.body;
-    const newEntry = await Entry.create({
-        author: req.user._id,
-        body: body,
+    console.log(req.body);
+    const { entry, is_public } = req.body;
+    let newEntry = await Entry.create({
         type: 'text',
+        author: req.user._id,
+        body: entry,
         hidden: is_public ? true : false
-    });
+    })
+    newEntry = await newEntry.populate('author').execPopulate()
 
     return res.json(newEntry)
 });
@@ -45,11 +47,20 @@ router.get("/delete/:id", isLoggedIn(), async (req, res, next) => {
     const { id } = req.params;
     const entry = await Entry.findById(id);
 
-    if (entry.author === req.user._id) {
-        const entry = await Entry.findOneAndDelete({ _id: entry.id })
-        return res.json(entry)
+    if (entry.author.toString() === req.user._id.toString()) {
+        await Entry.findOneAndDelete({ _id: entry._id });
+        const entries = await Entry.find({ author: req.user._id })
+            .populate([
+                { path: "author" },
+                { path: "likes" }
+            ]);
+
+        console.log(entries)
+
+        return res.json(entries);
+
     } else {
-        return res.status(401).json({ status: "You are not the post author. You can only delete your own entries." })
+        return res.status(401).json({ status: "You are not the post author. You can only delete your own entries." });
     }
 });
 

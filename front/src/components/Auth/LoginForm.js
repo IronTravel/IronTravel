@@ -27,6 +27,7 @@ export const LoginForm = withRouter(({ history }) => {
                 setFormSubmitError('Wrong Email or Password. Please, verify and try again.');
             })
     }
+
     return (
         <section className="auth-card">
             <header className="auth-card__header">

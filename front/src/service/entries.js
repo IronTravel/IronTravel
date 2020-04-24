@@ -1,11 +1,11 @@
 import service from './_base';
 
-export const createEntry = async () => {
-    return await service.post(`entries/`);
+export const createEntry = async data => {
+    return await service.post(`entries/`, data);
 }
 
 export const deleteEntry = async entryId => {
-    return await service.post(`entries/${entryId}`);
+    return await service.get(`entries/delete/${entryId}`);
 }
 
 export const getUserEntries = async userId => {
