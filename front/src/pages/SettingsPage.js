@@ -36,7 +36,6 @@ export const SettingsPage = () => {
             .then((res) => {
                 console.log(res.data)
                 setUser(res.data)
-                setFormSubmitError(res.data.status)
                 toast("Information saved successfully!")
             })
     }
@@ -76,21 +75,21 @@ export const SettingsPage = () => {
                                     <form onSubmit={handleSubmit(onFormSubmit)}>
                                         <div className="row">
                                             <div className="col col-6 mb-2">
-                                                <div className="field-wrapper">
+                                                <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                                                     <label className="field__label" htmlFor="name">Name</label>
-                                                    <input className="field__input-text" placeholder="your name here" name="name" id="name" type="text" defaultValue={user.name} ref={register} />
+                                                    <input className="field__input-text" placeholder="your name here" name="name" id="name" type="text" defaultValue={user.name} ref={register({ required: true })} />
                                                 </div>
                                             </div>
                                             <div className="col col-6 mb-2">
-                                                <div className="field-wrapper">
+                                                <div className={`field-wrapper ${errors?.lastName && 'field-wrapper--error'}`}>
                                                     <label className="field__label" htmlFor="lastName">Last Name</label>
-                                                    <input className="field__input-text" placeholder="your lastName here" name="lastName" id="lastName" type="text" defaultValue={user.lastName} ref={register} />
+                                                    <input className="field__input-text" placeholder="your lastName here" name="lastName" id="lastName" type="text" defaultValue={user.lastName} ref={register({ required: true })} />
                                                 </div>
                                             </div>
                                             <div className="col col-6 mb-2">
-                                                <div className="field-wrapper">
+                                                <div className={`field-wrapper ${errors?.email && 'field-wrapper--error'}`}>
                                                     <label className="field__label" htmlFor="email">E-mail</label>
-                                                    <input className="field__input-text" placeholder="your email here" name="email" id="email" type="email" defaultValue={user.email} ref={register} />
+                                                    <input className="field__input-text" placeholder="your email here" name="email" id="email" type="email" defaultValue={user.email} ref={register({ required: true })} />
                                                 </div>
                                             </div>
                                             <div className="col col-6 mb-2">
@@ -106,6 +105,7 @@ export const SettingsPage = () => {
                                                         <option className="placeholder" disabled>Select an option...</option>
                                                         <option value="male">Male</option>
                                                         <option value="female">Female</option>
+                                                        <option value="female">Other</option>
                                                     </select>
                                                 </div>
                                             </div>

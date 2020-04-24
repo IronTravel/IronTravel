@@ -3,7 +3,7 @@ const router = express.Router();
 const _ = require("lodash");
 
 //Lib
-const { isLoggedIn } = require('../lib');
+const { isLoggedIn, uploadCloudinaryAvatar } = require('../lib');
 
 //Models
 const Tour = require("../models/Tour");
@@ -83,6 +83,21 @@ router.get('/delete/:id', isLoggedIn(), async (req, res) => {
     return res.json({status:`${id} eliminado`})
   })
 
+//UPDATE IMAGE TOUR//
+router.post("/image/:id", isLoggedIn(), uploadCloudinaryAvatar.single("avatar"), async (req, res) => {
+  const id = req.params.id
+  console.log(id)
+  try {
+      const tour = await Tour.findById(id);
+      tour.photos = req.file.url
+      await tour.save()
+      return res.json(tour)
+  } catch (error) {
+      console.log(error)
+  }
+}
+)
+
 //ONE TOUR//
 router.get('/:id', isLoggedIn(), async (req, res) => {
     const id = req.params.id
@@ -90,6 +105,7 @@ router.get('/:id', isLoggedIn(), async (req, res) => {
     console.log(tour)   
     return res.json(tour)
   })
+
 
   
 module.exports = router;

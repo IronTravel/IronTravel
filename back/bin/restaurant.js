@@ -19,9 +19,9 @@ const limit = 1;
 withDbConnection(async () => {
 await dropIfExists(Restaurant);
   let cities = await City.find();
-    let cityCount = 0;
+  let cityCount = 0;
 
-    cities = cities.slice(0,1)
+  cities = cities.slice(0,1);
 
   for (city of cities) {
     try {
@@ -30,11 +30,17 @@ await dropIfExists(Restaurant);
         `https://api.foursquare.com/v2/venues/explore/?client_id=${id}&client_secret=${secret}&v=${v}&categoryId=${restaurantId}&sortByPopularity=${sortPopularity}&near=${city.name}&limit=${limit}`
       );
       const createdRestaurant = await Restaurant.create(response.data.response.groups.map((e) => e.items.map((i) => i.venue)).pop())
-      await City.findByIdAndUpdate(city._id,
-          { restaurants: createdRestaurant }
-      )
+      const updatedCity = await City.findByIdAndUpdate(city._id, {
+        restaurants: createdRestaurant,
+      });
+
+      console.log(createdRestaurant)
+      console.log("Restaurante ID", updatedCity);
+      console.log('Restaurante en ciudad', updatedCity.restaurants[0]);
+
       console.log(`${city.name} restaurants (${++cityCount} of ${cities.length})`);
     } catch (error) {
+      console.log(error)
       console.log(
         error.response.status,
         error.response.statusText,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link  } from 'react-router-dom';
 
 // Context
 import { useUser } from '../context/user';
@@ -57,7 +57,7 @@ export const ProfilePage = () => {
                                     console.log(user),
                                     user && user.description &&
                                     <section className="content-box">
-                                        <h4 className="content-box__title">About Me</h4>
+                                        <Link to="/settings"><h4 className="content-box__title">About Me</h4></Link>
                                         <p>{user.description}</p>
                                     </section>
                                 }
@@ -65,7 +65,7 @@ export const ProfilePage = () => {
                                 {
                                     user && user.personality &&
                                     <section className="content-box">
-                                        <h4 className="content-box__title">Personality</h4>
+                                        <Link to="/settings/personality"><h4 className="content-box__title">Personality</h4></Link>
                                         <div className="content-box__pills">
                                             {user.personality.map((e, i) =>
                                                 <span className="pill-shape pill-shape--secondary" key={i}>{e.name}</span>
@@ -77,7 +77,7 @@ export const ProfilePage = () => {
                                 {
                                     user && user.life_style &&
                                     <section className="content-box">
-                                        <h4 className="content-box__title">Lifestyle</h4>
+                                        <Link to ="/settings/personality"><h4 className="content-box__title">Lifestyle</h4></Link>
                                         <div className="content-box__pills">
                                             {user.life_style.map((e, i) =>
                                                 <span className="pill-shape pill-shape--primary" key={i}>{e.name}</span>
@@ -89,7 +89,7 @@ export const ProfilePage = () => {
                                 {
                                     user && user.hobbies &&
                                     <section className="content-box">
-                                        <h4 className="content-box__title">Hobbies</h4>
+                                        <Link to ="/settings/music-hobbies"><h4 className="content-box__title">Hobbies</h4></Link>
                                         <div className="content-box__pills">
                                             {user.hobbies.map((e, i) =>
                                                 <span className="pill-shape pill-shape--terciary" key={i}>{e.name}</span>
@@ -154,7 +154,7 @@ export const ProfilePage = () => {
                                 <article className="tour-small">
                                     {
                                         user && user.my_tours.map((e, i) =>
-                                            <a href="#" key={i}>
+                                            <Link to="/my-tours" key={i}>
                                                 <div className="tour-small__img">
                                                     <img src={e.photos} />
                                                 </div>
@@ -163,7 +163,7 @@ export const ProfilePage = () => {
                                                     <p className="tour-small__info__subtitle">{e.tour_type}</p>
                                                     <div className="tour-small__info__stars"></div>
                                                 </div>
-                                            </a>
+                                            </Link>
                                         )}
                                 </article>
                             </div>
