@@ -21,3 +21,11 @@ export const oneTour = async idTours => {
     console.log(idTours)
     return await service.get(`/tours/${idTours}`);
 }
+
+export const updateImageTour = async (avatarFile, id) => {
+    console.log(avatarFile)
+    console.log(id)
+    const data = new FormData();
+    data.append("avatar", avatarFile)
+    return await service.post(`/tours/image/${id}`, data);
+}

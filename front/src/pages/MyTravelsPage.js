@@ -11,7 +11,7 @@ import { Header } from '../layout/Header';
 import { UserProfileHeader } from '../components/UserProfileHeader';
 import NewEntity from '../assets/svgs/icon-new.svg';
 
-import { allTravel, createTravel, deleteTravel, oneTravel, editTravel } from '../service/travel';
+import { allTravel, createTravel, deleteTravel, getTravel, editTravel } from '../service/travel';
 import { allCountries } from '../service/data'
 import { Edit, Trash2, MoreVertical } from 'react-feather';
 import { DropDownMenu } from '../components/DropDownMenu';
@@ -77,11 +77,11 @@ export const MyTravelsPage = () => {
     //  options.name = e.name
     // })
 
-    const options = [
-        { ...countries }
-    ]
+    // const options = [
+    //     { ...countries }
+    // ]
 
-    console.log(options)
+    // console.log(options)
 
 
 
@@ -123,17 +123,18 @@ export const MyTravelsPage = () => {
                                     <DropDownMenu icon={<MoreVertical size={16} />}>
                                         <button className="button" onClick={() => {
                                             setEditTravelModal()
-                                            oneTravel(travel._id).then((res) => setEditOneTravel(res.data))
+                                            console.log(travel._id)
+                                            getTravel(travel._id).then((res) => setEditOneTravel(res.data))
                                         }}>
                                             <Edit size={14} />
-                                            <span>Editar</span>
+                                            <span>Edit</span>
                                         </button>
                                         <button className="button" onClick={() => {
                                             setDeleteTravelModal()
                                             setTravel(travel._id)
                                         }}>
                                             <Trash2 size={14} />
-                                            <span>Eliminar</span>
+                                            <span>Delete</span>
                                         </button>
                                     </DropDownMenu>
 
@@ -171,19 +172,19 @@ export const MyTravelsPage = () => {
                         </div>
                         <div className="row">
                             <div className="col-6 pr-1">
-                                <div className="field-wrapper">
+                                <div className={`field-wrapper ${errors?.from && 'field-wrapper--error'}`}>
                                     <label className="field__label" htmlFor="from">From</label>
                                     <input className="field__input-text" placeholder="From" name="from" id="from" type="date" ref={register({ required: false })} />
                                 </div>
                             </div>
                             <div className="col-6 pl-1">
-                                <div className="field-wrapper">
+                                <div className={`field-wrapper ${errors?.to && 'field-wrapper--error'}`}>
                                     <label className="field__label" htmlFor="to">To</label>
                                     <input className="field__input-text" placeholder="To" name="to" id="to" type="date" ref={register({ required: false })} />
                                 </div>
                             </div>
                         </div>
-                        <div className="field-wrapper">
+                        <div className={`field-wrapper ${errors?.country && 'field-wrapper--error'}`}>
                             <label className="field__label" htmlFor="country">Country</label>
                             <input className="field__input-text" placeholder="Your destination" name="country" id="country" type="text" ref={register({ required: false })} ></input>
                         </div>
@@ -279,5 +280,3 @@ export const MyTravelsPage = () => {
         </>
     )
 }
-
-

@@ -16,9 +16,6 @@ export const ToFollow = () => {
 
   const fetchCity = () => oneCity(id).then(res => setCity(res.data));
 
-
-
-
 console.log(city)
   
 

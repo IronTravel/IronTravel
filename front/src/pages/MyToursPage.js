@@ -7,11 +7,13 @@ import Modali, { useModali } from 'modali';
 // Components
 import { Header } from '../layout/Header';
 import { UserProfileHeader } from '../components/UserProfileHeader';
-import { UserCard } from '../components/UserCard';
 import NewEntity from '../assets/svgs/icon-new.svg';
 import StarIcon from '../assets/svgs/icon-star.svg';
+import { Edit, Trash2, MoreVertical } from 'react-feather';
+import { DropDownMenu } from '../components/DropDownMenu';
+import { Save } from 'react-feather';
 
-import { allTours, createTour, editTour, oneTour, deleteTour } from '../service/tour';
+import { allTours, createTour, editTour, oneTour, deleteTour, updateImageTour } from '../service/tour';
 
 import { allCountries } from '../service/data'
 
@@ -21,6 +23,7 @@ export const MyToursPage = () => {
     const { handleSubmit, register, errors } = useForm();
     const [newTourModal, setNewTourModal] = useModali({ title: 'New Tour' });
     const [editTourModal, setEditTourModal] = useModali({ title: 'Edit Tour' });
+    const [editImageModal, setEditImageModal] = useModali({ title: 'Update Image' });
     const [deleteTourModal, setDeleteTourModal] = useModali({ title: 'Delete Tour' });
     
     const [countries, setCountries] = useState([])
@@ -29,15 +32,23 @@ export const MyToursPage = () => {
     const [idTour, setIDTour] = useState()
     const [editOneTour, setEditOneTour] = useState()
 
+    const [hasImageLoaded, setHasImageLoaded] = useState(false);
+
 
     const fetchUserTour = () => allTours().then(userTours => SetUserTour(userTours.data));
 
     const fetchCountries = () => allCountries().then(allcountries => setCountries(allcountries.data))
 
-    console.log(userTour)
+    const handleChange = (e) => setHasImageLoaded(!!e.target.files.length)
+
+    const cloudinary = require("cloudinary-core");
+
+
+//Nombre del cloudinary que sale en la web
+const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
+
 
     const onNewTourFormSubmit = (data) => {
-        console.log("HOLAAAAAAAAAAAAaaaa", data)
        createTour(data)
           .then((res) => {
                fetchUserTour()
@@ -46,6 +57,7 @@ export const MyToursPage = () => {
     }
 
     const onUpdateSubmit = (data) => {
+        console.log(idTour)
         const id = idTour
         
         console.log(data)
@@ -57,12 +69,32 @@ export const MyToursPage = () => {
              setFormSubmitError(res.data.status)
          })
       };
+
+      const onUpdateImageSubmit = (data, e) => {
+        const myAvatar = data.avatar[0];
+        console.log(idTour)
+        const id = idTour
+        console.log(myAvatar)
+        console.log(id)
+        updateImageTour(myAvatar, id)
+            .then((res) => {
+                console.log("changed file")
+                setEditOneTour(res.data)
+                fetchUserTour()
+            })
+            .catch((error) => {
+                console.log("error updating")
+                console.log(error)
+            })
+      }
     
     useEffect(() => {
         fetchUserTour()
         fetchCountries()
     }, [])
     
+
+    console.log(editOneTour)
     return (
         <>
             <Header />
@@ -84,19 +116,43 @@ export const MyToursPage = () => {
                                     <img src={e.photos[0]} alt="" />
                                 </div>
                             </header>
-                            <button className="button" onClick={() => {
+                            {/* <button className="button" onClick={() => {
                                     setEditTourModal()
                                     oneTour(e._id).then((res)=> setEditOneTour(res.data))}} />
                                 <button className="button" onClick={()=>{ 
                                     setDeleteTourModal()
                                     setTour(e._id)
-                                    }} />
+                                    }} /> */}
                             <div className="entity-card__body">
+                            <DropDownMenu icon={<MoreVertical size={16} />}>
+                                        <button className="button" onClick={() => {
+                                    setEditTourModal()
+                                    oneTour(e._id).then((res)=> setEditOneTour(res.data))}} >
+                                            <Edit size={14} />
+                                            <span>Edit</span>
+                                        </button>
+                                        <button className="button" onClick={() => {
+                                            setDeleteTourModal()
+                                            setTour(e._id)
+                                        }}>
+                                            <Trash2 size={14} />
+                                            <span>Delete</span>
+                                        </button>
+                                        <button className="button" onClick={() => {
+                                            setEditImageModal()
+                                            oneTour(e._id).then((res)=> setEditOneTour(res.data))
+                                            
+                                        }}>
+                                            <Edit size={14} />
+                                            <span>Update Image</span>
+                                        </button>
+                                    </DropDownMenu>
                                 <h2 className="entity-card__body__title">{e.name}</h2>
                                 <p className="entity-card__body__tagline">{e.tour_type}</p>
-                                <div className="entity-card__body__data">
+                                <p className="entity-card__body__tagline">Description: {e.description}</p>
+                                {/* <div className="entity-card__body__data">
                                     <div className="inline-objects inline-objects--vertical inline-objects--spread">
-                                        <span className="mt-3 mb-2">Rating</span>
+                                        <span className="mt-3 mb-2">{e.description}</span>
                                         <div className="inline-objects__images inline-objects__images--centered">
                                             <StarIcon />
                                             <StarIcon />
@@ -105,7 +161,7 @@ export const MyToursPage = () => {
                                             <StarIcon />
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </article>
                     </div>
@@ -227,16 +283,48 @@ export const MyToursPage = () => {
                 </div>
             </Modali.Modal>
 
+
+            {/* Update Image Modal */}
+            <Modali.Modal {...editImageModal} className="modal">
+                <div className="auth-card__body">
+                    <strong className="mb-2">Si no te gusta nuestra imagen cambiala</strong>
+                    {editOneTour && 
+                    <form onSubmit={handleSubmit(onUpdateImageSubmit)}>
+                        <div>
+                            <label className="field__label" htmlFor="name">Type</label>
+                            <input className="big-avatar__upload-btn" type="file"
+                                                name="avatar"
+                                                accept="image/png, image/jpeg"
+                                                onChange={(e) => handleChange(e)}
+                                                ref={register()} />
+                        </div>
+                        <div className="field-wrapper--button mt-4">
+                        <button className="big-avatar__save" type="submit"onClick={() => {
+
+                            console.log("en el modaaaal", editOneTour._id)
+                                setIDTour(editOneTour._id)
+                                setEditImageModal()}}>
+                                            <Save size={20} />
+                                        </button>
+                        </div>
+                        <div className="form-errors">{formSubmitError}</div>
+                    </form>
+                    }
+                </div>
+            </Modali.Modal>
+
             {/* Delete Modal */}
             <Modali.Modal {...deleteTourModal} className="modal">
-                <div className="auth-card__body">
-                    <strong className="mb-2">Are you sure??</strong>
-                    <div>
-                        <Modali.Button label="Delete" isStyleDestructive onClick={() => {
+            <div className="auth-card__body">
+                <p className="mb-3"><strong> You are about to delete a Tour. This is an irreversible action, are you sure you want to continue?</strong></p>
+                <div>
+                    <Modali.Button label="Delete"
+                        isStyleDestructive onClick={() => {
                             deleteTour(tour).then(fetchUserTour())
                             setDeleteTourModal()
-                            }}/>
-                    </div>
+                        }}
+                    />
+                </div>
                 </div>
             </Modali.Modal>
         </>
