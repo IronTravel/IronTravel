@@ -9,7 +9,7 @@ import { DropDownMenu } from '../../components/DropDownMenu';
 import { MoreVertical, Edit, Trash2 } from 'react-feather'
 
 // Services
-import { deleteEntry } from '../../service/entries';
+import { deleteEntry, likeEntry } from '../../service/entries';
 import { useUser } from '../../context/user';
 
 export const Entry = ({ entry, setEntry }) => {
@@ -18,6 +18,11 @@ export const Entry = ({ entry, setEntry }) => {
 
     const handleDeleteEntry = async (id) => {
         const entries = await deleteEntry(id);
+        setEntry(entries.data);
+    }
+
+    const handleLike = async (id) => {
+        const entries = await likeEntry(id);
         setEntry(entries.data);
     }
 
@@ -33,7 +38,6 @@ export const Entry = ({ entry, setEntry }) => {
                         </button>
                     </DropDownMenu>
                 }
-
                 <UserCard
                     avatar={entry.author.avatar}
                     avatarSize={38}
@@ -46,7 +50,7 @@ export const Entry = ({ entry, setEntry }) => {
             <footer className="post-box__footer">
                 {
                     (entry.author.id !== loggedInUser._id) &&
-                        <LikeButton count={entry.likes.length} className="mr-4" />
+                        <LikeButton entry={entry} count={entry.likes.length} onClick={() => handleLike(entry._id)} className="mr-4" />
                 }
                 {entry.likes && <LikesFaces entries={entry.likes} />}
             </footer>

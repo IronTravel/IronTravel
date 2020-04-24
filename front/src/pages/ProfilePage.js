@@ -24,19 +24,24 @@ export const ProfilePage = () => {
     const [entries, setEntries] = useState();
     const { id } = useParams();
 
+    const handleSetEntry = (entries) => {
+        setEntries(_.orderBy(entries, ['_id'], ['desc']));
+    }
+
     useEffect(() => {
         if (id) {
             getUser(id).then(res => {
                 setUser(res.data);
                 getUserEntries(id)
-                    .then(res => setEntries( _.orderBy(res.data, ['_id'], ['desc']) ));
+                    .then(res => handleSetEntry(res.data));
             });
         } else {
             setUser(loggedInUser);
             whoami().then((res) => {
                 setUser(res.data)
             });
-            getUserEntries(loggedInUser._id).then(res => setEntries(res.data));
+            getUserEntries(loggedInUser._id)
+                .then(res => handleSetEntry(res.data));
         }
     }, [id]);
 
@@ -111,9 +116,9 @@ export const ProfilePage = () => {
                             entries && entries.map((entry, i) => {
                                 if (entry.hidden) {
                                     if (entry.author.id === loggedInUser._id)
-                                    return <Entry key={i} entry={entry} setEntry={(entries) => { setEntries(entries) }} />
+                                        return <Entry key={i} entry={entry} setEntry={(entries) => { handleSetEntry(entries) }} />
                                 } else
-                                    return <Entry key={i} entry={entry} setEntry={(entries) => { setEntries(entries) }} />
+                                    return <Entry key={i} entry={entry} setEntry={(entries) => { handleSetEntry(entries) }} />
                             })
                         }
                     </div>

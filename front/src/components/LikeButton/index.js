@@ -1,13 +1,20 @@
 import React from 'react';
-import IconHeart from '../../assets/svgs/icon-heart.svg';
+import { Heart } from 'react-feather'
 
-export const LikeButton = ({ count, inverted, ...props }) => {
+import { useUser } from '../../context/user';
+
+export const LikeButton = ({ entry, count, inverted, ...props }) => {
+
+    const loggedInUser = useUser();
+
     return (
         <div {...props}>
             <div className={`btn-like ${inverted ? 'btn-like--inverted' : ''}`}>
-                <button className="btn-like__icon">
-                    <IconHeart />
-                </button>
+                {
+                    <button className={`btn-like__icon ${entry.likes.filter(e => e._id === loggedInUser._id).length && 'btn-like__icon--liked'}`}>
+                        <Heart />
+                    </button>
+                }
                 <span className="btn-like__count">{count || 0}</span>
             </div>
         </div>
