@@ -22,17 +22,21 @@ router.post('/create', isLoggedIn(), async (req, res) => {
   const id = req.user.id
   const { name, type, city, country, description, end, start } = req.body;
   try {
-    const countryID = await Country.findOne({name:country})
     const tour = await Tour.create({
         name:name,
         tour_type:type,
         city:city,
-        country:countryID._id,
+        country:country.value,
         start_date: start, 
         end_date:end,
         description:description
     })
-  const user = await User.findByIdAndUpdate(id, {$addToSet: {my_tours: tour.id}})
+  await User.findByIdAndUpdate(id, {$addToSet: {my_tours: tour.id}})
+  const tours = await User.findById(id, { password: 0, __v: 0 })
+  .populate('my_tours');
+  
+  
+  
   return res.json(user)
   } catch (error ){
     console.log(error)
@@ -45,7 +49,6 @@ router.post('/edit/:id', isLoggedIn(), async (req, res) => {
   const { name, type, city, country, description, end, start } = req.body;
     const id = req.params.id
     try {
-      const countryID = await Country.findOne({name:country})
         const tour = await Tour.findByIdAndUpdate(id) 
         if(tour){
           tour.name = name,
