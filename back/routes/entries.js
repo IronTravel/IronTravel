@@ -28,14 +28,24 @@ router.get('/:userId', isLoggedIn(), async (req, res) => {
 //LIKE ENTRIES//
 router.get('/likes/:entryId', isLoggedIn(), async (req, res) => {
     const { entryId } = req.params;
-    const entry = await Entry.findByIdAndUpdate(entryId, {
-        $addToSet: { likes: req.user._id }
-    }).populate([
-        { path: "author" },
-        { path: "likes" }
-    ])
 
-    return res.json(entry)
+    const entry = await Entry.findById(entryId);
+
+    (entry.likes.includes(req.user._id)) ?
+        await Entry.findByIdAndUpdate(entryId, {
+            $pull: { likes: { $in: [req.user._id] } }
+        }) :
+        await Entry.findByIdAndUpdate(entryId, {
+            $addToSet: { likes: req.user._id }
+        })
+
+    const entries = await Entry.find({ author: entry.author })
+        .populate([
+            { path: "author" },
+            { path: "likes" }
+        ])
+
+    return res.json(entries)
 })
 
 //CREATE ENTRY//

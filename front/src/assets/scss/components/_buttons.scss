@@ -58,6 +58,10 @@
     &__icon {
         background: transparent;
         border: none;
+
+        &--liked svg {
+        stroke: red;
+    }
     }
 
     &__count {

@@ -22,8 +22,8 @@ export const Entry = ({ entry, setEntry }) => {
     }
 
     const handleLike = async (id) => {
-        const like = await likeEntry(id);
-        console.log(like)
+        const entries = await likeEntry(id);
+        setEntry(entries.data);
     }
 
     return (
@@ -50,7 +50,7 @@ export const Entry = ({ entry, setEntry }) => {
             <footer className="post-box__footer">
                 {
                     (entry.author.id !== loggedInUser._id) &&
-                    <LikeButton count={entry.likes.length} onClick={() => handleLike(entry._id)} className="mr-4" />
+                        <LikeButton entry={entry} count={entry.likes.length} onClick={() => handleLike(entry._id)} className="mr-4" />
                 }
                 {entry.likes && <LikesFaces entries={entry.likes} />}
             </footer>

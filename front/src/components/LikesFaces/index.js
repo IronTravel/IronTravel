@@ -4,7 +4,7 @@ import { UserCard } from '../UserCard';
 
 export const LikesFaces = ({ entries, inverted }) => {
 
-    const [entriesQty, setEntriesQty] = useState('hola');
+    const [entriesQty, setEntriesQty] = useState('');
 
     useEffect(() => {
         const length = entries.length;
@@ -22,7 +22,7 @@ export const LikesFaces = ({ entries, inverted }) => {
             default:
                 setEntriesQty(`<b>${entries[0].name},</b> <b>${entries[1].name}</b> and <br /> ${length - 2} more like this`)
         }
-    }, [])
+    }, [entries])
 
     return (
         entries &&

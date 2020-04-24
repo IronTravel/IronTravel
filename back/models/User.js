@@ -17,7 +17,7 @@ const User = new mongoose.Schema(
         googleId: Number,
         main_image: String,
         avatar: String,
-        description: { type: String, default: "" },
+        description: String,
         country: String,
         favourite_color: String,
         notifications: {
