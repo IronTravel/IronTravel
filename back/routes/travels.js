@@ -7,7 +7,6 @@ const { isLoggedIn } = require('../lib');
 
 //Models
 const Travel = require("../models/Travel");
-const Country = require("../models/Country");
 const User = require("../models/User");
 
 //ALL TRAVELS//
@@ -20,53 +19,50 @@ router.get('/', isLoggedIn(), async (req, res) => {
 
 //CREATE TRAVEL//
 router.post('/create', isLoggedIn(), async (req, res) => {
-  console.log(req.body)
-    const id = req.user.id
-    // const {country} = req.body.reactSelect
-    // console.log("eeeeeeeeeeeeeeeeeeeee", country)
+
+    const { id } = req.user
     const { name, from, to, country } = req.body;
+
     try {
-        const countryID = await Country.findOne({ name: country })
         const travel = await Travel.create({
             name: name,
             from: from,
             to: to,
-            country: countryID._id
+            country: country.value
         })
-        const user = await User.findByIdAndUpdate(id, { $addToSet: { my_travels: travel.id } })
-        return res.json(user)
+
+        await User.findByIdAndUpdate(id, { $addToSet: { my_travels: travel._id } })
+        const travels = await User.findById(id, { password: 0, __v: 0 })
+            .populate('my_travels');
+
+        return res.json(travels)
+
     } catch (error) {
-        console.log(error)
-        return res.json({ status: "No se ha creado correctamente." })
+        res.status(403).json({ status: 'No se ha creado correctamente' })
     }
 })
 
 //EDIT TRAVEL//
 router.post('/edit/:id', isLoggedIn(), async (req, res) => {
+
+    const { id } = req.params;
     const { name, from, to, country } = req.body;
-    console.log("SOY NAME", name)
-    console.log("SOY FROM", from)
-    console.log("SOY TO", to)
-    console.log("SOY COUNTRY", country)
-    const id = req.params.id
+
     try {
-        const countryID = await Country.findOne({name:country})
-        console.log(countryID)
-        const travel = await Travel.findByIdAndUpdate(id) 
-        if(travel){
+        const travel = await Travel.findByIdAndUpdate(id)
+
+        if (travel) {
             travel.name = name,
             travel.from = from,
             travel.to = to,
-            travel.country = countryID,
+            travel.country = country.value,
             await travel.save()
-            console.log(travel)
             return res.json(travel)
         } else {
-            return res.json({ status: "No puedes cambiar el dato" })
+            return res.status(403).json({ status: "No puedes cambiar el dato" })
         }
-    } catch (error){
-      console.log(error)
-        return res.json(error)
+    } catch (error) {
+        return res.status(403).json(error)
 
     }
 })
@@ -89,10 +85,10 @@ router.get('/delete/:id', isLoggedIn(), async (req, res) => {
 //ONE TRAVEL//
 router.get('/:id', isLoggedIn(), async (req, res) => {
     const id = req.params.id
-    console.log(id)
-    const travel = await Travel.findById(id).populate({ path: "country" })
-    console.log(travel)    
+    const travel = await Travel.findById(id)
+        .populate({ path: "country" })
+
     return res.json(travel)
-  })
+})
 
 module.exports = router;
