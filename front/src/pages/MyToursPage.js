@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form'
+import Select from 'react-select'
 import moment from 'moment'
 
 import Modali, { useModali } from 'modali';
@@ -14,13 +15,14 @@ import { DropDownMenu } from '../components/DropDownMenu';
 import { Save } from 'react-feather';
 
 import { allTours, createTour, editTour, oneTour, deleteTour, updateImageTour } from '../service/tour';
-
 import { allCountries } from '../service/data'
+
+
 
 export const MyToursPage = () => {
 
     const [formSubmitError, setFormSubmitError] = useState('');
-    const { handleSubmit, register, errors } = useForm();
+    const { handleSubmit, register, errors, setValue } = useForm();
     const [newTourModal, setNewTourModal] = useModali({ title: 'New Tour' });
     const [editTourModal, setEditTourModal] = useModali({ title: 'Edit Tour' });
     const [editImageModal, setEditImageModal] = useModali({ title: 'Update Image' });
@@ -37,7 +39,7 @@ export const MyToursPage = () => {
 
     const fetchUserTour = () => allTours().then(userTours => SetUserTour(userTours.data));
 
-    const fetchCountries = () => allCountries().then(allcountries => setCountries(allcountries.data))
+    // const fetchCountries = () => allCountries().then(allcountries => setCountries(allcountries.data))
 
     const handleChange = (e) => setHasImageLoaded(!!e.target.files.length)
 
@@ -70,6 +72,11 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
          })
       };
 
+      const handleCountrySelection = selectedOption => {
+        setValue("country", selectedOption);
+        // setReactSelect({ selectedOption });
+    };
+
       const onUpdateImageSubmit = (data, e) => {
         const myAvatar = data.avatar[0];
         console.log(idTour)
@@ -90,7 +97,9 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
     
     useEffect(() => {
         fetchUserTour()
-        fetchCountries()
+        // fetchCountries()
+        allCountries()
+        .then(allcountries => setCountries(allcountries.data))
     }, [])
     
 
@@ -183,20 +192,32 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
                             <label className="field__label" htmlFor="name">Type</label>
                             <input className="field__input-text" placeholder="What kind of tour??" name="type" id="Type" type="text" ref={register({ required: false })} />
                         </div>
-                        <div className="row">
-                            <div className="col-6 pr-1">
+                        
+                            
                                 <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                                     <label className="field__label" htmlFor="from">City</label>
                                     <input className="field__input-text" placeholder="City" name="city" id="city" type="text" ref={register({ required: false })} />
                                 </div>
+                            
+                            
+                            <div className={`field-wrapper ${errors?.country && 'field-wrapper--error'}`}>
+                            <label className="field__label" htmlFor="select">Select</label>
+                                <Select
+                                    className="reactSelect"
+                                    name="country"
+                                    placeholder="Country"
+                                    onChange={handleCountrySelection}
+                                    options={countries.map(country => {
+                                        return {
+                                            value: country._id,
+                                            label: country.name
+                                        }
+                                    })}
+                                    ref={register({ name: "country", required: true })}
+                                />
                             </div>
-                            <div className="col-6 pl-1">
-                                <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
-                                    <label className="field__label" htmlFor="to">Country</label>
-                                    <input className="field__input-text" placeholder="Country" name="country" id="country" type="text" ref={register({ required: false })} />
-                                </div>
-                            </div>
-                        </div>
+                        
+                        
                         <div className="row">
                             <div className="col-6 pr-1">
                                 <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
@@ -232,27 +253,39 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
 
                     <form onSubmit={handleSubmit(onUpdateSubmit)}>
                         <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
-                            <label className="field__label" htmlFor="name">Title or name*</label>
+                           <label className="field__label" htmlFor="name">Title or name*</label>
                             <input className="field__input-text" placeholder="Add a name to identify your travel" defaultValue={editOneTour.name} name="name" id="name" type="text" ref={register({ required: true })} />
                         </div>
                         <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                             <label className="field__label" htmlFor="name">Type</label>
                             <input className="field__input-text" placeholder="What kind of tour??" defaultValue={editOneTour.tour_type} name="type" id="Type" type="text" ref={register({ required: true })} />
                         </div>
-                        <div className="row">
-                            <div className="col-6 pr-1">
+
                                 <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                                     <label className="field__label" htmlFor="from">City</label>
                                     <input className="field__input-text" placeholder="City" defaultValue={editOneTour.city} name="city" id="city" type="text" ref={register({ required: true })} />
                                 </div>
+                                <div className="field-wrapper">
+                                <label className="field__label" htmlFor="select">Select</label>
+                                <Select
+                                    className="reactSelect"
+                                    name="country"
+                                    placeholder="Country"
+                                    onChange={handleCountrySelection}
+                                    options={countries?.map(country => ({
+                                        value: country._id,
+                                        label: country.name
+                                    }))}
+                                    
+                                    // defaultValue={{
+                                        
+                                    //     value: editOneTour?.country._id,
+                                    //     label: editOneTour?.country.name
+                                    // }}
+                                    ref={register({ name: "country", required: true })}
+                                />
                             </div>
-                            <div className="col-6 pl-1">
-                                <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
-                                    <label className="field__label" htmlFor="to">Country</label>
-                                    <input className="field__input-text" placeholder="Country" defaultValue={editOneTour.country.name} name="country" id="country" type="text" ref={register({ required: false })} />
-                                </div>
-                            </div>
-                        </div>
+
                         <div className="row">
                             <div className="col-6 pr-1">
                                 <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
