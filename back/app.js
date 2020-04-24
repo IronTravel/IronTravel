@@ -7,7 +7,6 @@ const mongoose = require("mongoose");
 const logger = require("morgan");
 const path = require("path");
 const DBURL = process.env.DBURL;
-// const DBURL = process.env.DBURL_PRODUCTION
 const session = require("express-session")
 const cors = require("cors");
 const MongoStore = require("connect-mongo")(session);

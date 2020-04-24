@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-//const http = require("http");
-const https = require('https');
+const http = require("http");
+//const https = require('https');
 const fs = require('fs');
 
 let app = require("../app");
@@ -23,11 +23,11 @@ app.use((err, req, res, next) => {
     }
 });
 
-// let server = http.createServer(app);
-let server = https.createServer({
-    key: fs.readFileSync('./bin/keys/server.key'),
-    cert: fs.readFileSync('./bin/keys/server.cert')
-}, app);
+let server = http.createServer(app);
+// let server = https.createServer({
+//     key: fs.readFileSync('./bin/keys/server.key'),
+//     cert: fs.readFileSync('./bin/keys/server.cert')
+// }, app);
 
 server.on("error", error => {
     if (error.syscall !== "listen") {
@@ -50,5 +50,5 @@ server.on("error", error => {
 });
 
 server.listen(process.env.PORT, () => {
-    console.log(`Listening on https://localhost:${process.env.PORT}`);
+    console.log(`Listening on ${process.env.BACK_URL}`);
 });
