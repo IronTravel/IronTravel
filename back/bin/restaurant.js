@@ -9,12 +9,12 @@ const Restaurant = require("../models/Restaurant");
 const { withDbConnection, dropIfExists } = require("../lib");
 
 //Params
-const id = process.env.CLIENT_ID_FOURSQUARE;
-const secret = process.env.CLIENT_SECRET_FOURSQUARE;
+const id = 'SFNQHPA4TDJOJE0XOJCB2JJQ15Y00AVG5AGMUXICRWS4AGLW';
+const secret = 'BKP0LLVWRSKMHT0TUR4EMO2RD4HS4TKGUF2FQ1HKCDLBTVET';
 const v = process.env.VERSION_FOURSQUARE;
 const restaurantId = "4d4b7105d754a06374d81259";
 const sortPopularity = 1;
-const limit = 3;
+const limit = 1;
 
 withDbConnection(async () => {
 await dropIfExists(Restaurant);
@@ -33,7 +33,7 @@ await dropIfExists(Restaurant);
       const updatedCity = await City.findByIdAndUpdate(city._id, {
         restaurants: createdRestaurant,
       });
-        
+
       console.log(createdRestaurant)
       console.log("Restaurante ID", updatedCity);
       console.log('Restaurante en ciudad', updatedCity.restaurants[0]);

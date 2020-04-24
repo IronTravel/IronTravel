@@ -96,7 +96,7 @@ export const UserProfileHeader = ({ data }) => {
                         <div className="value">{user?.fullName}</div>
                         {
                             <div className="key">
-                                {user.personality && handleGetRandom(user.personality)} 🌎 {user.life_style && handleGetRandom(user.life_style)} 🌎 {user.hobbies && handleGetRandom(user.hobbies)}
+                                {user?.personality && handleGetRandom(user.personality)} 🌎 {user?.life_style && handleGetRandom(user.life_style)} 🌎 {user?.hobbies && handleGetRandom(user.hobbies)}
                             </div>
                         }
                     </div>

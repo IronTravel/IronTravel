@@ -3,7 +3,7 @@ import service from './_base';
 
 //LIST Followers
 export const allFollowers = async () => {
-    return await service.get('followers/')
+    return await service.get('followers')
 }
 //ADD Follow
 export const addFollow = async (followID) => {
@@ -14,6 +14,6 @@ export const addFollow = async (followID) => {
 export const deleteFollow = async (followID) => {
     console.log(followID)
     return await service.get(`followers/deleteFollow/${followID}`)
-    
+
 }
 
