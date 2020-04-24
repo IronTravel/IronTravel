@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import _ from 'lodash';
 
 // Service
-import { allUser } from '../service/user';
+import { matches } from '../service/user';
 
 // Components
 import { Header } from '../layout/Header';
@@ -15,7 +16,9 @@ export const SearchMatchPage = () => {
     const [followers, setFollowers] = useState();
 
     useEffect(() => {
-        allUser().then(res => setUsers(res.data));
+        matches().then(res => {
+            setUsers(_.orderBy(res.data, ['factorTotal'], ['desc']));
+        });
         allFollowers().then(res => setFollowers(res.data));
     }, []);
 

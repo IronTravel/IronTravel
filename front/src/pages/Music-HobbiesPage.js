@@ -34,7 +34,6 @@ export const MusicHobbiesPage = () => {
             musicgenres().then(res => setMusicGenreList(res.data));
             hobbies().then(res => setHobbiesList(res.data));
             fetchUAboutMe()
-            toast("Information saved successfully!")
         });
 
     }, []);
@@ -54,10 +53,12 @@ export const MusicHobbiesPage = () => {
         let keys = _.keys(_.pickBy(data));
         const hobbies = hobbiesList.map(e => e._id)
 
+        toast("Information saved successfully!")
+
         let newArrayMusicGenres = []
         let newArrayHobbiess = []
         await keys.forEach(e => {
-            if (hobbies.indexOf(e) !== -1){
+            if (hobbies.indexOf(e) !== -1) {
             return newArrayHobbiess.push(e)
         }
         return newArrayMusicGenres.push(e)

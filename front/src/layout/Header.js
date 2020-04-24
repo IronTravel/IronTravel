@@ -43,7 +43,7 @@ export const Header = withRouter(({ history }) => {
             setSearch(res.data)
         })
       };
-      
+
     return (
         <header className="main-header">
             <div className="main-logo">
@@ -56,7 +56,7 @@ export const Header = withRouter(({ history }) => {
                     {search &&
                     search.map(e => <Link to={`/${e._id}`}>{e.name}</Link>)}
                 </div>
-    
+
             </div>
             <nav className="main-nav">
                 <Link to="/my-travels">My Travels</Link>
@@ -65,10 +65,10 @@ export const Header = withRouter(({ history }) => {
             </nav>
             <div className="user-menu">
                 <div className="user-menu__icon-btn">
-                    <DropDownMessages icon={<MessageSquare size={22} />} />
+                    <DropDownMessages icon={<MessageSquare size={22} />} quantity={0} />
                 </div>
                 <div className="user-menu__icon-btn">
-                    <DropDownMessages icon={<Bell size={22} />} />
+                    <DropDownMessages icon={<Bell size={22} />} quantity={0} />
                 </div>
                 {
                     user &&

@@ -23,14 +23,20 @@ const User = new mongoose.Schema(
         notifications: {
             date: Date,
             description: String,
-            related_user: [{ type: mongoose.Schema.ObjectId, ref: "user" }],
+            type: {
+                type: String,
+                enum: ["follow", "like"]
+            },
+            related_user: { type: mongoose.Schema.ObjectId, ref: "user" },
         },
+        factor: Array,
+        factorTotal: Number,
         followers: [{ type: mongoose.Schema.ObjectId, ref: "user" }],
         following: [{ type: mongoose.Schema.ObjectId, ref: "user" }],
         my_travels: [{ type: mongoose.Schema.ObjectId, ref: "travel" }],
         my_tours: [{ type: mongoose.Schema.ObjectId, ref: "tour" }],
         my_places: [{ type: mongoose.Schema.ObjectId, ref: "place" }],
-        music: [{ type: mongoose.Schema.ObjectId, ref: "musicGenres" }],
+        music: [{ type: mongoose.Schema.ObjectId, ref: "musicGenre" }],
         personality: [{ type: mongoose.Schema.ObjectId, ref: "personality" }],
         life_style: [{ type: mongoose.Schema.ObjectId, ref: "lifeStyle" }],
         hobbies: [{ type: mongoose.Schema.ObjectId, ref: "hobby" }],

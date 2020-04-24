@@ -5,14 +5,11 @@ withDbConnection(async () => {
     await dropIfExists(Personality);
     await Personality.create(
         ['Active',
-            'Calm',
             'Caring',
             'Cheerful',
             'Cooperative',
             'Creative',
             'Determined',
-            'Easy-going',
-            'Empathetic',
             'Enthusiastic',
             'Flexible',
             'Friendly',
@@ -22,7 +19,6 @@ withDbConnection(async () => {
             'Optimistic',
             'Organized',
             'Passionate',
-            'Practical',
             'Proactive',
             'Rational',
             'Chill',

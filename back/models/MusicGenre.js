@@ -8,4 +8,4 @@ const MusicGenre = new mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model("musicGenres", MusicGenre);
+module.exports = mongoose.model("musicGenre", MusicGenre);

@@ -48,10 +48,10 @@ axios({
         for (user of users) {
             await User.findByIdAndUpdate(user._id, {
                 description: description.data.pop(),
-                music: getRandomFromArray(music, 5),
-                personality: getRandomFromArray(personality, 5),
-                life_style: getRandomFromArray(life_style, 5),
-                hobbies: getRandomFromArray(hobbies, 5),
+                music: getRandomFromArray(music, Math.floor(Math.random() * 15)),
+                personality: getRandomFromArray(personality, Math.floor(Math.random() * 12)),
+                life_style: getRandomFromArray(life_style, Math.floor(Math.random() * 12)),
+                hobbies: getRandomFromArray(hobbies, Math.floor(Math.random() * 12)),
                 followers: getRandomFromArray(users, Math.floor(Math.random() * 80), true),
                 following: getRandomFromArray(users, Math.floor(Math.random() * 80), true)
             });

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
@@ -33,7 +33,7 @@ export const UserProfileCard = ({ user, followers, setFollowers }) => {
                             <img src={user.avatar || defaultAvatar} alt={user.fullName} />
                         </Link>
                     </div>
-                    <span className="entity-card__body__user-value">76</span>
+                    <span className="entity-card__body__user-value">{user.factorTotal}</span>
                 </div>
                 <h2 className="entity-card__body__title">{user.fullName}</h2>
                 <p className="entity-card__body__tagline">

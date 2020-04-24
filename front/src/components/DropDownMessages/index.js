@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { UserCard } from '../UserCard';
 
-export const DropDownMessages = ({ icon }) => {
+export const DropDownMessages = ({ icon, quantity }) => {
 
     const [visible, setVisible] = useState(false);
 
     return (
         <aside className="notifications position-relative">
             <span onClick={() => setVisible(!visible)}>
-                <span className="notifications-qty">12</span>
+                {!!quantity && <span className="notifications-qty">{quantity}</span>}
                 <span className="notifications-icon">{icon}</span>
             </span>
             {

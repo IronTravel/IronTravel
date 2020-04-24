@@ -11,9 +11,7 @@ const User = require("../models/User");
 //ALL USERS//
 router.get('/', isLoggedIn(), async (req, res) => {
     const { id } = req.user;
-    const users = await User.find(
-        
-        { _id: { $ne: id } }, { password: 0, __v: 0 })
+    const users = await User.find({ _id: { $ne: id } }, { password: 0, __v: 0 })
         .populate([
             { path: "personality" },
             { path: "life_style" },
@@ -22,6 +20,34 @@ router.get('/', isLoggedIn(), async (req, res) => {
 
     return res.json(users);
 })
+
+//MATCH USERS//
+router.get('/matches', isLoggedIn(), async (req, res) => {
+    const { id } = req.user;
+    let users = await User.find({}, { password: 0, __v: 0 })
+        .populate([
+            { path: "personality" },
+            { path: "life_style" },
+            { path: "hobbies" },
+            { path: "music" }
+        ]);
+
+    const currentUser = _.remove(users, (user) => user._id.toString() == id).pop();
+    users.forEach(user => {
+        user.factor = matchFactor(user, currentUser)
+        user.factorTotal = _.sum(matchFactor(user, currentUser))
+    })
+
+    return res.json(users);
+})
+
+function matchFactor(user, currentUser) {
+    return ['music', 'life_style', 'hobbies', 'personality'].map((item, idx) => {
+        let userItem = user[item] ? user[item].map(i => i.name) : []
+        let currentUserItem = currentUser[item] ? currentUser[item].map(i => i.name) : []
+        return _.intersection(userItem, currentUserItem).length * idx
+    })
+}
 
 //GET USER//
 router.get('/:id', isLoggedIn(), async (req, res) => {
