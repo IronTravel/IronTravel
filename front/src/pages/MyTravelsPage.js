@@ -31,17 +31,16 @@ export const MyTravelsPage = () => {
     const [editOneTravel, setEditOneTravel] = useState()
 
     const fetchUserTravel = () => allTravel().then(userTravel => setUserTravel(userTravel.data));
-    const fetchCountries = () => allCountries().then(allcountries => setCountries(allcountries.data))
 
     const onNewTravelFormSubmit = (data) => {
-        console.log(data)
         createTravel(data)
             .then((res) => {
-                fetchUserTravel()
-                setFormSubmitError(res.data.status)
+                setUserTravel(res.data.my_travels)
+                setNewTravelModal()
             })
-
+            .catch(res => setFormSubmitError(res.data.status))
     }
+
     const onUpdateSubmit = (data) => {
         const id = idTravel
 
@@ -56,43 +55,20 @@ export const MyTravelsPage = () => {
     };
 
     //SELECT2 CONFIGURATION
-    const [values, setReactSelect] = useState({
-        selectedOption: []
-    });
-    const handleMultiChange = selectedOption => {
-        setValue("reactSelect", selectedOption);
-        setReactSelect({ selectedOption });
+    // const [reactSelect, setReactSelect] = useState({
+    //     selectedOption: []
+    // });
+
+    const handleCountrySelection = selectedOption => {
+        setValue("country", selectedOption);
+        // setReactSelect({ selectedOption });
     };
-
-    // countries.map(e=> {
-    //     const prueba = new Object();
-    //     prueba.name = e.name
-    //     prueba.vale = e.name
-    //     return prueba
-    // })
-
-    // const options = countries.map(e =>{
-    //  const options = new Object()
-    //  options.value = e.name,
-    //  options.name = e.name
-    // })
-
-    // const options = [
-    //     { ...countries }
-    // ]
-
-    // console.log(options)
-
-
 
     useEffect(() => {
         fetchUserTravel()
-        fetchCountries()
-
+        allCountries()
+            .then(allcountries => setCountries(allcountries.data))
     }, [])
-
-
-    console.log("SOY EL USUARIOOOOOOOOOOOOOO", editOneTravel)
 
     return (
         <>
@@ -160,11 +136,11 @@ export const MyTravelsPage = () => {
                 </div>
             </div>
 
-            {/* Modals */}
+            {/* Create Modal */}
             <Modali.Modal {...newTravelModal} className="modal">
                 <div className="auth-card__body">
-                    <strong className="mb-2">Help us find better matches for you!</strong>
-                    <p className="mb-4">Tell us a little bit more about you, complete the questions below and we will match you more accurately.</p>
+                    <strong className="mb-2">Yeih! a new exciting trip coming soon!</strong>
+                    <p className="mb-4">Tell us a little bit more about your travel, so we can create a record for you.</p>
                     <form onSubmit={handleSubmit(onNewTravelFormSubmit)}>
                         <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                             <label className="field__label" htmlFor="name">Title or name*</label>
@@ -185,24 +161,24 @@ export const MyTravelsPage = () => {
                             </div>
                         </div>
                         <div className={`field-wrapper ${errors?.country && 'field-wrapper--error'}`}>
-                            <label className="field__label" htmlFor="country">Country</label>
-                            <input className="field__input-text" placeholder="Your destination" name="country" id="country" type="text" ref={register({ required: false })} ></input>
-                        </div>
-                        {/* <div className="field-wrapper">
                             <label className="field__label" htmlFor="select">Select</label>
                             <Select
                                 className="reactSelect"
-                                name="filters"
-                                placeholder="Filters"
-                                value={values.selectedOption}
-                                options={options}
-                                onChange={handleMultiChange}
-                                ref={e => register({ name: "reactSelect", required: true })}
+                                name="country"
+                                placeholder="Your destination"
+                                onChange={handleCountrySelection}
+                                options={countries.map(country => {
+                                    return {
+                                        value: country._id,
+                                        label: country.name
+                                    }
+                                })}
+                                ref={register({ name: "country", required: true })}
                             />
-                        </div> */}
+                        </div>
 
                         <div className="field-wrapper--button mt-4">
-                            <button className="btn btn--primary btn--w-full" type="submit" onClick={setNewTravelModal}>Create</button>
+                            <button className="btn btn--primary btn--w-full" type="submit">Create</button>
                         </div>
                         <div className="form-errors">{formSubmitError}</div>
                     </form>
@@ -212,42 +188,47 @@ export const MyTravelsPage = () => {
             {/* Edit Modal */}
             <Modali.Modal {...editTravelModal} className="modal">
                 <div className="auth-card__body">
-                    <strong className="mb-2">Edit your travel!</strong>
+                    <strong className="mb-2">Was something wrong? No problem, change what you need!</strong>
+                    <p className="mb-4">Just keep in mind that if you connect your travel with a social network, you won't be able to change it's dates.</p>
 
                     {editOneTravel &&
 
                         <form onSubmit={handleSubmit(onUpdateSubmit)}>
                             <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                                 <label className="field__label" htmlFor="name">Title or name*</label>
-                                <input className="field__input-text" placeholder="Add a name to identify your travel" defaultValue={editOneTravel.name} name="name" id="name" type="text" ref={register({ required: true })} />
+                                <input className="field__input-text" placeholder="Add a name to identify your travel" defaultValue={editOneTravel?.name} name="name" id="name" type="text" ref={register({ required: true })} />
                             </div>
                             <div className="row">
                                 <div className="col-6 pr-1">
                                     <div className="field-wrapper">
                                         <label className="field__label" htmlFor="from">From</label>
-                                        <input className="field__input-text" placeholder="From" name="from" id="from" type="date" defaultValue={editOneTravel.from ? moment(editOneTravel.from).format('YYYY-MM-DD') : ""} ref={register({ required: false })} />
+                                        <input className="field__input-text" placeholder="From" name="from" id="from" type="date" defaultValue={editOneTravel?.from ? moment(editOneTravel?.from).format('YYYY-MM-DD') : ""} ref={register({ required: false })} />
                                     </div>
                                 </div>
                                 <div className="col-6 pl-1">
                                     <div className="field-wrapper">
                                         <label className="field__label" htmlFor="to">To</label>
-                                        <input className="field__input-text" placeholder="To" name="to" id="to" type="date" defaultValue={editOneTravel.to ? moment(editOneTravel.to).format('YYYY-MM-DD') : ""} ref={register({ required: false })} />
+                                        <input className="field__input-text" placeholder="To" name="to" id="to" type="date" defaultValue={editOneTravel?.to ? moment(editOneTravel?.to).format('YYYY-MM-DD') : ""} ref={register({ required: false })} />
                                     </div>
                                 </div>
                             </div>
                             <div className="field-wrapper">
                                 <label className="field__label" htmlFor="select">Select</label>
-                                <input className="field__input-text" placeholder="Country" defaultValue={editOneTravel.country.name} name="country" id="country" type="text" ref={register({ required: true })} />
-                                {/* <Select
-                                defaultValue={e.name}
-                                className="reactSelect"
-                                name="filters"
-                                placeholder="Filters"
-                                value={values.selectedOption}
-                                options={options}
-                                onChange={handleMultiChange}
-                                ref={e => register({ name: "reactSelect", required: true })}
-                            /> */}
+                                <Select
+                                    className="reactSelect"
+                                    name="country"
+                                    placeholder="Your destination"
+                                    onChange={handleCountrySelection}
+                                    options={countries?.map(country => ({
+                                        value: country._id,
+                                        label: country.name
+                                    }))}
+                                    defaultValue={{
+                                        value: editOneTravel?.country._id,
+                                        label: editOneTravel?.country.name
+                                    }}
+                                    ref={register({ name: "country", required: true })}
+                                />
                             </div>
 
                             <div className="field-wrapper--button mt-4">
@@ -269,8 +250,11 @@ export const MyTravelsPage = () => {
                     <div>
                         <Modali.Button label="Delete"
                             isStyleDestructive onClick={() => {
-                                deleteTravel(travel).then(fetchUserTravel())
-                                setDeleteTravelModal()
+                                deleteTravel(travel)
+                                    .then(() => {
+                                        fetchUserTravel()
+                                        setDeleteTravelModal()
+                                    })
                             }}
                         />
                     </div>
