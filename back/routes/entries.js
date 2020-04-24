@@ -25,6 +25,19 @@ router.get('/:userId', isLoggedIn(), async (req, res) => {
     return res.json(userEntries)
 })
 
+//LIKE ENTRIES//
+router.get('/likes/:entryId', isLoggedIn(), async (req, res) => {
+    const { entryId } = req.params;
+    const entry = await Entry.findByIdAndUpdate(entryId, {
+        $addToSet: { likes: req.user._id }
+    }).populate([
+        { path: "author" },
+        { path: "likes" }
+    ])
+
+    return res.json(entry)
+})
+
 //CREATE ENTRY//
 router.post("/", isLoggedIn(), async (req, res, next) => {
 
