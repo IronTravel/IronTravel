@@ -7,7 +7,6 @@ const { isLoggedIn } = require('../lib');
 
 //Models
 const Travel = require("../models/Travel");
-const Country = require("../models/Country");
 const User = require("../models/User");
 
 //ALL TRAVELS//
