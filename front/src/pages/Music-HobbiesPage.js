@@ -52,8 +52,6 @@ export const MusicHobbiesPage = () => {
         let keys = _.keys(_.pickBy(data));
         const hobbies = hobbiesList.map(e => e._id)
 
-        toast("Information saved successfully!")
-
         let newArrayMusicGenres = []
         let newArrayHobbiess = []
         await keys.forEach(e => {

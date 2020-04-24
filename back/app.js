@@ -115,8 +115,8 @@ app.use("/tours", tours);
 const entries = require("./routes/entries");
 app.use("/entries", entries);
 
-const followers = require("./routes/followers");
-app.use("/followers", followers);
+const follow = require("./routes/followers");
+app.use("/follow", follow);
 
 const search = require("./routes/search");
 app.use("/search", search)

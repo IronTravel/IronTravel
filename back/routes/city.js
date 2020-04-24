@@ -11,10 +11,7 @@ const City = require("../models/City")
 
 router.get('/:id', isLoggedIn(), async (req, res) => {
     const id = req.params.id
-    const city = await City.findById(id)
-    .populate([
-      { path: "museum" },
-  ]);
+    const city = await City.findById(id).populate({path:"restaurant"}).populate({path:"restaurant"})
     console.log(city)   
     return res.json(city)
   })
