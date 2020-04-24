@@ -8,19 +8,21 @@ import { matches } from '../service/user';
 import { Header } from '../layout/Header';
 import { UserProfileHeader } from '../components/UserProfileHeader';
 import { UserProfileCard } from '../components/UserProfileCard';
-import { allFollowers } from '../service/followers';
+import { allFollowing, allFollowers } from '../service/followers';
 
 export const SearchMatchPage = () => {
 
     const [users, setUsers] = useState();
-    const [followers, setFollowers] = useState();
+    const [following, setFollowing] = useState();
 
     useEffect(() => {
         matches().then(res => {
             setUsers(_.orderBy(res.data, ['factorTotal'], ['desc']));
         });
-        allFollowers().then(res => setFollowers(res.data));
+        allFollowing().then(res => setFollowing(res.data));
     }, []);
+
+    console.log("SOY DEL SEARCH MARCTH", following)
 
     return (
         <>
@@ -31,7 +33,7 @@ export const SearchMatchPage = () => {
                     {
                         users && users.map((user, i) => (
                             <div key={i} className="col-3">
-                                <UserProfileCard user={user} followers={followers} setFollowers={setFollowers} />
+                                <UserProfileCard user={user} following={following} setFollowing={setFollowing}/>
                             </div>
                         ))
                     }

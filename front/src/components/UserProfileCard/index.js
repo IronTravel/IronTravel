@@ -6,18 +6,27 @@ import defaultAvatar from '../../assets/images/avatar.png';
 import StarIcon from '../../assets/svgs/icon-star.svg';
 import LikeIcon from '../../assets/svgs/icon-like.svg';
 import ProfileIcon from '../../assets/svgs/icon-profile.svg';
+
+import { ThumbsDown } from 'react-feather';
+
 import { deleteFollow, addFollow } from '../../service/followers';
 
-export const UserProfileCard = ({ user, followers, setFollowers }) => {
+import Modali, { useModali } from 'modali';
+
+export const UserProfileCard = ({ user, following, setFollowing }) => {
+
+    const [deleteOneFollow, setDeleteOneFollow] = useModali({ title: 'Unfollow' });
 
     const handleGetRandom = (arr) => arr[_.random(0, arr.length - 1)]?.name || '';
 
     const check = (id) => {
-        const followersID = followers.followers.map(e => e._id)
-        return followersID.includes(id)
+        const followingID = following.following.map(e => e._id)
+        return followingID.includes(id)
     }
 
+    console.log(following)
     return (
+    <>
         <article className="entity-card">
             <header className="entity-card__header">
                 <Link to={`/profile/${user._id}`}>
@@ -58,14 +67,14 @@ export const UserProfileCard = ({ user, followers, setFollowers }) => {
             </div>
             <footer className="entity-card__footer">
                 {
-                    user && followers && check(user._id) ?
-                    <button className="entity-card__footer__btn" onClick={()=>deleteFollow(user._id).then((res)=> setFollowers(res.data)) }>
-                        <ProfileIcon />
-                        <span>Disconnect</span>
+                    user && following && check(user._id) ?
+                    <button className="entity-card__footer__btn" onClick={()=>setDeleteOneFollow() }>
+                        <ThumbsDown />
+                        <span>Unfollow</span>
                     </button> :
-                    <button className="entity-card__footer__btn" onClick={()=>addFollow(user._id).then((res)=> setFollowers(res.data)) }>
+                    <button className="entity-card__footer__btn" onClick={()=>addFollow(user._id).then((res)=> setFollowing(res.data)) }>
                         <LikeIcon />
-                        <span>Connect</span>
+                        <span>Follow</span>
                     </button>
                 }
                 <Link className="entity-card__footer__btn" to={`/profile/${user._id}`}>
@@ -74,5 +83,22 @@ export const UserProfileCard = ({ user, followers, setFollowers }) => {
                 </Link>
             </footer>
         </article>
+
+        {/* Delete Modal */}
+        <Modali.Modal {...deleteOneFollow} className="modal">
+            {user && following && 
+            <div className="auth-card__body">
+                <p className="mb-3"><strong> Are you sure??</strong></p>
+                <div>
+                <Modali.Button label="Unfollow"
+                    isStyleDestructive onClick={() => {
+                        deleteFollow(user._id).then((res)=> setFollowing(res.data))
+                        setDeleteOneFollow()
+                    }}/>
+                </div>
+            </div>
+            }
+        </Modali.Modal>
+    </>
     )
 }
