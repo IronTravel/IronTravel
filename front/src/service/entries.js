@@ -12,3 +12,6 @@ export const getUserEntries = async userId => {
     return await service.get(`entries/${userId}`);
 }
 
+export const likeEntry = async entryId => {
+    return await service.get(`entries/likes/${entryId}`);
+}
