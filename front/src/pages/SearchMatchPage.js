@@ -22,8 +22,6 @@ export const SearchMatchPage = () => {
         allFollowing().then(res => setFollowing(res.data));
     }, []);
 
-    console.log("SOY DEL SEARCH MARCTH", following)
-
     return (
         <>
             <Header />

@@ -12,7 +12,6 @@ export const login = async (formData) => {
 
 //Google Login
 export const google = async () => {
-    console.log("hola soy google")
     return await service.get('auth/google/login');
 };
 

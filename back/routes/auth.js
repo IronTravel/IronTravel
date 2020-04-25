@@ -43,11 +43,8 @@ router.post("/login", isLoggedOut(), passport.authenticate("local"), (req, res) 
 });
 
 //LOGIN GOOGLE//
-router.get(
-    "/google/login",
-    isLoggedOut(),
-    passport.authenticate("google", { scope: ["profile email"] })
-);
+router.get("/google/login", isLoggedOut(), passport.authenticate("google", { scope: ["profile email"] }));
+
 router.get(
     "/google/callback",
     isLoggedOut(),
@@ -56,7 +53,7 @@ router.get(
     }),
     (req, res) => {
         // Successful authentication, redirect home.
-        //res.redirect(`${process.env.FRONT_URL}/profile`);
+        res.redirect(`${process.env.FRONT_URL}/profile`);
     }
 );
 

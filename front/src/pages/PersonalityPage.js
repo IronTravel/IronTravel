@@ -19,12 +19,6 @@ export const PersonalityPage = () => {
     const [userPersonaLityList, setUserPersonaLityList] = useState([])
     const [userLifeStyleList, setUserLifeStyleList] = useState([])
 
-    console.log(userPersonaLityList)
-
-    const [userAboutMe, setUserAboutMe] = useState([]);
-
-    const fetchUAboutMe = () => aboutMe().then(aboutMe => setUserAboutMe(aboutMe.data));
-
     const [formSubmitError, setFormSubmitError] = useState('');
     const { handleSubmit, register, errors } = useForm();
 
@@ -34,9 +28,8 @@ export const PersonalityPage = () => {
             setUserLifeStyleList(res.data.life_style.map(e => e._id));
             personalities().then(res => setPersonalityList(res.data));
             lifestyles().then(res => setLifeStylesList(res.data));
-            fetchUAboutMe()
+            //fetchUAboutMe()
         });
-
     }, []);
 
     const handleChecked = (hasValue, id, set, list) => {
@@ -107,7 +100,7 @@ export const PersonalityPage = () => {
                                         <div className="col col-12 mb-4">
                                             <h4 className="content-box__title">Personality</h4>
                                             <div className="content-box__pills text-center">
-                                                {personalityList.length && personalityList.map((e, i) => {
+                                                {personalityList.length > 0 && personalityList.map((e, i) => {
                                                     let hasValue = userPersonaLityList.includes(e._id);
                                                     return(
                                                         <label className="pill-checkbox" key={i}>
@@ -121,7 +114,7 @@ export const PersonalityPage = () => {
                                         <div className="col col-12 mb-4">
                                             <h4 className="content-box__title">Lifestyle</h4>
                                             <div className="content-box__pills text-center">
-                                            {lifeStylesList.length && lifeStylesList.map((e, i) => {
+                                            {lifeStylesList.length > 0 && lifeStylesList.map((e, i) => {
                                                 let hasValue = userLifeStyleList.includes(e._id);
                                                 return(
                                                     <label className="pill-checkbox" key={i}>

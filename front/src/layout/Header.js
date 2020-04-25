@@ -1,17 +1,11 @@
 import React, {useState} from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
-// Context
-import { useUserSetter } from "../context/user";
-
 // Service
 import { logout, whoami } from '../service/auth';
 
 //Context
-import { useUser } from "../context/user";
-
-
-
+import { useUser, useUserSetter } from "../context/user";
 
 // Components
 import LogoWeTravelSM from '../assets/svgs/logo-wetravel-sm.svg';
@@ -40,7 +34,6 @@ export const Header = withRouter(({ history }) => {
     const handleSearch = e => {
         const query = e.target.value;
         searchUser(query).then(res => {
-            console.log(res.data)
             setSearch(res.data)
         })
     };

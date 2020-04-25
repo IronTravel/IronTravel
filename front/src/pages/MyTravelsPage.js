@@ -55,9 +55,6 @@ const handleChange = (e) => setHasImageLoaded(!!e.target.files.length)
 
     const onUpdateSubmit = (data) => {
         const id = idTravel
-
-        console.log(data)
-        console.log(idTravel)
         editTravel(data, id)
             .then((res) => {
                 setEditOneTravel(res.data)

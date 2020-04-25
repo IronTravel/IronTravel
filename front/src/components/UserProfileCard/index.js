@@ -24,7 +24,6 @@ export const UserProfileCard = ({ user, following, setFollowing }) => {
         return followingID.includes(id)
     }
 
-    console.log(following)
     return (
     <>
         <article className="entity-card">
@@ -86,7 +85,7 @@ export const UserProfileCard = ({ user, following, setFollowing }) => {
 
         {/* Delete Modal */}
         <Modali.Modal {...deleteOneFollow} className="modal">
-            {user && following && 
+            {user && following &&
             <div className="auth-card__body">
                 <p className="mb-3"><strong> Are you sure??</strong></p>
                 <div>
