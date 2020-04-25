@@ -124,7 +124,7 @@ const Page = () => {
                             if (entry.type === 'instagram')
                                 return <InstagramPost key={i} data={entry.content} />
                             if (entry.type === 'spotify')
-                                return <SpotifyPost key={i} data={entry.content} />
+                                return <SpotifyPost key={i} data={entry.content} audio={audio} setAudio={(audio) => setAudio(audio)} />
                             if (entry.type === 'twitter')
                                 return <TwitterPost key={i} data={entry.content} />
                         })

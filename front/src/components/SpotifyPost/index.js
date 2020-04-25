@@ -6,9 +6,7 @@ import { PlayCircle, StopCircle } from 'react-feather';
 import { LikeButton } from '../LikeButton';
 import { LikesFaces } from '../LikesFaces';
 
-export const SpotifyPost = ({ data }) => {
-
-    const [audio, setAudio] = useState('');
+export const SpotifyPost = ({ data, setAudio, audio }) => {
 
     const formatTime = (time) => {
         const date = new Date();
