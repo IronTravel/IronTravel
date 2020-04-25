@@ -49,7 +49,7 @@ export const LoginForm = withRouter(({ history }) => {
                     <div className="form-errors">{formSubmitError}</div>
                 </form>
                 <section className="social-auth">
-                    <a href="#" className="btn btn--facebook mb-2">Login with Facebook</a>
+                    {/* <a href="#" className="btn btn--facebook mb-2">Login with Facebook</a> */}
                     <a href={`${process.env.API_URL}auth/google/login`} className="btn btn--google">Login with Google</a>
                 </section>
             </div>
