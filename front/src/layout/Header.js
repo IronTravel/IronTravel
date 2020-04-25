@@ -50,7 +50,7 @@ export const Header = withRouter(({ history }) => {
             {/* <div className="current-section">My Profile</div> */}
             <div className="main-nav"><Link to ="/profile">My Profile</Link></div>
             <div className="header-search">                
-                <input type="search" name="search" placeholder="Search your favourite City"onChange={handleSearch}/>
+                {/* <input type="search" name="search" placeholder="Search your favourite City"onChange={handleSearch}/> */}
                 <div>
                     {search &&
                     search.map(e => <Link to={`/city/${e._id}`}>{e.name}</Link>)}
