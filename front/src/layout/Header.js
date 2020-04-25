@@ -38,18 +38,16 @@ export const Header = withRouter(({ history }) => {
         })
     };
 
-
-
-      console.log("SOY EL USER DE HEADER", user)
-
     return (
         <header className="main-header">
             <div className="main-logo">
-                <Link to="/profile"><LogoWeTravelSM /> </Link>
+                <Link to="/profile"><LogoWeTravelSM /></Link>
             </div>
             {/* <div className="current-section">My Profile</div> */}
-            <div className="main-nav"><Link to ="/profile">My Profile</Link></div>
-            <div className="header-search">                
+            <div className="current-section">
+                <Link to="/profile">My Profile</Link>
+            </div>
+            <div className="header-search">
                 {/* <input type="search" name="search" placeholder="Search your favourite City"onChange={handleSearch}/> */}
                 <div>
                     {search &&
@@ -63,12 +61,12 @@ export const Header = withRouter(({ history }) => {
                 <Link to="/search">All Users</Link>
             </nav>
             <div className="user-menu">
-                <div className="user-menu__icon-btn">
+                {/* <div className="user-menu__icon-btn">
                     <DropDownMessages icon={<MessageSquare size={22} />} quantity={0} />
                 </div>
                 <div className="user-menu__icon-btn">
                     <DropDownMessages icon={<Bell size={22} />} quantity={0} />
-                </div>
+                </div> */}
                 {
                     user &&
                     <div className="user-menu__user-btn">

@@ -18,8 +18,9 @@ import iconSpotify from '../assets/images/icon-spotify.png';
 
 import { InstagramPost } from '../components/InstagramPost';
 import { SpotifyPost } from '../components/SpotifyPost';
+import { withProtected } from '../components/withProtectedHOC';
 
-export const TravelPage = () => {
+const Page = () => {
 
     const user = useUser();
     const { travel_id } = useParams();
@@ -56,8 +57,8 @@ export const TravelPage = () => {
                 <div className="travel-header">
                     <div className="travel-header__bg">
                         <div className="travel-header__info">
-                            <h2 className="travel-header__title">Discovering my roots in Japan</h2>
-                            <p className="travel-header__tagline">Tourism | Japan</p>
+                            <h2 className="travel-header__title">{travel?.name}</h2>
+                            <p className="travel-header__tagline">Tourism | {travel?.country.name}</p>
                         </div>
                         <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80" alt="" />
                     </div>
@@ -133,3 +134,5 @@ export const TravelPage = () => {
         </>
     )
 }
+
+export const TravelPage = withProtected(Page);

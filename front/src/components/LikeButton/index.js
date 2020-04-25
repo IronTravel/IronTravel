@@ -11,7 +11,7 @@ export const LikeButton = ({ entry, count, inverted, ...props }) => {
         <div {...props}>
             <div className={`btn-like ${inverted ? 'btn-like--inverted' : ''}`}>
                 {
-                    <button className={`btn-like__icon ${entry.likes.filter(e => e._id === loggedInUser._id).length && 'btn-like__icon--liked'}`}>
+                    <button className={`btn-like__icon ${entry?.likes.filter(e => e._id === loggedInUser._id).length && 'btn-like__icon--liked'}`}>
                         <Heart />
                     </button>
                 }

@@ -10,6 +10,7 @@ import moment from 'moment'
 import { Header } from '../layout/Header';
 import { UserProfileHeader } from '../components/UserProfileHeader';
 import NewEntity from '../assets/svgs/icon-new.svg';
+import { withProtected } from '../components/withProtectedHOC';
 
 import { allTravel, createTravel, deleteTravel, getTravel, editTravel, updateImageTravel } from '../service/travel';
 import { allCountries } from '../service/data'
@@ -17,7 +18,7 @@ import { Edit, Trash2, MoreVertical } from 'react-feather';
 import { DropDownMenu } from '../components/DropDownMenu';
 import { Save } from 'react-feather';
 
-export const MyTravelsPage = () => {
+const Page = () => {
 
     const [formSubmitError, setFormSubmitError] = useState('');
     const { handleSubmit, register, errors, setValue } = useForm();
@@ -144,7 +145,7 @@ const handleChange = (e) => setHasImageLoaded(!!e.target.files.length)
                                         <button className="button" onClick={() => {
                                             setEditImageModal()
                                             getTravel(travel._id).then((res)=> setEditOneTravel(res.data))
-                                            
+
                                         }}>
                                             <Edit size={14} />
                                                 <span>Update Image</span>
@@ -285,7 +286,7 @@ const handleChange = (e) => setHasImageLoaded(!!e.target.files.length)
                     <div>
                         <strong className="mb-2">Change Image!!</strong>
                     </div>
-                    {editOneTravel && 
+                    {editOneTravel &&
                     <form onSubmit={handleSubmit(onUpdateImageSubmit)}>
                         <div>
                             <label className="field__label" htmlFor="name">Type</label>
@@ -328,3 +329,5 @@ const handleChange = (e) => setHasImageLoaded(!!e.target.files.length)
         </>
     )
 }
+
+export const MyTravelsPage = withProtected(Page);

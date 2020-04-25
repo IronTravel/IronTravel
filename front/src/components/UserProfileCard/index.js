@@ -4,10 +4,9 @@ import _ from 'lodash';
 
 import defaultAvatar from '../../assets/images/avatar.png';
 import StarIcon from '../../assets/svgs/icon-star.svg';
-import LikeIcon from '../../assets/svgs/icon-like.svg';
 import ProfileIcon from '../../assets/svgs/icon-profile.svg';
 
-import { ThumbsDown } from 'react-feather';
+import { ThumbsDown, ThumbsUp } from 'react-feather';
 
 import { deleteFollow, addFollow } from '../../service/followers';
 
@@ -68,11 +67,11 @@ export const UserProfileCard = ({ user, following, setFollowing }) => {
                 {
                     user && following && check(user._id) ?
                     <button className="entity-card__footer__btn" onClick={()=>setDeleteOneFollow() }>
-                        <ThumbsDown />
+                        <ThumbsDown size={18} />
                         <span>Unfollow</span>
                     </button> :
                     <button className="entity-card__footer__btn" onClick={()=>addFollow(user._id).then((res)=> setFollowing(res.data)) }>
-                        <LikeIcon />
+                        <ThumbsUp size={18} />
                         <span>Follow</span>
                     </button>
                 }
@@ -87,7 +86,7 @@ export const UserProfileCard = ({ user, following, setFollowing }) => {
         <Modali.Modal {...deleteOneFollow} className="modal">
             {user && following &&
             <div className="auth-card__body">
-                <p className="mb-3"><strong> Are you sure??</strong></p>
+                <p className="mb-3"><strong> You are about to unfollow a someone. You will lose contact, are you sure you want to continue?</strong></p>
                 <div>
                 <Modali.Button label="Unfollow"
                     isStyleDestructive onClick={() => {

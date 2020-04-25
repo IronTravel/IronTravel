@@ -13,13 +13,12 @@ import StarIcon from '../assets/svgs/icon-star.svg';
 import { Edit, Trash2, MoreVertical } from 'react-feather';
 import { DropDownMenu } from '../components/DropDownMenu';
 import { Save } from 'react-feather';
+import { withProtected } from '../components/withProtectedHOC';
 
 import { allTours, createTour, editTour, oneTour, deleteTour, updateImageTour } from '../service/tour';
 import { allCountries } from '../service/data'
 
-
-
-export const MyToursPage = () => {
+const Page = () => {
 
     const [formSubmitError, setFormSubmitError] = useState('');
     const { handleSubmit, register, errors, setValue } = useForm();
@@ -27,7 +26,7 @@ export const MyToursPage = () => {
     const [editTourModal, setEditTourModal] = useModali({ title: 'Edit Tour' });
     const [editImageModal, setEditImageModal] = useModali({ title: 'Update Image' });
     const [deleteTourModal, setDeleteTourModal] = useModali({ title: 'Delete Tour' });
-    
+
     const [countries, setCountries] = useState([])
     const [userTour , SetUserTour] = useState([])
     const [tour, setTour] = useState()
@@ -55,15 +54,15 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
           .then((res) => {
                fetchUserTour()
                setNewTourModal()
-            
-        }) 
+
+        })
         .catch(res => setFormSubmitError(res.data.status))
     }
 
     const onUpdateSubmit = (data) => {
         console.log(idTour)
         const id = idTour
-        
+
         console.log(data)
         console.log(idTour)
         editTour(data, id)
@@ -71,7 +70,7 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
             setEditOneTour(res.data)
             fetchUserTour()
             setEditTourModal()
-             
+
          })
          .catch(res => setFormSubmitError(res.data.status))
       };
@@ -99,14 +98,14 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
                 console.log(error)
             })
       }
-    
+
     useEffect(() => {
         fetchUserTour()
         // fetchCountries()
         allCountries()
         .then(allcountries => setCountries(allcountries.data))
     }, [])
-    
+
 
     console.log(editOneTour)
     return (
@@ -122,7 +121,7 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
                             <p className="entity-card--button__tagline">Show your city to other travelers…</p>
                         </button>
                     </div>
-                    {userTour.my_tours && userTour.my_tours.map((e,i) => 
+                    {userTour.my_tours && userTour.my_tours.map((e,i) =>
                     <div className="col-3" key={i}>
                         <article className="entity-card entity-card--travel">
                             <header className="entity-card__header">
@@ -133,7 +132,7 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
                             {/* <button className="button" onClick={() => {
                                     setEditTourModal()
                                     oneTour(e._id).then((res)=> setEditOneTour(res.data))}} />
-                                <button className="button" onClick={()=>{ 
+                                <button className="button" onClick={()=>{
                                     setDeleteTourModal()
                                     setTour(e._id)
                                     }} /> */}
@@ -155,7 +154,7 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
                                         <button className="button" onClick={() => {
                                             setEditImageModal()
                                             oneTour(e._id).then((res)=> setEditOneTour(res.data))
-                                            
+
                                         }}>
                                             <Edit size={14} />
                                             <span>Update Image</span>
@@ -197,14 +196,14 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
                             <label className="field__label" htmlFor="name">Type</label>
                             <input className="field__input-text" placeholder="What kind of tour??" name="type" id="Type" type="text" ref={register({ required: true })} />
                         </div>
-                        
-                            
+
+
                                 <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                                     <label className="field__label" htmlFor="from">City</label>
                                     <input className="field__input-text" placeholder="City" name="city" id="city" type="text" ref={register({ required: true })} />
                                 </div>
-                            
-                            
+
+
                             <div className={`field-wrapper ${errors?.country && 'field-wrapper--error'}`}>
                             <label className="field__label" htmlFor="select">Select</label>
                                 <Select
@@ -221,8 +220,8 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
                                     ref={register({ name: "country", required: true })}
                                 />
                             </div>
-                        
-                        
+
+
                         <div className="row">
                             <div className="col-6 pr-1">
                                 <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
@@ -231,7 +230,7 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
                                 </div>
                             </div>
                             <div className="col-6 pl-1">
-                                <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}> 
+                                <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                                     <label className="field__label" htmlFor="to">End</label>
                                     <input className="field__input-text" placeholder="End" name="end" id="end" type="date" ref={register({ required: true })} />
                                 </div>
@@ -253,8 +252,8 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
             <Modali.Modal {...editTourModal} className="modal">
                 <div className="auth-card__body">
                     <strong className="mb-2">Edit yor Tour</strong>
-                    
-                    {editOneTour && 
+
+                    {editOneTour &&
 
                     <form onSubmit={handleSubmit(onUpdateSubmit)}>
                         <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
@@ -281,9 +280,9 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
                                         value: country._id,
                                         label: country.name
                                     }))}
-                                    
+
                                     // defaultValue={{
-                                        
+
                                     //     value: editOneTour?.country._id,
                                     //     label: editOneTour?.country.name
                                     // }}
@@ -299,7 +298,7 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
                                 </div>
                             </div>
                             <div className="col-6 pl-1">
-                                <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}> 
+                                <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                                     <label className="field__label" htmlFor="to">End</label>
                                     <input className="field__input-text" placeholder="End" defaultValue={editOneTour.end_date ? moment(editOneTour.end_date).format('YYYY-MM-DD') : ""} name="end" id="end" type="date" ref={register({ required: true })} />
                                 </div>
@@ -327,7 +326,7 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
                     <div>
                         <strong className="mb-2">Change Image!!</strong>
                     </div>
-                    {editOneTour && 
+                    {editOneTour &&
                     <form onSubmit={handleSubmit(onUpdateImageSubmit)}>
                         <div>
                             <label className="field__label" htmlFor="name">Type</label>
@@ -366,3 +365,5 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
         </>
     )
 }
+
+export const MusicHobbiesPage = withProtected(MyToursPage);

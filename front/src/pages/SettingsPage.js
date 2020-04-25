@@ -7,15 +7,15 @@ import moment from 'moment'
 // Components
 import { Header } from '../layout/Header';
 import { UserProfileHeader } from '../components/UserProfileHeader';
+import { withProtected } from '../components/withProtectedHOC';
 
 //Context
 import { useUser, useUserSetter } from "../context/user";
 
 //Service
 import { editUser } from '../service/user';
-import { whoami } from '../service/auth';
 
-export const SettingsPage = () => {
+const Page = () => {
 
     const user = useUser()
     const setUser = useUserSetter();
@@ -122,3 +122,5 @@ export const SettingsPage = () => {
         </>
     )
 }
+
+export const SettingsPage = withProtected(Page);
