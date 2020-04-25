@@ -15,20 +15,32 @@ const User = new mongoose.Schema(
             age: Number
         },
         googleId: Number,
-        main_image: Array,
+        main_image: {
+            type: Array,
+            default: 'https://images.pexels.com/photos/1939485/pexels-photo-1939485.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260'
+        },
         avatar: String,
         description: String,
         country: String,
         favourite_color: String,
-        notifications: {
-            date: Date,
+        notifications: [{
+            date: { type: Date, default: Date.now },
             description: String,
             type: {
                 type: String,
                 enum: ["follow", "like"]
             },
-            related_user: { type: mongoose.Schema.ObjectId, ref: "user" },
-        },
+            related_user: { type: mongoose.Schema.ObjectId, ref: "user" }
+        }],
+        pendings: [{
+            date: { type: Date, default: Date.now },
+            description: String,
+            type: {
+                type: String,
+                enum: ["follow"]
+            },
+            related_user: { type: mongoose.Schema.ObjectId, ref: "user" }
+        }],
         factor: Array,
         factorTotal: Number,
         followers: [{ type: mongoose.Schema.ObjectId, ref: "user" }],

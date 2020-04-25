@@ -124,6 +124,9 @@ app.use("/search", search)
 const city = require("./routes/city");
 app.use("/city", city)
 
+const notifications = require("./routes/notifications");
+app.use("/notifications", notifications)
+
 const spotify = require("./routes/spotify");
 app.use("/spotify", spotify);
 

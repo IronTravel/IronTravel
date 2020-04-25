@@ -10,7 +10,7 @@ const User = require("../models/User");
 
 //ALL user Followers
 router.get('/followers/', isLoggedIn(), async (req, res) => {
-    const userID = req.user.id    
+    const userID = req.user.id
     const followers = await User.findById(userID)
     const followersPopulate = await User.findById(userID).populate({ path:"followers" })
     return res.json(followersPopulate)
@@ -18,31 +18,53 @@ router.get('/followers/', isLoggedIn(), async (req, res) => {
 
 //ALL user Following
 router.get('/following/', isLoggedIn(), async (req, res) => {
-    const userID = req.user.id    
+    const userID = req.user.id
     const following = await User.findById(userID)
     const followingPopulate = await User.findById(userID).populate({ path:"following" })
     return res.json(followingPopulate)
 })
+
 //ADD Follow
 router.post('/addFollow/:id', isLoggedIn(), async (req, res)=> {
+
     const userID = req.user.id
     const followID = req.params.id
 
     try {
-        const addUser = await User.findByIdAndUpdate(userID,
-            { $addToSet: { following: followID}})
-            console.log(`se ha agregado el following ${followID} a ${userID}`)
-        const addfollow = await User.findByIdAndUpdate(followID,
-            { $addToSet: { followers: userID}})
-            console.log(`se ha agregado el followers ${userID} a ${followID}`)
-            console.log("EMPIEZA AQUIIIIIIIIIIIIIIIIIIIIIIIIII", addUser)
-            const user = await User.findById(userID).populate({ path:"following" })
+        const addToPendings = await User.findByIdAndUpdate(userID, {
+            $addToSet: {
+                pendings: {
+                    type: 'follow',
+                    related_user: followID
+                }
+            }
+        })
 
-            console.log("EMPIEZA USEEEEEEEEEEEEEEEEEEEEEEEEEEEER", user)
+        const addToNotifications = await User.findByIdAndUpdate(followID,
+            {
+                $addToSet: {
+                    notifications: {
+                        type: 'follow',
+                        related_user: userID
+                    }
+                }
+            })
+
+        const user = await User.findById(userID)
+            .populate([
+                { path: "following" },
+                {
+                    path: 'pages', populate: {
+                        path: 'related_user',
+                        model: 'User'
+                    }
+                }])
+
+        console.log(user);
+
         return res.json(user)
-    } catch (error){
-        console.log(error)
-        console.log("no se ha creado")
+
+    } catch (error) {
         return res.json({status:"No se ha creado correctamente."})
     }
 })
@@ -58,7 +80,7 @@ router.get('/deleteFollow/:id', isLoggedIn(), async (req, res) => {
       ).populate({ path:"following" })
       console.log(`se ha eliminado el following ${followID} de ${userID}`)
     const deleteFollow = await User.findByIdAndUpdate(
-        followID, 
+        followID,
         { $pull: { followers: userID } },
         { safe: true, multi: true }
         )
