@@ -4,7 +4,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import _ from 'lodash';
 
 // Context
-import { useUser } from "../../context/user";
+import { useUser, useUserSetter } from "../../context/user";
 import defaultAvatar from '../../assets/images/avatar.png';
 import { randomAboutMe } from '../../service/data'
 import { updateAvatar } from '../../service/user';
@@ -19,33 +19,32 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
 export const UserProfileHeader = ({ data }) => {
 
     const location = useLocation();
-    const { id } = useParams();
 
     const loggedInUser = useUser();
+    const setLoggedInUser = useUserSetter();
+
     const [user, setUser] = useState({});
     const [hasImageLoaded, setHasImageLoaded] = useState(false);
     const [inUserSettigns, setIUserSettigns] = useState(false);
 
     const { handleSubmit, register, errors, reset } = useForm();
 
-    useEffect(() => {
-        setUser(id ? data : loggedInUser)
-        setIUserSettigns(location.pathname.includes('settings'))
-    }, [id]);
-
     const handleGetRandom = (arr) => arr[_.random(0, arr.length - 1)]?.name || '';
     const handleChange = (e) => setHasImageLoaded(!!e.target.files.length)
+
+    useEffect(() => {
+        data && setUser(data)
+        setIUserSettigns(location.pathname.includes('settings'))
+    });
 
     const onSubmit = (data, e) => {
         const myAvatar = data.avatar[0];
 
         updateAvatar(myAvatar)
             .then((res) => {
-                console.log("changed file")
-                setUser(res.data.user)
+                setLoggedInUser(res.data.user)
             })
             .catch((error) => {
-                console.log("error updating")
                 console.log(error)
             })
     }
@@ -72,7 +71,7 @@ export const UserProfileHeader = ({ data }) => {
                                 <>
                                     <label className={`${inUserSettigns && 'clickable'}`}>
                                         <div className="big-avatar">
-                                            <img src={user?.avatar || defaultAvatar} alt="" />
+                                            <img src={loggedInUser?.avatar || defaultAvatar} alt="" />
                                         </div>
                                         {
                                             inUserSettigns &&
@@ -92,7 +91,6 @@ export const UserProfileHeader = ({ data }) => {
                                 </>
                             }
                         </form>
-
                         <div className="value">{user?.fullName}</div>
                         {
                             <div className="key">

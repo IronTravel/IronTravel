@@ -105,7 +105,7 @@ export const MusicHobbiesPage = () => {
                                         <div className="col col-12 mb-4">
                                             <h4 className="content-box__title">Music Genres</h4>
                                             <div className="content-box__pills text-center">
-                                                {musicGenreList.length && musicGenreList.map((e, i) => {
+                                                {musicGenreList.length > 0 && musicGenreList.map((e, i) => {
                                                     let hasValue = userMusicList.includes(e._id);
                                                     return (
                                                         <label className="pill-checkbox" key={i}>
@@ -119,7 +119,7 @@ export const MusicHobbiesPage = () => {
                                         <div className="col col-12 mb-4">
                                             <h4 className="content-box__title">Hobbies</h4>
                                             <div className="content-box__pills text-center">
-                                            {hobbiesList.length && hobbiesList.map((e, i) => {
+                                            {hobbiesList.length > 0 && hobbiesList.map((e, i) => {
                                                 let hasValue = userHobbyList.includes(e._id);
                                                 return(
                                                 <label className="pill-checkbox" key={i}>

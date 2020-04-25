@@ -32,14 +32,13 @@ export const ProfilePage = () => {
         if (id) {
             getUser(id).then(res => {
                 setUser(res.data);
-                getUserEntries(id)
-                    .then(res => handleSetEntry(res.data));
+                getUserEntries(id).then(res => handleSetEntry(res.data));
             });
         } else {
             setUser(loggedInUser);
-            whoami().then((res) => {
-                setUser(res.data)
-            });
+            // whoami().then((res) => {
+            //     setUser(res.data)
+            // });
             getUserEntries(loggedInUser._id)
                 .then(res => handleSetEntry(res.data));
         }

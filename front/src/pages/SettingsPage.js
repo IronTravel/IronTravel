@@ -17,13 +17,6 @@ import { whoami } from '../service/auth';
 
 export const SettingsPage = () => {
 
-    useEffect(() => {
-        whoami().then((res) => {
-            console.log(res.data)
-        });
-
-    }, []);
-
     const user = useUser()
     const setUser = useUserSetter();
 
@@ -31,10 +24,8 @@ export const SettingsPage = () => {
     const { handleSubmit, register, errors } = useForm();
 
     const onFormSubmit = (data) => {
-        console.log(data)
         editUser(data)
             .then((res) => {
-                console.log(res.data)
                 setUser(res.data)
                 toast("Information saved successfully!")
             })

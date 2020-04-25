@@ -9,7 +9,6 @@ export const getUser = async (idUser) => {
 }
 
 export const editUser = async data => {
-    console.log(data)
     return await service.post("users/edit", data);
 }
 

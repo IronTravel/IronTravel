@@ -12,11 +12,11 @@ import { UserProfileHeader } from '../../components/UserProfileHeader';
 //Context
 import { useUser, useUserSetter } from "../../context/user";
 
+//Service
 import { editPass } from '../../service/user';
 
 
 export const ChangePassword = () => {
-
 
     const user = useUser()
 
@@ -24,21 +24,17 @@ export const ChangePassword = () => {
     const { handleSubmit, register, errors } = useForm();
 
     const setUser = useUserSetter();
-    
+
     const onFormSubmit = (data) => {
-        console.log(data)
-        if(data.newPassword === data.confirmNewPassword) {
+        if (data.newPassword === data.confirmNewPassword) {
             editPass(data)
                 .then((res) => {
-                    console.log(res.data)
                     setUser(res.data)
                     toast("Information saved successfully!")
                 })
-
-        }else{
+        } else {
             setFormSubmitError('New Password and Confirmed Password are diferents');
         }
-        
     }
 
     return (
@@ -72,7 +68,7 @@ export const ChangePassword = () => {
                                 <h2 className="section-box__title px-4">Change Password</h2>
                             </div>
                             <div className="section-box__body px-4 pb-4">
-                                {user && 
+                                {user &&
                                 <form onSubmit={handleSubmit(onFormSubmit)}>
                                     <div className="row">
                                         <div className="col col-12">
