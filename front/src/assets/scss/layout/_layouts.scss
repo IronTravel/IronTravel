@@ -34,6 +34,15 @@
 .bg-faces {
     @extend .position-fixed, .fixed-top, .fixed-bottom, .vw-100, .vh-100;
     z-index: 1;
+
+    img {
+        object-fit: cover;
+        //position: absolute;
+        //top: -50%;
+        //transform: translateY(50%);
+        width: 100%;
+        height: 100%;
+    }
 }
 
 .profile-box-wrapper {

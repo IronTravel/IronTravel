@@ -7,9 +7,7 @@ import StarIcon from '../../assets/svgs/icon-star.svg';
 import ProfileIcon from '../../assets/svgs/icon-profile.svg';
 
 import { ThumbsDown, ThumbsUp } from 'react-feather';
-
 import { deleteFollow, addFollow } from '../../service/followers';
-
 import Modali, { useModali } from 'modali';
 
 export const UserProfileCard = ({ user, following, setFollowing }) => {
@@ -29,7 +27,7 @@ export const UserProfileCard = ({ user, following, setFollowing }) => {
             <header className="entity-card__header">
                 <Link to={`/profile/${user._id}`}>
                     <div className="entity-card__header__bg">
-                        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80" alt="" />
+                        <img src={user.main_image[0]} alt="" />
                     </div>
                 </Link>
             </header>
@@ -40,7 +38,7 @@ export const UserProfileCard = ({ user, following, setFollowing }) => {
                             <img src={user.avatar || defaultAvatar} alt={user.fullName} />
                         </Link>
                     </div>
-                    <span className="entity-card__body__user-value">{user.factorTotal}</span>
+                    { user.factorTotal && <span className="entity-card__body__user-value">{user.factorTotal}</span> }
                 </div>
                 <h2 className="entity-card__body__title">{user.fullName}</h2>
                 <p className="entity-card__body__tagline">
