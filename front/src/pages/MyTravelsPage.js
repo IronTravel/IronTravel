@@ -154,8 +154,8 @@ const handleChange = (e) => setHasImageLoaded(!!e.target.files.length)
 
                                     <h2 className="entity-card__body__title">{travel.name}</h2>
                                     {
-                                        travel.entries.length > 0 &&
-                                        <p className="entity-card__body__tagline">Last update: 2 hours ago</p>
+                                        travel?.entries.length > 0 &&
+                                        travel && <p className="entity-card__body__tagline">Last update: { moment(travel.updatedAt).fromNow() }</p>
                                     }
 
                                     <div className="entity-card__body__data">

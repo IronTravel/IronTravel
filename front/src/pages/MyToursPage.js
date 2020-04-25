@@ -106,8 +106,6 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
         .then(allcountries => setCountries(allcountries.data))
     }, [])
 
-
-    console.log(editOneTour)
     return (
         <>
             <Header />
@@ -366,4 +364,4 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
     )
 }
 
-export const MusicHobbiesPage = withProtected(MyToursPage);
+export const MyToursPage = withProtected(Page);
