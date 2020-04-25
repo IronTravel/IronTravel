@@ -9,6 +9,7 @@ import { LoginForm } from '../components/Auth/LoginForm';
 import { RegisterForm } from '../components/Auth/SignupForm';
 import { AuthTabs } from '../components/Auth/AuthTabs';
 import LogoWeTravel from '../assets/svgs/logo-wetravel.svg';
+import Faces from '../assets/images/bg.jpg';
 
 export const AuthPage = () => {
 
@@ -32,7 +33,9 @@ export const AuthPage = () => {
                     </div>
                 </div >
                 <div className="special-bg"></div>
-                <div className="bg-faces"></div>
+                <div className="bg-faces">
+                    <img src={Faces} alt="faces" />
+                </div>
             </div> :
             <Redirect to='/profile' />
     )
