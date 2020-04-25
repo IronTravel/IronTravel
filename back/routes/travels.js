@@ -72,15 +72,17 @@ router.get('/delete/:id', isLoggedIn(), async (req, res) => {
     const id = req.params.id
     const userID = req.user.id
 
-  await User.findByIdAndUpdate(
-    userID,
-    { $pull: { my_travels: id } },
-    { safe: true, multi: true }
-  );
+    await User.findByIdAndUpdate(
+        userID,
+        { $pull: { my_travels: id } },
+        { safe: true, multi: true }
+    );
+
     const travel = await Travel.findOneAndDelete({_id: id})
     console.log("eliminado correctamente")
     return res.json({status:`${id} eliminado`})
-  })
+})
+
 
 //UPDATE IMAGE TRAVEL//
 router.post("/image/:id", isLoggedIn(), uploadCloudinaryAvatar.single("avatar"), async (req, res) => {

@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify';
-
 import _ from 'lodash';
 
 // Components
 import { Header } from '../layout/Header';
 import { UserProfileHeader } from '../components/UserProfileHeader';
+import { withProtected } from '../components/withProtectedHOC';
 
 //Service
 import { musicgenres, hobbies ,addAboutMe, randomAboutMe } from '../service/data'
 import { whoami } from '../service/auth'
 
-export const MusicHobbiesPage = () => {
+
+const Page = () => {
 
     const [musicGenreList, setMusicGenreList] = useState([])
     const [hobbiesList, setHobbiesList] = useState([])
@@ -145,3 +146,5 @@ export const MusicHobbiesPage = () => {
         </>
     )
 }
+
+export const MusicHobbiesPage = withProtected(Page);

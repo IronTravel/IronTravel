@@ -7,12 +7,13 @@ import _ from 'lodash';
 // Components
 import { Header } from '../layout/Header';
 import { UserProfileHeader } from '../components/UserProfileHeader';
+import { withProtected } from '../components/withProtectedHOC';
 
 //Service
 import { personalities, lifestyles ,addAboutMe, aboutMe } from '../service/data'
 import { whoami } from '../service/auth'
 
-export const PersonalityPage = () => {
+const Page = () => {
 
     const [personalityList, setPersonalityList] = useState([])
     const [lifeStylesList, setLifeStylesList] = useState([])
@@ -140,3 +141,5 @@ export const PersonalityPage = () => {
         </>
     )
 }
+
+export const PersonalityPage = withProtected(Page);

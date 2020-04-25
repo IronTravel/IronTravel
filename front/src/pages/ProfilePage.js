@@ -16,9 +16,9 @@ import { Header } from '../layout/Header';
 import { UserProfileHeader } from '../components/UserProfileHeader';
 import { PublishBox } from '../components/PublishBox';
 import { Entry } from '../components/Entry';
+import { withProtected } from '../components/withProtectedHOC';
 
-export const ProfilePage = () => {
-
+const Page = () => {
     const loggedInUser = useUser();
     const [user, setUser] = useState();
     const [entries, setEntries] = useState();
@@ -170,3 +170,5 @@ export const ProfilePage = () => {
         </>
     )
 }
+
+export const ProfilePage = withProtected(Page);
