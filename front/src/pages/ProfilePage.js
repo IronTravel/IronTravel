@@ -129,9 +129,9 @@ export const ProfilePage = () => {
                                 <div className="image-grid">
                                     {user && user.my_travels.map((e, i) =>
                                         <div className="image-box" key={i}>
-                                            <a href="#">
-                                                <img src="https://via.placeholder.com/150/150" />
-                                            </a>
+                                            <Link to={`travel/${e._id}`}>
+                                                <img src={e.photos} />
+                                            </Link>
                                         </div>
                                     )}
                                 </div>

@@ -11,10 +11,11 @@ import { Header } from '../layout/Header';
 import { UserProfileHeader } from '../components/UserProfileHeader';
 import NewEntity from '../assets/svgs/icon-new.svg';
 
-import { allTravel, createTravel, deleteTravel, getTravel, editTravel } from '../service/travel';
+import { allTravel, createTravel, deleteTravel, getTravel, editTravel, updateImageTravel } from '../service/travel';
 import { allCountries } from '../service/data'
 import { Edit, Trash2, MoreVertical } from 'react-feather';
 import { DropDownMenu } from '../components/DropDownMenu';
+import { Save } from 'react-feather';
 
 export const MyTravelsPage = () => {
 
@@ -22,6 +23,7 @@ export const MyTravelsPage = () => {
     const { handleSubmit, register, errors, setValue } = useForm();
     const [newTravelModal, setNewTravelModal] = useModali({ title: 'New Travel' });
     const [editTravelModal, setEditTravelModal] = useModali({ title: 'Edit Travel' });
+    const [editImageModal, setEditImageModal] = useModali({ title: 'Update Image' });
     const [deleteTravelModal, setDeleteTravelModal] = useModali({ title: 'Delete Travel' });
 
     const [countries, setCountries] = useState([])
@@ -29,6 +31,16 @@ export const MyTravelsPage = () => {
     const [travel, setTravel] = useState()
     const [idTravel, setIDTravel] = useState()
     const [editOneTravel, setEditOneTravel] = useState()
+
+    const [hasImageLoaded, setHasImageLoaded] = useState(false);
+
+    const cloudinary = require("cloudinary-core");
+
+
+//Nombre del cloudinary que sale en la web
+const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
+
+const handleChange = (e) => setHasImageLoaded(!!e.target.files.length)
 
     const fetchUserTravel = () => allTravel().then(userTravel => setUserTravel(userTravel.data));
 
@@ -50,8 +62,9 @@ export const MyTravelsPage = () => {
             .then((res) => {
                 setEditOneTravel(res.data)
                 fetchUserTravel()
-                setFormSubmitError(res.data.status)
+                setEditTravelModal()
             })
+            .catch(res => setFormSubmitError(res.data.status))
     };
 
     //SELECT2 CONFIGURATION
@@ -63,6 +76,25 @@ export const MyTravelsPage = () => {
         setValue("country", selectedOption);
         // setReactSelect({ selectedOption });
     };
+
+    const onUpdateImageSubmit = (data, e) => {
+        const myAvatar = data.avatar[0];
+        console.log(idTravel)
+        const id = idTravel
+        console.log(myAvatar)
+        console.log(id)
+        updateImageTravel(myAvatar, id)
+            .then((res) => {
+                console.log("changed file")
+                setEditOneTravel(res.data)
+                fetchUserTravel()
+                setEditImageModal()
+            })
+            .catch((error) => {
+                console.log("error updating")
+                console.log(error)
+            })
+      }
 
     useEffect(() => {
         fetchUserTravel()
@@ -90,7 +122,7 @@ export const MyTravelsPage = () => {
                                 <header className="entity-card__header">
                                     <Link to={`travel/${travel._id}`}>
                                         <div className="entity-card__header__bg">
-                                            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80" alt="" />
+                                            <img src={travel.photos[0]} alt="" />
                                         </div>
                                     </Link>
                                 </header>
@@ -111,6 +143,14 @@ export const MyTravelsPage = () => {
                                         }}>
                                             <Trash2 size={14} />
                                             <span>Delete</span>
+                                        </button>
+                                        <button className="button" onClick={() => {
+                                            setEditImageModal()
+                                            getTravel(travel._id).then((res)=> setEditOneTravel(res.data))
+                                            
+                                        }}>
+                                            <Edit size={14} />
+                                                <span>Update Image</span>
                                         </button>
                                     </DropDownMenu>
 
@@ -150,13 +190,13 @@ export const MyTravelsPage = () => {
                             <div className="col-6 pr-1">
                                 <div className={`field-wrapper ${errors?.from && 'field-wrapper--error'}`}>
                                     <label className="field__label" htmlFor="from">From</label>
-                                    <input className="field__input-text" placeholder="From" name="from" id="from" type="date" ref={register({ required: false })} />
+                                    <input className="field__input-text" placeholder="From" name="from" id="from" type="date" ref={register({ required: true })} />
                                 </div>
                             </div>
                             <div className="col-6 pl-1">
                                 <div className={`field-wrapper ${errors?.to && 'field-wrapper--error'}`}>
                                     <label className="field__label" htmlFor="to">To</label>
-                                    <input className="field__input-text" placeholder="To" name="to" id="to" type="date" ref={register({ required: false })} />
+                                    <input className="field__input-text" placeholder="To" name="to" id="to" type="date" ref={register({ required: true })} />
                                 </div>
                             </div>
                         </div>
@@ -200,19 +240,19 @@ export const MyTravelsPage = () => {
                             </div>
                             <div className="row">
                                 <div className="col-6 pr-1">
-                                    <div className="field-wrapper">
+                                <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                                         <label className="field__label" htmlFor="from">From</label>
-                                        <input className="field__input-text" placeholder="From" name="from" id="from" type="date" defaultValue={editOneTravel?.from ? moment(editOneTravel?.from).format('YYYY-MM-DD') : ""} ref={register({ required: false })} />
+                                        <input className="field__input-text" placeholder="From" name="from" id="from" type="date" defaultValue={editOneTravel?.from ? moment(editOneTravel?.from).format('YYYY-MM-DD') : ""} ref={register({ required: true })} />
                                     </div>
                                 </div>
                                 <div className="col-6 pl-1">
-                                    <div className="field-wrapper">
+                                <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                                         <label className="field__label" htmlFor="to">To</label>
-                                        <input className="field__input-text" placeholder="To" name="to" id="to" type="date" defaultValue={editOneTravel?.to ? moment(editOneTravel?.to).format('YYYY-MM-DD') : ""} ref={register({ required: false })} />
+                                        <input className="field__input-text" placeholder="To" name="to" id="to" type="date" defaultValue={editOneTravel?.to ? moment(editOneTravel?.to).format('YYYY-MM-DD') : ""} ref={register({ required: true })} />
                                     </div>
                                 </div>
                             </div>
-                            <div className="field-wrapper">
+                            <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                                 <label className="field__label" htmlFor="select">Select</label>
                                 <Select
                                     className="reactSelect"
@@ -234,11 +274,38 @@ export const MyTravelsPage = () => {
                             <div className="field-wrapper--button mt-4">
                                 <button className="btn btn--primary btn--w-full" type="submit" onClick={() => {
                                     setIDTravel(editOneTravel._id)
-                                    setEditTravelModal()
                                 }}>Edit</button>
                             </div>
                             <div className="form-errors">{formSubmitError}</div>
                         </form>
+                    }
+                </div>
+            </Modali.Modal>
+
+            {/* Update Image Modal */}
+            <Modali.Modal {...editImageModal} className="modal">
+                <div className="auth-card__body">
+                    <div>
+                        <strong className="mb-2">Change Image!!</strong>
+                    </div>
+                    {editOneTravel && 
+                    <form onSubmit={handleSubmit(onUpdateImageSubmit)}>
+                        <div>
+                            <label className="field__label" htmlFor="name">Type</label>
+                            <input className="big-avatar__upload-btn" type="file"
+                                                name="avatar"
+                                                accept="image/png, image/jpeg"
+                                                onChange={(e) => handleChange(e)}
+                                                ref={register()} />
+
+                            <button className="big-avatar__save" type="submit"onClick={() => {
+                                    console.log("en el modaaaal", editOneTravel._id)
+                                    setIDTravel(editOneTravel._id)
+                            }}>
+                                    <Save size={20} />
+                            </button>
+                        </div>
+                    </form>
                     }
                 </div>
             </Modali.Modal>

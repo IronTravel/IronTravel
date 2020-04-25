@@ -49,18 +49,7 @@ function matchFactor(user, currentUser) {
     })
 }
 
-//GET USER//
-router.get('/:id', isLoggedIn(), async (req, res) => {
-    const { id } = req.params;
-    const user = await User.findById(id, { password: 0, __v: 0 })
-        .populate([
-            { path: "personality" },
-            { path: "life_style" },
-            { path: "hobbies" }
-        ]);
 
-    return res.json(user);
-})
 
 //CHANGE USER PASSWORD
 router.post('/update-password', isLoggedIn(), async (req, res) => {
@@ -142,5 +131,32 @@ router.post("/image", isLoggedIn(), uploadCloudinaryAvatar.single("avatar"), asy
     }
 }
 )
+
+//cambiar background
+router.post("/back", isLoggedIn(), uploadCloudinaryAvatar.single("avatar"), async (req, res) => {
+    const id = req.user.id
+    try {
+        const user = await User.findById(id);
+        user.main_image = req.file.url
+        await user.save()
+        return res.json({ status: "Upload completed", user: user })
+    } catch (error) {
+        console.log(error)
+    }
+}
+)
+
+//GET USER//
+router.get('/:id', isLoggedIn(), async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findById(id, { password: 0, __v: 0 })
+        .populate([
+            { path: "personality" },
+            { path: "life_style" },
+            { path: "hobbies" }
+        ]);
+
+    return res.json(user);
+})
 
 module.exports = router;
