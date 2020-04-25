@@ -38,7 +38,7 @@ export const UserProfileCard = ({ user, following, setFollowing }) => {
                             <img src={user.avatar || defaultAvatar} alt={user.fullName} />
                         </Link>
                     </div>
-                    { user.factorTotal && <span className="entity-card__body__user-value">{user.factorTotal}</span> }
+                    { !!user.factorTotal && <span className="entity-card__body__user-value">{user.factorTotal}</span> }
                 </div>
                 <h2 className="entity-card__body__title">{user.fullName}</h2>
                 <p className="entity-card__body__tagline">

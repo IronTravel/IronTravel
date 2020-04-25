@@ -9,9 +9,8 @@ import { Header } from '../layout/Header';
 import { UserProfileHeader } from '../components/UserProfileHeader';
 import { UserProfileCard } from '../components/UserProfileCard';
 import { allFollowing, allFollowers } from '../service/followers';
-import { withProtected } from '../components/withProtectedHOC';
 
-const Page = () => {
+export const SearchMatchPage = () => {
 
     const [users, setUsers] = useState();
     const [following, setFollowing] = useState();
@@ -41,5 +40,3 @@ const Page = () => {
         </>
     )
 }
-
-export const SearchMatchPage = withProtected(Page);
