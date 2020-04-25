@@ -7,7 +7,7 @@ import _ from 'lodash';
 import { useUser, useUserSetter } from "../../context/user";
 import defaultAvatar from '../../assets/images/avatar.png';
 import { randomAboutMe } from '../../service/data'
-import { updateAvatar } from '../../service/user';
+import { updateAvatar, updateBackGroundAvatar } from '../../service/user';
 import { Save } from 'react-feather';
 
 const cloudinary = require("cloudinary-core");
@@ -25,12 +25,16 @@ export const UserProfileHeader = ({ data }) => {
 
     const [user, setUser] = useState({});
     const [hasImageLoaded, setHasImageLoaded] = useState(false);
+    const [hasImageBackGroundLoaded, setHasImageBackGroundLoaded] = useState(false);
     const [inUserSettigns, setIUserSettigns] = useState(false);
 
     const { handleSubmit, register, errors, reset } = useForm();
 
     const handleGetRandom = (arr) => arr[_.random(0, arr.length - 1)]?.name || '';
     const handleChange = (e) => setHasImageLoaded(!!e.target.files.length)
+    const handleChangeBack = (e) => setHasImageBackGroundLoaded(!!e.target.files.length)
+
+    const defaultBackGround = "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80"
 
     useEffect(() => {
         data && setUser(data)
@@ -38,7 +42,9 @@ export const UserProfileHeader = ({ data }) => {
     });
 
     const onSubmit = (data, e) => {
-        const myAvatar = data.avatar[0];
+        const myAvatar = data.avatarUser[0];
+
+        console.log(myAvatar)
 
         updateAvatar(myAvatar)
             .then((res) => {
@@ -49,12 +55,49 @@ export const UserProfileHeader = ({ data }) => {
             })
     }
 
+    const backGroundOnSubmit = (data, e) => {
+        const myAvatar = data.avatarback[0];
+console.log(myAvatar)
+        updateBackGroundAvatar(myAvatar)
+            .then((res) => {
+                console.log("changed file")
+                setUser(res.data.user)
+            })
+            .catch((error) => {
+                console.log("error updating")
+                console.log(error)
+            })
+    }
+
     return (
         <>
             <div className="profile-header">
-                <div className="profile-header__bg">
-                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80" alt="" />
-                </div>
+            <form className="profile-header-wrapper" onSubmit={handleSubmit(backGroundOnSubmit)}>
+                {
+                    user &&
+                    <>
+                    <label className={`${inUserSettigns && 'clickable'}`}>
+                        <div className="profile-header__bg">    
+                            <img src={user?.main_image || defaultBackGround} alt="" />
+                        </div>
+                {
+                    inUserSettigns &&
+                    <input className="big-avatar__upload-btn" type="file"
+                        name="avatarback"
+                        accept="image/png, image/jpeg"
+                        onChange={(e) => handleChangeBack(e)}
+                        ref={register()} />
+                }
+            </label>
+            {
+              hasImageBackGroundLoaded &&
+              <button className="big-avatar__save .position-absolute" type="submit">
+                  <Save size={20} />
+              </button>
+            }
+            </>
+            }
+            </form>
                 <div className="profile-header__info">
                     <div className="profile-header__info__data">
                         <div className="value">{user?.my_travels?.length || 0}</div>
@@ -76,7 +119,7 @@ export const UserProfileHeader = ({ data }) => {
                                         {
                                             inUserSettigns &&
                                             <input className="big-avatar__upload-btn" type="file"
-                                                name="avatar"
+                                                name="avatarUser"
                                                 accept="image/png, image/jpeg"
                                                 onChange={(e) => handleChange(e)}
                                                 ref={register()} />

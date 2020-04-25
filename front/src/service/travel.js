@@ -23,3 +23,11 @@ export const deleteTravel = async idTravel => {
 export const getTravel = async idTravel => {
     return await service.get(`travels/${idTravel}`);
 }
+
+export const updateImageTravel = async (avatarFile, id) => {
+    console.log(avatarFile)
+    console.log(id)
+    const data = new FormData();
+    data.append("avatar", avatarFile)
+    return await service.post(`/travels/image/${id}`, data);
+}
