@@ -1,0 +1,66 @@
+//
+//  Auth card
+// --------------------------------------------------
+
+.auth-card {
+    background-color: #F2F2F4;
+    border-radius: 8px;
+
+    &__header {
+        padding: 38px 38px 28px;
+        border-bottom: 1px solid #D8D8D8;
+    }
+
+    &__header__title {
+        font-weight: 500;
+        font-size: 20px;
+        margin: 0;
+        color: #575757;
+        letter-spacing: -0.5px;
+    }
+
+    &__body {
+        padding: 28px 38px;
+    }
+
+    .field-wrapper {
+        padding: 8px 10px;
+        margin-bottom: 8px;
+    }
+}
+
+.social-auth {
+    margin-top: 25px;
+    position: relative;
+
+    &:before {
+        content: 'or';
+        display: block;
+        font-size: 14px;
+        font-weight: 300;
+        text-align: center;
+        font-style: italic;
+        text-align: center;
+        color: #5F5F5F;
+        letter-spacing: 0;
+        margin-bottom: 25px;
+        position: relative;
+        z-index: 2;
+    }
+
+    &:after {
+        content: '';
+        display: block;
+        border-bottom: 1px solid #D8D8D8;
+        position: absolute;
+        width: 100%;
+        top: 20px;
+    }
+
+    p {
+        font-size: 13px;
+        text-align: center;
+        margin-top: 15px;
+        margin-bottom: 0;
+    }
+}

@@ -1,0 +1,173 @@
+//
+//  Profile header
+// --------------------------------------------------
+
+.profile-header {
+    @extend .mb-5;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #D8D8D8;
+
+    &-wrapper {
+        @extend .position-relative;
+        width: 100%;
+
+        label {
+            width: inherit;
+        }
+    }
+
+    &__bg {
+        height: 400px;
+        overflow: hidden;
+        position: relative;
+        border-top-right-radius: 8px;
+        border-top-left-radius: 8px;
+
+        .btn-fake-image {
+            @extend .btn, .btn--primary, .btn--small, .position-absolute;
+            background: rgba(#EE3263, .85);
+            width: 260px;
+            bottom: 15px;
+            left: 15px;
+        }
+
+        .big-image__upload-btn {
+            @extend .d-none;
+            cursor: pointer;
+        }
+
+        img {
+            object-fit: cover;
+            //position: absolute;
+            //top: -50%;
+            //transform: translateY(50%);
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .big-image__save {
+        @extend .position-absolute;
+        text-align: center;
+        background: #fff;
+        border: none;
+        border-radius: 6px;
+        width: 40px;
+        height: 40px;
+        left: 280px;
+        bottom: 22px;
+
+        &:hover {
+            background: #f1f1f1;
+        }
+    }
+
+    &__info {
+        @extend .d-flex, .justify-content-around;
+        padding: 30px 60px;
+
+        &__data {
+            width: 100%;
+            text-align: center;
+            color: #5F5F5F;
+
+            .value {
+                font-weight: 700;
+                font-size: 22px;
+            }
+
+            .key {
+                font-size: 16px;
+            }
+
+            &--user {
+                position: relative;
+                min-width: 350px;
+
+                label {
+                    .big-avatar {
+                        @extend .position-absolute;
+                        width: 175px;
+                        height: 175px;
+                        margin: auto;
+                        border-radius: 50%;
+                        overflow: hidden;
+                        border: 6px solid #F2F2F4;
+                        top: -175px;
+                        left: 50%;
+                        transform: translateX(-50%);
+
+                            img {
+                                @extend .position-absolute;
+                                width: 180px;
+                                max-width: initial;
+                                top: 50%;
+                                left: 50%;
+                                transform: translate(-50%, -50%);
+                            }
+                    }
+
+                    .big-avatar__upload-btn {
+                        @extend .d-none;
+                        cursor: pointer;
+                    }
+                }
+
+                .big-avatar__save {
+                    @extend .position-absolute;
+                    text-align: center;
+                    background: #fff;
+                    border: none;
+                    border-radius: 50%;
+                    width: 40px;
+                    height: 40px;
+                    top: -160px;
+                    right: 80px;
+                    border: 3px solid #bebebe;
+                    box-shadow: 0 10px 30px 0 rgba(0,0,0,0.5);
+
+                    &:hover {
+                        background: #f1f1f1;
+                    }
+                }
+
+                .btn-fake-avatar {
+                    @extend .position-absolute;
+                    background: rgba(#EE3263, .98);
+                    text-align: center;
+                    border: none;
+                    border-radius: 50%;
+                    width: 40px;
+                    height: 40px;
+                    top: -160px;
+                    right: 80px;
+                    box-shadow: 0 10px 30px 0 rgba(0,0,0,0.5);
+
+                    svg {
+                        @extend .position-absolute;
+                        stroke: rgba(#fff, .8);
+                        top: 45%;
+                        left: 52%;
+                        transform: translate(-50%, -50%);
+                    }
+                }
+
+                .value {
+                    @extend .mt-2;
+                    font-size: 26px;
+                }
+
+                .key {
+                    @extend .mt-1;
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+}
+
+.clickable {
+    width: inherit;
+    cursor: pointer;
+}

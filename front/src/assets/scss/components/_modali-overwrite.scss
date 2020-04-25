@@ -1,0 +1,54 @@
+//
+//  Modali Overwrite
+// --------------------------------------------------
+
+.modali-overlay {
+    background: #392E4E;
+    opacity: 0.95;
+}
+
+.modali-open {
+    @extend .pr-0;
+}
+
+.modali {
+
+    &-content {
+        border-radius: 8px;
+    }
+
+    &-header {
+        background-color: #F2F2F4;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 38px;
+        padding-right: 38px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #D8D8D8;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+
+        .modali-title {
+            font-weight: 700;
+            font-size: 24px;
+            color: #5F5F5F;
+            letter-spacing: -1px;
+        }
+
+        .modali-close-button {
+            background: transparent;
+            color: #5F5F5F;
+            font-size: 40px;
+            padding: 0;
+            margin: 0;
+        }
+    }
+
+    &-body {
+        background-color: #F2F2F4;
+    }
+
+    .modali-button {
+        @extend .btn, .btn--primary;
+    }
+}

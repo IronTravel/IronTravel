@@ -1,0 +1,67 @@
+//
+//  fields
+// --------------------------------------------------
+
+.field-wrapper {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    //padding: 10px 20px;
+    padding: 14px;
+    border-radius: 4px;
+    letter-spacing: 0;
+    border: 1px solid #D8D8D8;
+    margin-bottom: 10px;
+
+    &--select {
+        &:before {
+            @extend .position-absolute, .d-block;
+            content: '';
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+    .field__label {
+        font-size: 11px;
+        color: #a0a0a0;
+        //margin-bottom: 0;
+        margin-bottom: 6px;
+    }
+
+    .field__input-select {
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        background-color: #fff;
+    }
+
+    .field__input-text,
+    .field__input-select,
+    .field__input-textarea {
+        font-size: 14px;
+        color: #5F5F5F;
+        border: none;
+        box-shadow: none!important;
+
+        &::-webkit-input-placeholder,
+        &::placeholder {
+            color: #ddd;
+        }
+    }
+
+    .field__input-textarea {
+        resize: none;
+    }
+
+    &--error {
+        border: 1px solid red;
+    }
+}
+
+.form-errors {
+    color: red;
+    text-align: center;
+    padding: 5px;
+}

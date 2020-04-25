@@ -1,0 +1,48 @@
+//
+// CSS Base
+// --------------------------------------------------
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background-color: #F0F4F7;
+    font: 13px 'Open Sans', sans-serif;
+    color: #5F5F5F;
+}
+
+textarea,
+select,
+input[type="tel"],
+input[type="file"],
+input[type="text"],
+input[type="date"],
+input[type="number"],
+input[type="search"],
+input[type="password"],
+a {
+    outline: 0;
+
+	&:hover,
+	&:focus,
+	&:active {
+		outline: 0;
+	}
+}
+
+button {
+    outline: none;
+
+    &:hover,
+	&:focus,
+	&:active {
+        outline: none;
+        box-shadow: none;
+    }
+}
+
+img {
+	@extend .img-fluid;
+}

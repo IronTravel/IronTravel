@@ -1,0 +1,87 @@
+//
+//  Main Header
+// --------------------------------------------------
+
+.main-header {
+    @extend .d-flex, .align-items-center, .pr-3, .mb-5;
+    background-color: #392E4E;
+    height: 50px;
+
+    .main-logo {
+        min-width: 50px;
+    }
+
+    .current-section {
+        @extend .px-3;
+        width: 100%;
+        max-width: 200px;
+        font-size: 16px;
+        font-weight: 700;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+    }
+
+    .header-search {
+        background-color: #473B5F;
+        width: 100%;
+        height: inherit;
+
+        input[type="search"] {
+            background-color: #473B5F;
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .main-nav {
+        @extend .d-flex, .align-items-center, .justify-content-between, .px-4;
+        width: 100%;
+        max-width: 300px;
+        height: inherit;
+
+        a {
+            font-size: 13px;
+            font-weight: 600;
+            color: #C4C4C4;
+        }
+    }
+
+    .user-menu {
+        @extend .d-flex, .align-items-center, .justify-content-around;
+        width: 100%;
+        max-width: 150px;
+
+        &__icon-btn,
+        &__user-btn {
+            border: none;
+            background: transparent;
+        }
+
+        &__user-btn {
+            .user-card {
+                color: #fff;
+                &__img {
+                    @extend .mr-2;
+                }
+            }
+        }
+
+        .dropdownmenu {
+            @extend .d-inline-flex;
+            height: 50px;
+
+            &__options {
+                top: 50px;
+                right: 0;
+                font-size: 14px;
+            }
+        }
+    }
+}

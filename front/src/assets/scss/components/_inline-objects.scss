@@ -1,0 +1,51 @@
+//
+//  Inline avatars
+// --------------------------------------------------
+
+.inline-objects {
+    @extend .d-flex, .align-items-center;
+
+    &__images {
+        @extend .d-flex, .align-items-center, .mr-4;
+
+        > * {
+            margin-right: -25px;
+        }
+
+        .user-card__img {
+            border: 2px solid white;
+        }
+
+        &--centered .user-card:last-child .user-card__img {
+            @extend .mr-0;
+        }
+    }
+
+    &__text {
+        max-width: 140px;
+        font-size: 11px;
+        line-height: 15px;
+    }
+
+    &--vertical {
+        @extend .flex-column, .align-items-center;
+    }
+
+    &--spread {
+        .inline-objects__images {
+            @extend .mr-0;
+            > * {
+               @extend .mr-0;
+            }
+        }
+    }
+
+    &--inverted {
+        .inline-objects__images {
+            order: 2;
+        }
+        .inline-objects__text {
+            @extend .mr-2, .text-right;
+        }
+    }
+}

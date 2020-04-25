@@ -1,0 +1,78 @@
+//
+//  Buttons
+// --------------------------------------------------
+
+.btn {
+    width: 100%;
+    font-size: 13px;
+    font-weight: 700;
+    color: #F2F2F4!important;
+    text-align: center;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    border: none;
+    transition: background-color .35s;
+
+    &--primary {
+        background-color: #EE3263;
+
+        &:hover {
+            background-color: darken(#EE3263, 7%);
+        }
+    }
+
+    &--facebook {
+        background-color: #3B5998;
+
+        &:hover {
+            background-color: darken(#3B5998, 7%);
+        }
+    }
+
+    &--google {
+        background-color: #DC4E41;
+
+        &:hover {
+            background-color: darken(#DC4E41, 7%);
+        }
+    }
+
+    &-w--full {
+        width: 100%;
+    }
+
+    &--small {
+        width: 110px;
+        padding-top: .6rem;
+        padding-bottom: .6rem;
+    }
+
+    &[disabled] {
+        background-color: #D8D8D8 !important;
+    }
+}
+
+.btn-like {
+    @extend .d-flex, .align-items-center;
+
+    &__icon {
+        background: transparent;
+        border: none;
+
+        &--liked svg {
+        stroke: red;
+    }
+    }
+
+    &__count {
+        font-weight: 700;
+        font-size: 14px;
+        color: #979797;
+    }
+
+    &--inverted {
+        .btn-like__icon {
+            order: 2;
+        }
+    }
+}

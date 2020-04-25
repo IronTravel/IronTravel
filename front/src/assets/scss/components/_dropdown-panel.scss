@@ -1,0 +1,133 @@
+//
+//  Dropdown panel
+// --------------------------------------------------
+
+.dropdown-panel {
+    @extend .position-absolute;
+    width: 400px;
+    background: #fff;
+    border-radius: 8px;
+    z-index: 100;
+    top: 37px;
+    right: -30px;
+    box-shadow: 0 10px 30px 0 rgba(0,0,0,.3);
+    user-select: none;
+
+    &:before {
+        @extend .position-absolute, .d-block;
+        content: '';
+        top: -10px;
+        right: 29px;
+        border-bottom: 10px solid #fff;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+    }
+
+    &__header {
+        @extend .py-3;
+
+        &__title {
+            @extend .mb-0;
+            font-weight: 700;
+            font-size: 18px;
+            color: #5F5F5F;
+            letter-spacing: -0.6px;
+            text-align: center;
+        }
+    }
+
+    &__body {
+        max-height: 240px;
+        overflow-y: scroll;
+    }
+
+    &__footer {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        overflow: hidden;
+
+        button {
+            @extend .py-3, .px-4;
+            width: 100%;
+            font-weight: 600;
+            color: #EE3263;
+            background-color: #F2F2F4;
+            transition: all .45s;
+
+            &:hover {
+                background-color: darken(#F2F2F4, 3%);
+                color: darken(#EE3263, 3%);
+            }
+        }
+    }
+}
+
+.notifications-qty {
+    @extend .position-absolute, .px-1;
+    cursor: pointer;
+    min-width: 20px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 20px;
+    top: -10px;
+    left: 10px;
+    background-color: red;
+    color: #fff;
+    border-radius: 10px;
+    user-select: none;
+    text-align: center;
+}
+
+.notifications-icon {
+    cursor: pointer;
+}
+
+.notifications-wrapper {
+    @extend .list-unstyled, .mb-0;
+    user-select: initial;
+}
+
+.notification {
+    @extend .d-flex, .align-items-start, .justify-content-between, .py-3, .px-4;
+    border-top: 1px solid #D8D8D8;
+    transition: all .45s;
+
+    &:hover {
+        background-color: darken(#fff, 5%);
+    }
+
+    .user-card__name {
+        font-weight: 700;
+        font-size: 14px;
+        margin-bottom: .125rem;
+        color: #5F5F5F;
+        letter-spacing: -0.45px;
+    }
+
+    &--new {
+        @extend .position-relative;
+
+        &:before {
+            @extend .position-absolute, .d-block;
+            content: '';
+            background-color: #EE3263;
+            width: 5px;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .user-card__name {
+            color: #EE3263;
+        }
+    }
+
+    time {
+        font-style: Italic;
+        font-size: 12px;
+        color: #5F5F5F;
+        letter-spacing: -0.4px;
+        text-align: right;
+    }
+}
