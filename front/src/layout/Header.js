@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { useUserSetter } from "../context/user";
 
 // Service
-import { logout } from '../service/auth';
+import { logout, whoami } from '../service/auth';
 
 //Context
 import { useUser } from "../context/user";
@@ -21,6 +21,7 @@ import { DropDownMenu } from '../components/DropDownMenu';
 import { MessageSquare, Bell, Settings, LogOut, User } from 'react-feather';
 import { searchUser } from '../service/search';
 import { allUser } from '../service/user';
+
 
 export const Header = withRouter(({ history }) => {
 
@@ -44,13 +45,18 @@ export const Header = withRouter(({ history }) => {
         })
     };
 
+
+
+      console.log("SOY EL USER DE HEADER", user)
+
     return (
         <header className="main-header">
             <div className="main-logo">
                 <Link to="/profile"><LogoWeTravelSM /> </Link>
             </div>
-            <div className="current-section">My Profile</div>
-            <div className="header-search">
+            {/* <div className="current-section">My Profile</div> */}
+            <div className="main-nav"><Link to ="/profile">My Profile</Link></div>
+            <div className="header-search">                
                 <input type="search" name="search" placeholder="Search your favourite City"onChange={handleSearch}/>
                 <div>
                     {search &&

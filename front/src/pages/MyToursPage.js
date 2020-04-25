@@ -54,8 +54,10 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
        createTour(data)
           .then((res) => {
                fetchUserTour()
-               setFormSubmitError(res.data.status)
+               setNewTourModal()
+            
         }) 
+        .catch(res => setFormSubmitError(res.data.status))
     }
 
     const onUpdateSubmit = (data) => {
@@ -68,8 +70,10 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
         .then((res) => {
             setEditOneTour(res.data)
             fetchUserTour()
-             setFormSubmitError(res.data.status)
+            setEditTourModal()
+             
          })
+         .catch(res => setFormSubmitError(res.data.status))
       };
 
       const handleCountrySelection = selectedOption => {
@@ -88,6 +92,7 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
                 console.log("changed file")
                 setEditOneTour(res.data)
                 fetchUserTour()
+                setEditImageModal()
             })
             .catch((error) => {
                 console.log("error updating")
@@ -186,17 +191,17 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
                     <form onSubmit={handleSubmit(onNewTourFormSubmit)}>
                         <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                             <label className="field__label" htmlFor="name">Title or name*</label>
-                            <input className="field__input-text" placeholder="Add a name to identify your travel" name="name" id="name" type="text" ref={register({ required: false })} />
+                            <input className="field__input-text" placeholder="Add a name to identify your travel" name="name" id="name" type="text" ref={register({ required: true })} />
                         </div>
                         <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                             <label className="field__label" htmlFor="name">Type</label>
-                            <input className="field__input-text" placeholder="What kind of tour??" name="type" id="Type" type="text" ref={register({ required: false })} />
+                            <input className="field__input-text" placeholder="What kind of tour??" name="type" id="Type" type="text" ref={register({ required: true })} />
                         </div>
                         
                             
                                 <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                                     <label className="field__label" htmlFor="from">City</label>
-                                    <input className="field__input-text" placeholder="City" name="city" id="city" type="text" ref={register({ required: false })} />
+                                    <input className="field__input-text" placeholder="City" name="city" id="city" type="text" ref={register({ required: true })} />
                                 </div>
                             
                             
@@ -222,22 +227,22 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
                             <div className="col-6 pr-1">
                                 <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                                     <label className="field__label" htmlFor="from">Start</label>
-                                    <input className="field__input-text" placeholder="Start" name="start" id="start" type="date" ref={register({ required: false })} />
+                                    <input className="field__input-text" placeholder="Start" name="start" id="start" type="date" ref={register({ required: true })} />
                                 </div>
                             </div>
                             <div className="col-6 pl-1">
                                 <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}> 
                                     <label className="field__label" htmlFor="to">End</label>
-                                    <input className="field__input-text" placeholder="End" name="end" id="end" type="date" ref={register({ required: false })} />
+                                    <input className="field__input-text" placeholder="End" name="end" id="end" type="date" ref={register({ required: true })} />
                                 </div>
                             </div>
                         </div>
                         <div className={`field-wrapper ${errors?.name && 'field-wrapper--error'}`}>
                             <label className="field__label" htmlFor="description">Description</label>
-                            <textarea className="field__input-textarea" placeholder="tell us more" id="description" name="description" rows="3" ref={register({ required: false })}></textarea>
+                            <textarea className="field__input-textarea" placeholder="tell us more" id="description" name="description" rows="3" ref={register({ required: true })}></textarea>
                         </div>
                         <div className="field-wrapper--button mt-4">
-                            <button className="btn btn--primary btn--w-full" type="submit" onClick={setNewTourModal}>Create</button>
+                            <button className="btn btn--primary btn--w-full" type="submit">Create</button>
                         </div>
                         <div className="form-errors">{formSubmitError}</div>
                     </form>
@@ -307,7 +312,6 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
                         <div className="field-wrapper--button mt-4">
                             <button className="btn btn--primary btn--w-full" type="submit" onClick={() => {
                                 setIDTour(editOneTour._id)
-                                setEditTourModal()
                                 }}>Edit</button>
                         </div>
                         <div className="form-errors">{formSubmitError}</div>
@@ -321,7 +325,7 @@ const cl = cloudinary.Cloudinary.new({ cloud_name: "dbfbhlyxp" });
             <Modali.Modal {...editImageModal} className="modal">
                 <div className="auth-card__body">
                     <div>
-                        <strong className="mb-2">Si no te gusta nuestra imagen cambiala</strong>
+                        <strong className="mb-2">Change Image!!</strong>
                     </div>
                     {editOneTour && 
                     <form onSubmit={handleSubmit(onUpdateImageSubmit)}>

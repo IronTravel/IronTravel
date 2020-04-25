@@ -445,7 +445,11 @@
 // city:
  //******************************************************************************************************************************************
 
-//  ["https://content.skyscnr.com/m/139e66b951813eed/original/eyeem_65408921.jpg.jpg?resize=1800px:1800px&#038;quality=100"
+//  ["https://viajes.nationalgeographic.com.es/medio/2017/04/24/cuzco-peru_f68afd77.jpg",
+// ,"https://viajes.nationalgeographic.com.es/medio/2017/04/24/marrakech-marruecos_71cde678.jpg"
+// ,"https://viajes.nationalgeographic.com.es/medio/2017/04/24/rio-de-janeiro-brasil_7686ae32.jpg"
+// ,"https://viajes.nationalgeographic.com.es/medio/2017/04/24/dubai-emiratos-arabes-unidos_e7e63fff.jpg"
+// ,"https://viajes.nationalgeographic.com.es/medio/2017/04/24/katmandu-nepal_7443c9e8.jpg"
 // ,"https://content.skyscnr.com/m/747b83ab736f8e6b/original/GettyImages-515722479_doc.jpg?resize=1800px:1800px&#038;quality=100"
 // ,"https://content.skyscnr.com/7805c7de6f4e7816a4fe0a7cc386969e/GettyImages-183633046.jpg"
 // ,"https://content.skyscnr.com/e9f18d98773d244ceef7d45bc67f6ef8/GettyImages-523665439.jpg"
@@ -458,5 +462,7 @@
 // ,"https://viajes.nationalgeographic.com.es/medio/2017/04/24/playa-del-carmen_e282eb30.jpg"
 // ,"https://viajes.nationalgeographic.com.es/medio/2017/04/24/gran-caiman-islas-caiman_c15a31ba.jpg"
 // ,"https://viajes.nationalgeographic.com.es/medio/2017/04/24/bora-bora-islas-de-la-sociedad_6007a5de.jpg"
+// ,"https://viajes.nationalgeographic.com.es/medio/2017/04/24/hoi-an-vietnam_a566cd37.jpg"
+// ,"https://viajes.nationalgeographic.com.es/medio/2017/04/24/jamaica_bd82f235.jpg"
+// ,"https://viajes.nationalgeographic.com.es/medio/2017/04/24/sant-petersburgo_2e25e940.jpg"
 // ,"https://viajes.nationalgeographic.com.es/medio/2017/04/24/cuzco-peru_f68afd77.jpg"]
-
