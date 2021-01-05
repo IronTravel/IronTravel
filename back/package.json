@@ -26,7 +26,7 @@
         "seeds": "node bin/musicGenres.js && node bin/users.js && node bin/personalities.js && node bin/amenities.js && node bin/lifestyles.js && node bin/hobbies.js && node bin/city.js && node bin/restaurant.js && node bin/museum.js && node bin/landmark.js && node bin/restaurant-images.js && bin/landmark-images.js && bin/museum-images.js"
     },
     "dependencies": {
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "bcrypt": "^4.0.1",
         "body-parser": "^1.18.3",
         "cheerio": "^1.0.0-rc.3",
