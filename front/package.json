@@ -16,7 +16,7 @@
         "lodash": "^4.17.15",
         "modali": "^1.2.0",
         "moment": "^2.24.0",
-        "parcel": "^1.12.4",
+        "parcel": "^2.8.2",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-feather": "^2.0.4",
